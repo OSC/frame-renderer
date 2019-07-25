@@ -1,0 +1,7 @@
+---
+name: Video Processing
+category: media
+icon: fa://tasks
+description: |-
+  An application to generate video files.
+role: media
