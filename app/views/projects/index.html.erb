@@ -1,0 +1,34 @@
+<div class="page-header" >
+  <h2>Video Processing Projects</h2>
+</div>
+
+<div>
+  <div class="btn-group open">
+    <a  data-method="get" 
+        data-toggle="tooltip" 
+        title="Create a new Project" 
+        href="<%= new_project_path %>"
+    >
+      
+    <button type="button" id="new_job_button" class="btn btn-primary" > New Project </button></a>
+  </div>
+</div>
+
+<br>
+<br>
+
+<h3>Projects</h3>
+<table>
+  <tr>
+    <th>Project Name</th>
+  <tr>
+
+  <% @projects.each do |project| %>
+    <tr>
+      <td><%= project.name %></td>
+      <td><%= link_to 'Work in', project_path(project) %>
+      <td><%= link_to 'Edit', edit_project_path(project) %>
+    <tr>
+  <% end %>
+
+</table>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  frames: MyString
+  camera: MyString
+  renderer: MyString
+  extra: MyString
+  file: MyString
+  project_id: 
+
+two:
+  name: MyString
+  frames: MyString
+  camera: MyString
+  renderer: MyString
+  extra: MyString
+  file: MyString
+  project_id: 

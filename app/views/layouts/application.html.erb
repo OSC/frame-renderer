@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>VideoProcessing</title>
+  <title>Video Processing</title>
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+  <header>
+      <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="navbar-header">
+          <ul class="navbar-breadcrumbs">
+            <li><%= link_to "Projects", projects_path %></li>
+          </ul>
+        </div>
+      </nav>
+  </header>
+
 <%= yield %>
+
+  <footer>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <p id="app_version" class="pull-right"><%= ENV['APP_VERSION'] %></p>
+        </div>
+      </div>
+  </footer>
 
 </body>
 </html>

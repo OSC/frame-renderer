@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+
+  resources :projects do 
+    resources :submissions, except: [:index ]
+  end
+
+  #get 'projects/:id/render' => 'projects#submission_edit', as: 'submission_edit'
+  #post 'projects/:id/render' => 'projects#submit', as: 'submit'
+
+  root 'projects#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
