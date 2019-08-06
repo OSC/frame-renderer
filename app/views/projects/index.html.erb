@@ -18,17 +18,29 @@
 <br>
 
 <h3>Projects</h3>
-<table>
-  <tr>
-    <th>Project Name</th>
-  <tr>
 
-  <% @projects.each do |project| %>
-    <tr>
-      <td><%= project.name %></td>
-      <td><%= link_to 'Work in', project_path(project) %>
-      <td><%= link_to 'Edit', edit_project_path(project) %>
-    <tr>
-  <% end %>
+<div id="submission-list-view" class="panel panel-default">
+  <div class="panel-body" >
+    <table id="submission-list-table" class="table data-table" >
 
-</table>
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Actions</th>
+      <tr>
+    </thead>
+
+    <tbody>
+      <% @projects.each do |project| %>
+        <tr>
+          <td><%= link_to project.name, project_path(project)  %></td>
+          <td><%= link_to 'Work in', project_path(project), class: 'btn btn-success btn-sm' %>
+          <td><%= link_to 'Edit', edit_project_path(project), class: 'btn btn-info btn-sm' %>
+          <td><%= link_to 'Delete', project_path(project), :method => :delete,
+            data: {confirm: "Are you sure?"}, class: 'btn btn-danger btn-sm' %>
+        <tr>
+      <% end %>
+    </tbody>
+
+  </div>
+</div>

@@ -26,6 +26,14 @@ class SubmissionsController < ApplicationController
     redirect_to @project
   end
 
+  def destroy
+    @project = Project.find(params[:project_id])
+    @submission = @project.submissions.find(params[:id])
+    @submission.destroy
+
+    redirect_to @project
+  end
+
   def submission_params
     params
       .require(:submission)

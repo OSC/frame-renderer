@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    @projects = Project.preload.all
+    @projects = Project.all
   end
 
   def show
@@ -46,10 +46,6 @@ class ProjectsController < ApplicationController
 
   def submission_edit
     @project = Project.find(params[:id])
-  end
-
-  def submit
-    
   end
 
   private
