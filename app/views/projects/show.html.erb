@@ -1,10 +1,11 @@
 <div class="page-header" >
   <h2><%= @project.name %></h2>
   <p><%= @project.description %></p>
+  <p>location: <%= @project.directory %></p>
 </div>
 
 
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Back', projects_path, class: "btn btn-info" %><br><br>
 
 <div>
   <div class="btn-group open">
@@ -16,20 +17,13 @@
     %>
   </div>
 </div>
-
-<p><%= @project.directory %></p>
+<br>
 
 <div>
-  <div class="btn-group open">
-    <%= button_to 'New Submission', 
-      new_project_submission_path(@project),
-      method: :get,
-      class: "btn btn-primary",
-      id: "submission_edit_button"
-    %>
-  </div>
+  <%= link_to "View Files", OodAppkit.files.url(path: @project.directory).to_s, 
+    class: 'btn btn-primary btn-sm', :target => '_blank' %>
 </div>
-
+<br><br>
 
 <div id="submission-list-view" class="panel panel-default">
   <div class="panel-body" >
@@ -55,11 +49,11 @@
 
             <td id="status_label_<%= submission.id %>"><%= status_label(submission) %></td>
             <td>
-                <%= link_to "Submit", project_submissions_path(@project, submission), :method => :put, class: 'btn btn-success btn-sm'%>
+                <%= link_to "Submit", project_submission_submit_path(@project, submission), :method => :put, class: 'btn btn-success btn-sm'%>
                 <%= link_to "Edit", edit_project_submission_path(@project, submission), :method => :get, class: 'btn btn-info btn-sm'%>
                 <%= link_to "Delete", project_submission_path(@project, submission), 
                       :method => :delete, class: 'btn btn-danger btn-sm', data: {confirm: "Are you sure?"} %>
-                <%= link_to "Files", OodAppkit.files.url(path: @project.directory).to_s, class: 'btn btn-warning btn-sm', :target => '_blank' %>
+                
                 
             </td>
           </tr>
@@ -70,3 +64,11 @@
 </div>
 
 
+<div class="btn-group open">
+  <%= button_to 'New Submission', 
+    new_project_submission_path(@project),
+    method: :get,
+    class: "btn btn-primary",
+    id: "submission_edit_button"
+  %>
+</div>

@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
   resources :projects do 
-    resources :submissions, except: [:index ]
+    resources :submissions, except: [:index ] do
+      put 'submit'
+    end
   end
 
   #get 'projects/:id/render' => 'projects#submission_edit', as: 'submission_edit'

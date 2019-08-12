@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190802201653) do
+ActiveRecord::Schema.define(version: 20190806151102) do
+
+  create_table "jobs", force: :cascade do |t|
+    t.string   "status"
+    t.string   "script_name"
+    t.string   "job_path"
+    t.string   "pbsid"
+    t.integer  "submission_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "jobs", ["submission_id"], name: "index_jobs_on_submission_id"
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
@@ -30,7 +42,6 @@ ActiveRecord::Schema.define(version: 20190802201653) do
     t.string   "file"
     t.integer  "cores"
     t.string   "cluster"
-    t.string   "status"
     t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
