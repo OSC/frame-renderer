@@ -3,6 +3,7 @@ class SubmissionsController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @submission = @project.submissions.build
+    @submission.file = @project.directory
   end
 
   def create
@@ -51,6 +52,16 @@ class SubmissionsController < ApplicationController
       redirect_to @project, notice: 'Job submission succeeded'
     else
       redirect_to @project, alert: "Job submission failed #{@submission.errors.to_a}"
+    end
+  end
+  
+  def show
+    @project = Project.find(params[:project_id])
+    @submission = @project.submissions.find(params[:id])
+
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @submission }
     end
   end
 

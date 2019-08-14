@@ -41,7 +41,11 @@
 
       <tbody>
         <% @project.submissions.each do |submission| %>
-          <tr class="submission-row">
+          <tr class="submission-row" 
+              data-toggle="poll" 
+              data-delay="10000"
+              data-url="<%= project_submission_path(@project, submission) %>.js" >
+
             <td><%= submission.name %></td>
             <td><%= submission.frames %></td>
             <td><%= submission.cores %></td>

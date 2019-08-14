@@ -37,8 +37,8 @@ class Submission < ActiveRecord::Base
   def parse_frames
     farray = frames.split('-')
 
-    start_frame = farray[0]
-    end_frame = farray[1]
+    @start_frame = farray[0]
+    @end_frame = farray[1]
   end
 
 end

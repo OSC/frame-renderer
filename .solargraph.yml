@@ -18,6 +18,7 @@ require:
 - activesupport
 - ood_appkit
 - osc_machete_rails
+- ood_core
 domains: []
 reporters:
 - rubocop
