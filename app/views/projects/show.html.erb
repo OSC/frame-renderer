@@ -51,7 +51,7 @@
             <td><%= submission.cores %></td>
             <td><%= submission.file %></td>
 
-            <td id="status_label_<%= submission.id %>"><%= status_label(submission) %></td>
+            <td id="status_label_<%= submission.id %>">TODO</td>
             <td>
                 <%= link_to "Submit", project_submission_submit_path(@project, submission), :method => :put, class: 'btn btn-success btn-sm'%>
                 <%= link_to "Edit", edit_project_submission_path(@project, submission), :method => :get, class: 'btn btn-info btn-sm'%>
