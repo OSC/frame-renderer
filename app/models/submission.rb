@@ -1,7 +1,7 @@
 class Submission < ActiveRecord::Base
   belongs_to :project
   has_many :jobs, dependent: :destroy
-  
+
   store :job_attrs
 
   attr_accessor :start_frame, :end_frame, :project_dir
@@ -10,28 +10,24 @@ class Submission < ActiveRecord::Base
     'video_jobs'
   end
 
-  # def build_jobs(staged_dir, job_list = [])
-  #   job_list << OSC::Machete::Job.new(
-  #     script: staged_dir.join('maya_submit.sh'),
-  #     host: 'owens'
-  #   )
-  # end
+  def submission_template
+    'jobs/video_jobs/maya_submit.sh.erb'
+  end
+
+  def templated_content
+    erb = ERB.new(File.read(submission_template))
+    erb.filename = submission_template.to_s
+    erb.result(binding)
+  end
 
   def submit(template_view = self)
     success = false
-    # staged_dir = stage
+
     parse_frames
+    script = OodCore::Job::Script.new(content: templated_content)
 
-    # render_mustache_files(staged_dir, template_view)
 
-    # jobs = build_jobs(staged_dir)
-
-    # if submit_jobs(jobs)
-    #   puts 'Jobs submitted successfully'
-    #   success = save_jobs(jobs, staged_dir)
-    # end
-
-    # success
+    true
   end
 
   def parse_frames
