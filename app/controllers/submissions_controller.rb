@@ -4,6 +4,7 @@ class SubmissionsController < ApplicationController
     @project = Project.find(params[:project_id])
     @submission = @project.submissions.build
     @submission.file = @project.directory
+    @submission.cores = '28'
   end
 
   def create
