@@ -2,10 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+
+
+# toggle an element's visibility
+@toggle = (elementId) ->
+  $('#' + elementId).toggle()
+
 #
 # Timer object
 #
-
 class Timer
   constructor: (@callback, @delay) ->
     @remaining = @delay

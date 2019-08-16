@@ -4,7 +4,7 @@ class Submission < ActiveRecord::Base
 
   store :job_attrs
 
-  attr_accessor :start_frame, :end_frame, :project_dir, :show_extra_vars
+  attr_accessor :start_frame, :end_frame, :project_dir
 
   def submit
     parse_frames

@@ -5,6 +5,7 @@ class SubmissionsController < ApplicationController
     @submission = @project.submissions.build
     @submission.file = @project.directory
     @submission.cores = '28'
+    @submission.extra = '-verb'
   end
 
   def create

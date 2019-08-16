@@ -45,8 +45,6 @@ group :development do
   gem 'spring'
 end
 
-#gem "bootstrap", "~> 4.0.0"
-
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'bootstrap_form', '~> 2.7.0'
 
