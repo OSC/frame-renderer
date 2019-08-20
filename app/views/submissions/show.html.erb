@@ -1,0 +1,40 @@
+
+<div class="page-header" >
+  <h2><%= @submission.name %></h2>  <!-- but also title type header  -->
+</div>
+
+<script>pollForUpdates('<%= @project.id %>', '<%= @submission.id %>')</script>
+
+<%= link_to 'Back', project_path(@project), class: "btn btn-info" %><br><br>
+
+<h3>All the job results for <%= @submission.name%></h3>
+<% @submission.jobs.each do |job| %>
+
+  <!-- the button to minimize the job results      -->
+  <button
+    id="job-<%= job.id %>-button"
+    class="job-result-button job-result-button-<%= normalize_css_str(job.status) %>" 
+    onclick="toggle('job-<%= job.id %>-container')"
+    job_id="<%= job.id %>"
+    job_status="<%= job.status %>"
+  >
+    <%= job.job_id %> [<%= job.status %>]
+  </button>
+
+  <!-- containter for the job results div  so it can toggle -->
+  <div id="job-<%= job.id %>-container" style="display: none;">
+
+   <!-- the job results div -->
+    <div 
+      id="job-<%= job.id %>-info" 
+    >
+
+      <%= job.status %>
+
+    </div> <!-- job results div -->
+
+  </div> <!-- toggle/hide container -->
+
+  <br><br>
+
+<% end %>

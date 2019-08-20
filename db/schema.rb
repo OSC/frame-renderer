@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20190806151102) do
   create_table "jobs", force: :cascade do |t|
     t.string   "status"
     t.string   "job_id"
+    t.string   "cluster"
     t.integer  "submission_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false

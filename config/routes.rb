@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :projects do 
     resources :submissions, except: [:index ] do
       put 'submit'
+      get 'jobs'
     end
   end
 

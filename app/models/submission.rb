@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class Submission < ActiveRecord::Base
   belongs_to :project
   has_many :jobs, dependent: :destroy
@@ -15,6 +17,10 @@ class Submission < ActiveRecord::Base
     success
   end
 
+  def never_submitted_status
+    'not submitted'
+  end
+
   private
 
   def submission_template
@@ -22,8 +28,12 @@ class Submission < ActiveRecord::Base
   end
 
   def new_job
-    job = Job.create(job_id: 'NA', status: 'not submitted')
-    job.cluster_id = attributes['cluster']
+    job = Job.create(
+      job_id: 'Never-Submitted-' + SecureRandom.urlsafe_base64(5),
+      status: never_submitted_status,
+      submission_id: attributes['id'],
+      cluster: attributes['cluster']
+    )
     job
   end
 
@@ -39,5 +49,6 @@ class Submission < ActiveRecord::Base
     @start_frame = farray[0]
     @end_frame = farray[1]
   end
+
 
 end

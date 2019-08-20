@@ -3,6 +3,7 @@ class CreateJobs < ActiveRecord::Migration
     create_table :jobs do |t|
       t.string :status
       t.string :job_id
+      t.string :cluster
       t.references :submission, index: true, foreign_key: true
 
       t.timestamps null: false

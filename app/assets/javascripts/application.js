@@ -16,5 +16,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require filepicker
+//= require js-routes
 //= require_tree .
 

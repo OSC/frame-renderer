@@ -59,11 +59,23 @@ class SubmissionsController < ApplicationController
   
   def show
     @project = Project.find(params[:project_id])
-    @submission = @project.submissions.find(params[:id])
+    @submission = Submission.find(params[:id])
 
     respond_to do |format|
       format.html { render :show }
       format.json { render json: @submission }
+    end
+  end
+
+  def jobs
+    @project = Project.find(params[:project_id])
+    @submission = Submission.find(params[:submission_id])
+    @jobs = @submission.jobs.where(submission_id: params[:submission_id])
+
+    @jobs.map(&:update_status)
+
+    respond_to do |format|
+      format.json { render json: @jobs }
     end
   end
 

@@ -50,3 +50,4 @@ gem 'bootstrap_form', '~> 2.7.0'
 
 gem 'ood_appkit', '~> 1.0'
 gem 'ood_core', '~> 0.9.3'
+gem 'js-routes', '~> 1.2.4'

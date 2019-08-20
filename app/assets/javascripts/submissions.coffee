@@ -2,84 +2,45 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-
-
 # toggle an element's visibility
 @toggle = (elementId) ->
-  $('#' + elementId).toggle()
+  jobInfo = $('#' + elementId)
+  jobInfo.toggle()
+  
 
-#
-# Timer object
-#
-class Timer
-  constructor: (@callback, @delay) ->
-    @remaining = @delay
-    @active = true
-    @resume()
-  resume: () ->
-    return unless @active
-    @start = new Date()
-    clearTimeout(@timerId)
-    @timerId = setTimeout(@callback, @remaining)
-  restart: () ->
-    return unless @active
-    @remaining = @delay
-    @resume()
-  pause: () ->
-    return unless @active
-    clearTimeout(@timerId)
-    @remaining -= new Date() - @start
-  stop: () ->
-    return unless @active
-    clearTimeout(@timerId)
-    @active = false
+@pollForUpdates = (project_id, submission_id) ->
+  update(project_id, submission_id)
+  setTimeout(pollForUpdates, 10000, project_id, submission_id)
 
-#
-# Poller object
-#
 
-class Poller
-  constructor: (@url, @delay) ->
-    @poll()
-  poll: ->
-    @timer = new Timer(@request.bind(this), @delay)
-  request: ->
-    that = this
-    $.getScript(@url).done((script, textStatus, jqxhr) ->
-      console.log textStatus
-      return
-    ).fail((jqxhr, textStatus, errorThrown) ->
-      console.log textStatus
-      return
-    ).always(() ->
-      that.poll()
-      return
-    )
-  pause: () ->
-    @timer.pause()
-  resume: () ->
-    @timer.resume()
+update = (project_id, submission_id) ->
+  $.ajax
+    type: 'GET'
+    url: Routes.project_submission_jobs_path project_id, submission_id, format: 'json'
+    contentType: "application/json; charset=utf-8"
+    dataType: "json"
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log jqXHR
+    success: (data, textStatus, jqXHR) ->
+      updateElements(data)
+    complete: ->
+      #console.log 'complete'
 
-#
-# Run on document load
-#
+# created_at: "2019-08-16T17:13:02.052Z"
+# id: 5
+# job_id: "Never-Submitted-fA_5HIA"
+# status: "not submitted"
+# submission_id: 1
+# updated_at: "2019-08-16T17:13:02.052Z"
 
-jQuery ->
-  # Pollers used
-  polls = []
+updateElements = (data) ->
+  data.forEach (job, index) ->
+    jobButtonId = 'job-' + job.id + '-button'
+    jobButton = $('#' + jobButtonId)
+    newCssClass = 'job-result-button job-result-button-' + normalizeCSS(job.status)
+    jobButton.attr('class', newCssClass)
+    jobButton.text(job.job_id + ' [' + job.status + ']')
+ 
 
-  # Look for pollers and start them
-  $('[data-toggle="poll"]').each ->
-    url   = $(this).data('url')
-    delay = $(this).data('delay')
-    polls.push(new Poller(url, delay)) if url && delay
-
-  # Pause pollers when modal appears
-  # (as modal may bind to object that gets replaced such as "delete")
-  $(document).on
-    'show.bs.modal': ->
-      for poll in polls
-        poll.pause()  # pause pollers
-    'hidden.bs.modal': ->
-      for poll in polls
-        poll.resume() # resume pollers
+normalizeCSS = (str) ->
+  return str.replace(" ", "-");

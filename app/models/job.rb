@@ -1,34 +1,46 @@
 class Job < ActiveRecord::Base
-
   belongs_to :submission
-
-  attr_accessor :cluster_id 
 
   def script_name
     'maya_submit.sh'
   end
 
+  class << self
+    def default_scope
+      # show latest job submission at the top
+      order("#{table_name}.id DESC")
+    end
+  end
+
   def submit(content = nil, opts = {})
-    success = true
     job_script.write(content)
     options = job_opts(opts).merge(content: content)
     script = OodCore::Job::Script.new(options)
 
-    job_id = adapter.submit script
-
-    puts 'submitted job: ' + job_id.to_s
+    job_id = adapter.submit script # throw exception up the stack
     info = adapter.info(job_id)
-    puts info.inspect.to_s
-
     update(job_id: job_id, status: info.status.to_s)
+  end
 
-    success
+  def update_status
+    return if unable_to_update?
+
+    info = adapter.info(job_id)
+    update(status: info.status.to_s)
   end
 
   private
 
+  def cluster
+    attributes['cluster']
+  end
+
+  def unable_to_update?
+    status == 'completed' || status == 'not submitted'
+  end
+
   def adapter
-    OodAppkit.clusters[cluster_id].job_adapter
+    OodAppkit.clusters[cluster].job_adapter
   end
 
   def job_dir
