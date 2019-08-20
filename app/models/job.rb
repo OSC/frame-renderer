@@ -13,13 +13,15 @@ class Job < ActiveRecord::Base
   end
 
   def submit(content = nil, opts = {})
-    job_script.write(content)
     options = job_opts(opts).merge(content: content)
     script = OodCore::Job::Script.new(options)
 
     job_id = adapter.submit script # throw exception up the stack
+
+    job_script.write(content)
     info = adapter.info(job_id)
     update(job_id: job_id, status: info.status.to_s)
+    true
   end
 
   def update_status

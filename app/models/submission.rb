@@ -4,21 +4,25 @@ class Submission < ActiveRecord::Base
   belongs_to :project
   has_many :jobs, dependent: :destroy
 
-  store :job_attrs
-
-  attr_accessor :start_frame, :end_frame, :project_dir
+  attr_accessor :project_dir
 
   def submit
-    parse_frames
-
-    job = new_job
-    success = job.submit(templated_content)
-
-    success
+    new_job.submit(templated_content)
+  rescue => e
+    errors.add(:name, e.class.to_s, message: e.message)
+    false
   end
 
   def never_submitted_status
     'not submitted'
+  end
+
+  def start_frame
+    frames.split('-').first
+  end
+
+  def end_frame
+    frames.split('-').last
   end
 
   private
@@ -28,13 +32,10 @@ class Submission < ActiveRecord::Base
   end
 
   def new_job
-    job = Job.create(
-      job_id: 'Never-Submitted-' + SecureRandom.urlsafe_base64(5),
-      status: never_submitted_status,
+    Job.new(
       submission_id: attributes['id'],
       cluster: attributes['cluster']
     )
-    job
   end
 
   def templated_content
@@ -42,13 +43,5 @@ class Submission < ActiveRecord::Base
     erb.filename = submission_template.to_s
     erb.result(binding)
   end
-
-  def parse_frames
-    farray = frames.split('-')
-
-    @start_frame = farray[0]
-    @end_frame = farray[1]
-  end
-
 
 end
