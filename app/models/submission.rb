@@ -9,7 +9,8 @@ class Submission < ActiveRecord::Base
   def submit
     new_job.submit(templated_content)
   rescue => e
-    errors.add(:name, e.class.to_s, message: e.message)
+    errors.add(:name, :blank, message: e.inspect.to_s)
+    puts 'error while submitting: ' + e.inspect.to_s
     false
   end
 
@@ -23,6 +24,11 @@ class Submission < ActiveRecord::Base
 
   def end_frame
     frames.split('-').last
+  end
+
+  def latest_status
+    status = jobs&.first&.status
+    status.nil? ? Job.not_submitted_status : status
   end
 
   private

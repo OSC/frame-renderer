@@ -79,6 +79,21 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def index
+    @project = Project.find(params[:project_id])
+    last_jobs = []
+
+    @project.submissions.each do |sub|
+      last_job = sub.jobs.first
+      last_job&.update_status
+      last_jobs.push(last_job) unless last_job.nil?
+    end
+
+    respond_to do |format|
+      format.json { render json: last_jobs }
+    end
+  end
+
   def submission_params
     params
       .require(:submission)

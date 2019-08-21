@@ -10,6 +10,10 @@ class Job < ActiveRecord::Base
       # show latest job submission at the top
       order("#{table_name}.id DESC")
     end
+
+    def not_submitted_status
+      'not submitted'
+    end
   end
 
   def submit(content = nil, opts = {})
@@ -21,7 +25,7 @@ class Job < ActiveRecord::Base
     job_script.write(content)
     info = adapter.info(job_id)
     update(job_id: job_id, status: info.status.to_s)
-    true
+    true # either throw an exception or you succeeded in submitting
   end
 
   def update_status
@@ -38,7 +42,7 @@ class Job < ActiveRecord::Base
   end
 
   def unable_to_update?
-    status == 'completed' || status == 'not submitted'
+    status == 'completed' || status == Job.not_submitted_status
   end
 
   def adapter
@@ -61,14 +65,13 @@ class Job < ActiveRecord::Base
     work_dir = job_dir
     opts = opts.to_h.compact.deep_symbolize_keys
 
-    opts = opts.merge(
+    opts.merge(
       script_file: job_script,
       workdir: work_dir,
       input_path: work_dir,
       output_path: work_dir.join('output.log'),
       error_path: work_dir.join('error.log')
     )
-    opts
   end
 
 end

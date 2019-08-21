@@ -4,6 +4,7 @@
   <p>location: <%= @project.directory %></p>
 </div>
 
+<script>pollSubmissions('<%= @project.id %>')</script>
 
 <%= link_to 'Back', projects_path, class: "btn btn-info" %><br><br>
 
@@ -41,17 +42,16 @@
 
       <tbody>
         <% @project.submissions.each do |submission| %>
-          <tr class="submission-row" 
-              data-toggle="poll" 
-              data-delay="1000000"
-              data-url="<%= project_submission_path(@project, submission) %>.json" >
+          <tr class="submission-row" >
 
             <td><%= submission.name %></td>
             <td><%= submission.frames %></td>
             <td><%= submission.cores %></td>
             <td><%= submission.file %></td>
 
-            <td id="status_label_<%= submission.id %>">TODO</td>
+            <td id="status_label_<%= submission.id %>">
+              <%= status_label(submission.latest_status, submission.id) %>
+            </td>
             <td>
                 <%= link_to "Submit", project_submission_submit_path(@project, submission), :method => :put, class: 'btn btn-success btn-sm'%>
                 <%= link_to "Edit", edit_project_submission_path(@project, submission), :method => :get, class: 'btn btn-info btn-sm'%>
