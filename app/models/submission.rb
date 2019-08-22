@@ -38,9 +38,12 @@ class Submission < ActiveRecord::Base
   end
 
   def new_job
-    Job.new(
+    clstr = attributes['cluster']
+    Job.create(
       submission_id: attributes['id'],
-      cluster: attributes['cluster']
+      cluster: clstr,
+      job_id: SecureRandom.random_number(1000000).to_s + '.' + clstr + '-never.submitted',
+      status: Job.not_submitted_status,
     )
   end
 
