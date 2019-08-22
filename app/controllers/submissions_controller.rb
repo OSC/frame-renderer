@@ -6,6 +6,8 @@ class SubmissionsController < ApplicationController
     @submission.file = @project.directory
     @submission.cores = '28'
     @submission.extra = '-verb'
+    @submission.email = false
+    @submission.scheduled_hrs = 1
   end
 
   def create
@@ -98,8 +100,8 @@ class SubmissionsController < ApplicationController
     params
       .require(:submission)
       .permit(
-        :name, :frames, :camera, :renderer,
-        :extra, :file, :cores, :cluster
+        :name, :frames, :camera, :file, :cluster, 
+        :renderer, :extra, :cores, :scheduled_hrs, :email
       )
   end
 

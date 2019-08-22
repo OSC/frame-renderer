@@ -41,9 +41,11 @@ ActiveRecord::Schema.define(version: 20190806151102) do
     t.string   "file"
     t.integer  "cores"
     t.string   "cluster"
+    t.integer  "scheduled_hrs"
+    t.boolean  "email"
     t.integer  "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "submissions", ["project_id"], name: "index_submissions_on_project_id"

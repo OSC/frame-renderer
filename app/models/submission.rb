@@ -7,7 +7,7 @@ class Submission < ActiveRecord::Base
   attr_accessor :project_dir
 
   def submit
-    new_job.submit(templated_content)
+    new_job.submit(templated_content, job_opts)
   rescue => e
     errors.add(:name, :blank, message: e.inspect.to_s)
     puts 'error while submitting: ' + e.inspect.to_s
@@ -53,4 +53,11 @@ class Submission < ActiveRecord::Base
     erb.result(binding)
   end
 
+  def job_opts
+    {
+      job_name: 'maya-render',
+      cores: attributes['cores'],
+      email_on_terminated: attributes['email']
+    }
+  end
 end
