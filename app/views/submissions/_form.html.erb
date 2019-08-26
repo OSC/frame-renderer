@@ -10,12 +10,11 @@
         <%= form.text_field :name, required: true %> 
         <%= form.text_field :frames, required: true %>
         <%= form.text_field :camera, required: true %> 
-        <%= form.text_field :file, required: true, 
-          'data-filepicker': @project.directory %>
+        <%= form.select :file, list_scenes(@project.directory), required: true %>
         
         
         <%= form.select :cluster, OODClusters.map { |cluster| [ "#{cluster.metadata.title}", cluster.id ] }, 
-            { label: "Cluster:", :include_blank => true }, { class: "selectpicker", id: "batch_host_select" } %>
+            { label: "Cluster:", required: true }, { class: "selectpicker", id: "batch_host_select" } %>
 
         
           <%= form.select :renderer, 

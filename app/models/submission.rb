@@ -46,6 +46,10 @@ class Submission < ActiveRecord::Base
     end
   end
 
+  def default_cluster
+    'owens'
+  end
+
   private
 
   def submission_template

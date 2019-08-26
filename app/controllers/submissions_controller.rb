@@ -99,6 +99,7 @@ class SubmissionsController < ApplicationController
     @submission.extra = '-verb -b 1 -ai:lve 1'
     @submission.email = true
     @submission.scheduled_hrs = 1
+    @submission.cluster = @submission.default_cluster
   end
 
   def submission_params
