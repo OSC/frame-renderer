@@ -2,7 +2,6 @@ class SubmissionsController < ApplicationController
 
   def new
     @project = Project.find(params[:project_id])
-    @submission = @project.submissions.build
     init_submission
   end
 
@@ -95,12 +94,15 @@ class SubmissionsController < ApplicationController
   private 
 
   def init_submission 
-    @submission.file = @project.directory
-    @submission.extra = '-verb -b 1 -ai:lve 1'
-    @submission.email = true
-    @submission.scheduled_hrs = 1
-    @submission.cluster = @submission.default_cluster
-    @submission.skip_existing = true
+    @submission = @project.submissions.build(
+      file: @project.directory,
+      extra: '-verb -b 1 -ai:lve 1',
+      email: true,
+      scheduled_hrs: 1,
+      cluster: Submission.default_cluster,
+      skip_existing: true
+    )
+
   end
 
   def submission_params

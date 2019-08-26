@@ -10,6 +10,10 @@ class Submission < ActiveRecord::Base
     def never_submitted_status
       'not submitted'
     end
+
+    def default_cluster
+      'owens'
+    end
   end
 
   def submit
@@ -47,9 +51,7 @@ class Submission < ActiveRecord::Base
     end
   end
 
-  def default_cluster
-    'owens'
-  end
+
 
   def cluster_ok?
     raise ArgumentError, "Ruby doesn't have required libraries" if cluster == 'ruby'
