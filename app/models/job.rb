@@ -1,5 +1,9 @@
+require 'pathname'
+
 class Job < ActiveRecord::Base
   belongs_to :submission
+
+  attr_accessor :job_dir
 
   def script_name
     'maya_submit.sh'
@@ -11,9 +15,6 @@ class Job < ActiveRecord::Base
       order("#{table_name}.id DESC")
     end
 
-    def not_submitted_status
-      'not submitted'
-    end
   end
 
   def submit(content = nil, opts = {})
@@ -25,8 +26,8 @@ class Job < ActiveRecord::Base
     info = adapter.info(job_id)
     update(job_id: job_id, status: info.status.to_s)
 
-    job_script.write(content)
-    true # either throw an exception or you succeeded in submitting
+    #job_script(job_id).write(content)
+    job_id # either throw an exception or you succeeded in submitting
   end
 
   def update_status
@@ -36,42 +37,28 @@ class Job < ActiveRecord::Base
     update(status: info.status.to_s)
   end
 
-  private
-
-  def cluster
-    attributes['cluster']
+  def base_output_dir
+    Pathname.new(job_dir).join('batch_jobs').tap { |p| p.mkpath unless p.exist? }
   end
 
+  private
+
   def unable_to_update?
-    status == 'completed' || status == Job.not_submitted_status
+    status == 'completed'
   end
 
   def adapter
     OodAppkit.clusters[cluster].job_adapter
   end
 
-  def job_dir
-    OodAppkit.dataroot.join(id.to_s).tap { |p| p.mkpath unless p.exist? }
-  end
 
-  def job_script
-    job_dir.join(script_name)
-  end
-
-  def user_defined_context_file
-    job_dir.join('context.json')
-  end
 
   def job_opts(opts = {})
-    work_dir = job_dir
     opts = opts.to_h.compact.deep_symbolize_keys
 
     opts.merge(
-      script_file: job_script,
-      workdir: work_dir,
-      input_path: work_dir,
-      output_path: work_dir.join('output.log'),
-      error_path: work_dir.join('error.log')
+      workdir: job_dir,
+      input_path: job_dir,
     )
   end
 

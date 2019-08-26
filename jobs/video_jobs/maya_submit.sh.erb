@@ -4,6 +4,7 @@
 
 #PBS -l nodes=1:ppn=<%= attributes['cores'] %>
 #PBS -j oe
+#PBS -o <%= base_output_dir.to_s %>/$PBS_JOBID/$PBS_JOBID.out
 
 echo "starting at $(date)"
 
