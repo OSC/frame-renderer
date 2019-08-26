@@ -42,7 +42,7 @@ class Submission < ActiveRecord::Base
   end
 
   def base_output_dir
-    Pathname.new(project_dir).join('batch_jobs', id.to_s).tap { |p| p.mkpath unless p.exist? }
+    Pathname.new(project_dir).join('batch_jobs').tap { |p| p.mkpath unless p.exist? }
   end
 
   def job_script(job_id = 'default')
