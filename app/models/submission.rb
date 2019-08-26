@@ -13,6 +13,7 @@ class Submission < ActiveRecord::Base
   end
 
   def submit
+    cluster_ok?
     content = templated_content
     job_id = new_job.submit(content, job_opts)
     job_script(job_id).write(content)
@@ -40,7 +41,7 @@ class Submission < ActiveRecord::Base
     if cluster == 'owens'
       return 28
     elsif cluster == 'pitzer'
-      return 44
+      return 40
     else
       default
     end
@@ -48,6 +49,10 @@ class Submission < ActiveRecord::Base
 
   def default_cluster
     'owens'
+  end
+
+  def cluster_ok?
+    raise ArgumentError, "Ruby doesn't have required libraries" if cluster == 'ruby'
   end
 
   private
