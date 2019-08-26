@@ -100,6 +100,7 @@ class SubmissionsController < ApplicationController
     @submission.email = true
     @submission.scheduled_hrs = 1
     @submission.cluster = @submission.default_cluster
+    @submission.skip_existing = true
   end
 
   def submission_params
@@ -107,7 +108,7 @@ class SubmissionsController < ApplicationController
       .require(:submission)
       .permit(
         :name, :frames, :camera, :file, :cluster, 
-        :renderer, :extra, :scheduled_hrs, :email
+        :renderer, :extra, :scheduled_hrs, :email, :skip_existing
       )
   end
 

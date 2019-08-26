@@ -22,8 +22,9 @@ END_FRAME="<%= end_frame %>"
 EXTRA_ARGS="<%= attributes['extra'] %>"
 FILE="<%= attributes['file'] %>"
 PRJ_DIR="<%= project_dir %>"
+SKIP_EXISTING="-skipExistingFrames <%= attributes['skip_existing'] %>"
 
-ARGS="-r $RENDERER ${EXTRA_ARGS} -proj $PRJ_DIR -s $START_FRAME -e $END_FRAME $FILE"
+ARGS="-r $RENDERER $SKIP_EXISTING ${EXTRA_ARGS} -proj $PRJ_DIR -s $START_FRAME -e $END_FRAME $FILE"
 
 echo "executing: $CMD $ARGS"
 echo "on host: $(hostname)"
