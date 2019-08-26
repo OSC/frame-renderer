@@ -7,7 +7,6 @@ class CreateSubmissions < ActiveRecord::Migration
       t.string :renderer
       t.string :extra
       t.string :file
-      t.integer :cores
       t.string :cluster
       t.integer :scheduled_hrs
       t.boolean :email

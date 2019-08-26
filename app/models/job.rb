@@ -51,8 +51,6 @@ class Job < ActiveRecord::Base
     OodAppkit.clusters[cluster].job_adapter
   end
 
-
-
   def job_opts(opts = {})
     opts = opts.to_h.compact.deep_symbolize_keys
 

@@ -17,20 +17,13 @@
         <%= form.select :cluster, OODClusters.map { |cluster| [ "#{cluster.metadata.title}", cluster.id ] }, 
             { label: "Cluster:", :include_blank => true }, { class: "selectpicker", id: "batch_host_select" } %>
 
-
-        <button type="button" name="show_extra_vars" 
-                class="btn btn-primary btn-sm" onclick="toggle('extra_form_items')">More Options</button>
-            <br>
-
-        <div id="extra_form_items" style="display: none;">
+        
           <%= form.select :renderer, 
             ['arnold','default','file','hw2','hw','interBatch','sw','turtle','turtlebake','vr'], required: true %>
           <%= form.text_field :extra, required: false %>
-          <%= form.number_field :cores, required: true %>
           <%= form.number_field :scheduled_hrs, required: true, help: 'hours this job will be scheduled for' %>
           <%= form.check_box :email %>
-        </div>
-
+        
       </div>
 
     </div>

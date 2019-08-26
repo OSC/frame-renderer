@@ -2,7 +2,7 @@
 
 #set the resources requests. Job name, time, nodes and cores per task, task count 
 
-#PBS -l nodes=1:ppn=<%= attributes['cores'] %>
+#PBS -l nodes=1:ppn=<%= cores %>
 #PBS -j oe
 #PBS -o <%= base_output_dir.to_s %>/$PBS_JOBID/$PBS_JOBID.out
 

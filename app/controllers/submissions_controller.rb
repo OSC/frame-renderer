@@ -3,11 +3,7 @@ class SubmissionsController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @submission = @project.submissions.build
-    @submission.file = @project.directory
-    @submission.cores = '28'
-    @submission.extra = '-verb'
-    @submission.email = false
-    @submission.scheduled_hrs = 1
+    init_submission
   end
 
   def create
@@ -96,12 +92,21 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  private 
+
+  def init_submission 
+    @submission.file = @project.directory
+    @submission.extra = '-verb -b 1 -ai:lve 1'
+    @submission.email = true
+    @submission.scheduled_hrs = 1
+  end
+
   def submission_params
     params
       .require(:submission)
       .permit(
         :name, :frames, :camera, :file, :cluster, 
-        :renderer, :extra, :cores, :scheduled_hrs, :email
+        :renderer, :extra, :scheduled_hrs, :email
       )
   end
 

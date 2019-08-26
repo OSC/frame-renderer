@@ -35,6 +35,17 @@ class Submission < ActiveRecord::Base
     status.nil? ? Submission.never_submitted_status : status
   end
 
+  def cores
+    default = 28
+    if cluster == 'owens'
+      return 28
+    elsif cluster == 'pitzer'
+      return 44
+    else
+      default
+    end
+  end
+
   private
 
   def submission_template
@@ -67,8 +78,8 @@ class Submission < ActiveRecord::Base
   def job_opts
     {
       job_name: 'maya-render',
-      cores: attributes['cores'],
-      email_on_terminated: attributes['email']
+      cores: 'cores',
+      email_on_terminated: 'email'
     }
   end
 end
