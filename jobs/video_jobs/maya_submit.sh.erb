@@ -5,7 +5,7 @@
 #PBS -l nodes=1:ppn=<%= attributes['cores'] %>
 #PBS -j oe
 
-echo "starting at `date`"
+echo "starting at $(date)"
 
 #load the singularity and ACCAD modules and record the loaded module list
 module use /usr/local/share/lmodfiles/project/osc
@@ -25,15 +25,15 @@ PRJ_DIR="<%= project_dir %>"
 ARGS="-r $RENDERER ${EXTRA_ARGS} -proj $PRJ_DIR -s $START_FRAME -e $END_FRAME $FILE"
 
 echo "executing: $CMD $ARGS"
-echo "on host:" `hostname`
+echo "on host: $(hostname)"
 echo "with modules:"
 module list
 
-# not let's actually execute and grab the end status
+# now let's actually execute and grab the end status
 ${CMD} ${ARGS}
 STATUS=$?
 
-echo "ended at `date`"
+echo "ended at $(date)"
 echo "ended with status $STATUS"
 
 exit $STATUS
