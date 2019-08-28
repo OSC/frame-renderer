@@ -45,7 +45,7 @@
 
             <td><%= submission.name %></td>
             <td><%= submission.frames %></td>
-            <td><%= submission.file %></td>
+            <td><%= File.basename(submission.file) %></td>
 
             <td id="status_label_<%= submission.id %>">
               <%= status_label(submission.latest_status, submission.id) %>
@@ -74,4 +74,32 @@
     class: "btn btn-primary",
     id: "submission_edit_button"
   %>
+</div>
+
+<br><br>
+
+<div id="thumbnail-list-view" class="panel panel-default">
+  <div class="panel-body" >
+    <table id="thumbnail-list-table" class="table data-table" >
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Image</th>
+        </tr>
+      </thead>
+          <%= %>
+      <tbody>
+        <% thumbnails(@project.directory).each do |thumbnail| %>
+          <tr>
+            <td><%= File.basename(thumbnail) %></td>
+            <td>
+              <img class="d-block w-100" src="/pun/sys/files/api/v1/fs<%= thumbnail %>"
+              >
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+
+    </table>
+  <div>
 </div>
