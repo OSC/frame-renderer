@@ -45,7 +45,7 @@
 
             <td><%= submission.name %></td>
             <td><%= submission.frames %></td>
-            <td><%= submission.file %></td>
+            <td><%= File.basename(submission.file) %></td>
 
             <td id="status_label_<%= submission.id %>">
               <%= status_label(submission.latest_status, submission.id) %>

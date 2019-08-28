@@ -41,6 +41,6 @@ statusToLabelLookup = (status) ->
   else if status == 'running'
     return 'success'
   else if status == 'completed'
-    return 'success'
+    return 'primary'
   else
     return 'default'

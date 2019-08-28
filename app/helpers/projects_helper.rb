@@ -21,7 +21,7 @@ module ProjectsHelper
     return 'label-default' if status == Submission.never_submitted_status
     return 'label-info' if status == 'queued'
     return 'label-success' if status == 'running'
-    return 'label-success' if status == 'completed'
+    return 'label-primary' if status == 'completed'
     'label-default'
   end
 
