@@ -41,23 +41,19 @@ class Submission < ActiveRecord::Base
   end
 
   def cores
-    default = 28
-    if cluster == 'owens'
-      return 28
-    elsif cluster == 'pitzer'
-      return 40
-    else
-      default
-    end
+    28
   end
 
-
-
   def cluster_ok?
-    raise ArgumentError, "Ruby doesn't have required libraries" if cluster == 'ruby'
+    raise ArgumentError, cluster_error_msg('ruby') if cluster == 'ruby'
+    raise ArgumentError, cluster_error_msg('pitzer') if cluster == 'pitzer'
   end
 
   private
+
+  def cluster_error_msg(cluster)
+    "Cannot execute Maya Jobs on #{cluster}, must choose #{default_cluster}"
+  end
 
   def submission_template
     'jobs/video_jobs/maya_submit.sh.erb'
