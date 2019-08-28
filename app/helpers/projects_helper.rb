@@ -10,6 +10,11 @@ module ProjectsHelper
 
   end
 
+  def thumbnails(project_dir)
+    imgs = Dir.glob(project_dir + '/thumbnails/*.png')
+    imgs&.sort
+  end
+
   private
 
   def label_class_lookup(status = Job.never_submitted_status)
