@@ -15,6 +15,11 @@ module ProjectsHelper
     imgs&.sort
   end
 
+  def thumbnail_to_exr(project_dir, thumbnail)
+    basename = File.basename(thumbnail, '.png')
+    project_dir + '/scenes/' + basename + '.exr'
+  end
+
   private
 
   def label_class_lookup(status = Job.never_submitted_status)
