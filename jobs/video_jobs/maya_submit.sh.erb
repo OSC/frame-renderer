@@ -8,7 +8,8 @@
 
 function create_thumails(){
   RESIZE="-resize 80x80"
-  IMG_ARGS="$RESIZE -auto-gamma"
+  #IMG_EXTRA_ARGS="-auto-gamma"
+  IMG_ARGS="$RESIZE $IMG_EXTRA_ARGS"
 
   IMG_DIR="<%= project_dir %>/images"
   THUMB_DIR="<%= project_dir %>/thumbnails"
