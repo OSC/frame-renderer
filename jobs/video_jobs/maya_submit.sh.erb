@@ -6,6 +6,24 @@
 #PBS -j oe
 #PBS -o <%= base_output_dir.to_s %>/$PBS_JOBID/$PBS_JOBID.out
 
+function create_thumails(){
+  RESIZE="-resize 80x80"
+  IMG_ARGS="$RESIZE -auto-gamma"
+
+  IMG_DIR="<%= project_dir %>/images"
+  THUMB_DIR="<%= project_dir %>/thumbnails"
+
+  mkdir $THUMB_DIR 2>/dev/null
+
+  for IMG in $(ls <%= project_dir %>/images/*.exr 2>/dev/null)
+  do
+    BASE_IMG_NAME=${IMG##*/}
+    IMG_NAME=${BASE_IMG_NAME%.exr}
+
+    convert $IMG ${IMG_ARGS} $THUMB_DIR/${IMG_NAME}.png
+  done
+}
+
 echo "starting at $(date)"
 
 #load the singularity and ACCAD modules and record the loaded module list
@@ -37,5 +55,11 @@ STATUS=$?
 
 echo "ended at $(date)"
 echo "ended with status $STATUS"
+
+if [ $STATUS -eq 0 ]; then
+  echo "now creating thumbnails"
+  time create_thumails
+fi
+
 
 exit $STATUS
