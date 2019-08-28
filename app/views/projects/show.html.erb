@@ -93,7 +93,8 @@
       <tbody>
         <% thumbnails(@project.directory).each do |thumbnail| %>
           <tr>
-            <td><%= File.basename(thumbnail) %></td>
+            <td>
+            <%= link_to File.basename(thumbnail), "/pun/sys/files/api/v1/fs" + thumbnail.to_s %>
             <td>
               <img class="d-block w-100" src="/pun/sys/files/api/v1/fs<%= thumbnail %>"
               >
