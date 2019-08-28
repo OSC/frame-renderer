@@ -5,7 +5,7 @@
 
 @pollSubmissions = (project_id) ->
   update(project_id)
-  setTimeout(pollSubmissions, 10000, project_id)
+  setTimeout(pollSubmissions, 30000, project_id)
 
 update = (project_id) ->
   $.ajax
@@ -28,10 +28,15 @@ update = (project_id) ->
 updateSubStatus = (data) ->
   data.forEach (job, index) ->
     statusSpanId = 'job-status-span-' + job.submission_id
+    jobIdRow = 'submission-' + job.submission_id + '-job-id'
+
     statusSpan = $('#' + statusSpanId)
+    jobIdElement = $('#' + statusSpan)
+
     newCssClass = 'status-label label label-' + statusToLabelLookup(job.status)
     statusSpan.attr('class', newCssClass)
     statusSpan.text(job.status)
+    jobIdElement.text(job.job_id)
 
 statusToLabelLookup = (status) ->
   if status == 'not submitted'

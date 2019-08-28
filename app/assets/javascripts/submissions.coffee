@@ -10,7 +10,7 @@
 
 @pollForUpdates = (project_id, submission_id) ->
   update(project_id, submission_id)
-  setTimeout(pollForUpdates, 10000, project_id, submission_id)
+  setTimeout(pollForUpdates, 30000, project_id, submission_id)
 
 
 update = (project_id, submission_id) ->
