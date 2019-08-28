@@ -97,7 +97,7 @@ class SubmissionsController < ApplicationController
   def init_submission 
     @submission = @project.submissions.build(
       file: @project.directory,
-      extra: '-verb -b 1 -ai:lve 1',
+      extra: '-verb -b 1 -ai:lve 0',
       email: true,
       scheduled_hrs: 1,
       cluster: Submission.default_cluster,
