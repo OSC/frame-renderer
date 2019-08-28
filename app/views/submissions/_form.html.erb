@@ -1,5 +1,5 @@
 
-<%= bootstrap_form_for [@project, @submission] do |form| %>
+<%= bootstrap_form_for [@project, @submission], :html => { :onsubmit => "return validateSubmission()" }  do |form| %>
 
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -8,7 +8,7 @@
 
       <div class="panel-body", role="main">
         <%= form.text_field :name, required: true %> 
-        <%= form.text_field :frames, required: true %>
+        <%= form.text_field :frames, required: true, help: 'example: 1-10' %>
         <%= form.text_field :camera, required: true %> 
         <%= form.select :file, list_scenes(@project.directory), required: true %>
         

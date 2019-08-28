@@ -3,6 +3,7 @@ require 'securerandom'
 class Submission < ActiveRecord::Base
   belongs_to :project
   has_many :jobs, dependent: :destroy
+  validates :frames, presence: true, format: { with: /\d+\-\d+/ }
 
   attr_accessor :project_dir
 

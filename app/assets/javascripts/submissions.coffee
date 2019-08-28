@@ -12,6 +12,17 @@
   update(project_id, submission_id)
   setTimeout(pollForUpdates, 30000, project_id, submission_id)
 
+@validateSubmission = () ->
+  console.log('validating')
+  frameValue = $('#submission_frames').val()
+  match = frameValue.match(/\d+\-\d+/g)
+  if !match
+    console.log(match)
+    alert('frame input is wrong')
+    return false
+  else 
+    return true
+
 
 update = (project_id, submission_id) ->
   $.ajax

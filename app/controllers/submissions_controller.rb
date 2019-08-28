@@ -7,8 +7,9 @@ class SubmissionsController < ApplicationController
 
   def create
     @project = Project.find(params[:project_id])
+    @submission = @project.submissions.build(submission_params)
 
-    if @submission = @project.submissions.create(submission_params)
+    if @submission.save
       redirect_to project_path(@project), notice: 'Submission successfully created.'
     else
       redirect_to project_path(@project), alert: "Unable to create submission: #{@submission.errors.to_a}"
