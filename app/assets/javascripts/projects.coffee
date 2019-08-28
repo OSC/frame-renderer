@@ -31,7 +31,7 @@ updateSubStatus = (data) ->
     jobIdRow = 'submission-' + job.submission_id + '-job-id'
 
     statusSpan = $('#' + statusSpanId)
-    jobIdElement = $('#' + statusSpan)
+    jobIdElement = $('#' + jobIdRow)
 
     newCssClass = 'status-label label label-' + statusToLabelLookup(job.status)
     statusSpan.attr('class', newCssClass)
