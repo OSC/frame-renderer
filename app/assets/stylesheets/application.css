@@ -14,12 +14,13 @@
  *= require_self
  */
 
- 
-
 .navbar {
   background-color: inherit;
 }
 
+.navbar-right {
+  float: right;
+}
 
 ul.breadcrumb {
   padding: 10px 16px;
@@ -29,6 +30,7 @@ ul.breadcrumb {
 ul.breadcrumb li {
   display: inline;
   font-size: 18px;
+  color: white
 }
 ul.breadcrumb li+li:before {
   padding: 8px;
@@ -37,9 +39,10 @@ ul.breadcrumb li+li:before {
 }
 ul.breadcrumb li a {
   text-decoration: none;
+  color: white;
+  font-size: 18px;
 }
 ul.breadcrumb li a:hover {
   color: #002a4e;
   background-color: inherit;
-  /* text-decoration: underline; */
 }
