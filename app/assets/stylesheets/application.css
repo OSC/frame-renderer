@@ -32,11 +32,11 @@ ul.breadcrumb li {
   font-size: 18px;
   color: white
 }
-ul.breadcrumb li+li:before {
+/* ul.breadcrumb li+li:before {
   padding: 8px;
   color: black;
   content: "/\00a0";
-}
+} */
 ul.breadcrumb li a {
   text-decoration: none;
   color: white;
@@ -45,4 +45,8 @@ ul.breadcrumb li a {
 ul.breadcrumb li a:hover {
   color: #002a4e;
   background-color: inherit;
+}
+
+ul.breadcrumb li:last-child::before { 
+  content: "";
 }
