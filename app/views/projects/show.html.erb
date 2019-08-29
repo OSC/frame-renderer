@@ -53,9 +53,10 @@
               <%= status_label(submission.latest_status, submission.id) %>
             </td>
             <td>
-                <%= link_to "Submit", project_submission_submit_path(@project, submission), :method => :put, class: 'btn btn-success btn-sm'%>
+                <%= link_to "Submit", project_submission_submit_path(@project, submission), :method => :put, 
+                    class: 'btn btn-success btn-sm', id: "submit-button-" + submission.id.to_s %>
                 <%= link_to "Stop", project_submission_stop_job_path(@project, submission, submission.latest_id), 
-                    :method => :delete, class: 'btn btn-danger btn-sm'%>
+                    :method => :delete, class: 'btn btn-danger btn-sm disabled', id: "stop-button-" + submission.id.to_s, disabled: "disabled" %>
                 <%= link_to "Edit", edit_project_submission_path(@project, submission), :method => :get, class: 'btn btn-info btn-sm'%>
                 <%= link_to "Delete", project_submission_path(@project, submission), 
                       :method => :delete, class: 'btn btn-danger btn-sm', data: {confirm: "Are you sure?"} %>

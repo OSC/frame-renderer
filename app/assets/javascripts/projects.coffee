@@ -37,6 +37,7 @@ updateSubStatus = (data) ->
     statusSpan.attr('class', newCssClass)
     statusSpan.text(job.status)
     jobIdElement.text(job.job_id)
+    toggleRunStop(job.status, job.submission_id)
 
 statusToLabelLookup = (status) ->
   if status == 'not submitted'
@@ -49,3 +50,21 @@ statusToLabelLookup = (status) ->
     return 'primary'
   else
     return 'default'
+
+toggleRunStop = (status, submission_id) -> 
+  submitButtonId = 'submit-button-' + submission_id
+  stopButtonId = 'stop-button-' + submission_id
+
+  submitButton = $('#' + submitButtonId)
+  stopButton = $('#' + stopButtonId)
+
+  if status == 'queued' || status == 'running'
+    submitButton.attr("disabled", true)
+    submitButton.addClass("disabled")
+    stopButton.attr("disabled", false)
+    stopButton.removeClass("disabled")
+  else
+    submitButton.attr("disabled", false)
+    submitButton.removeClass("disabled")
+    stopButton.attr("disabled", true)
+    stopButton.addClass("disabled")
