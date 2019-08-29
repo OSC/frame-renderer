@@ -46,6 +46,11 @@ class Submission < ActiveRecord::Base
     id.nil? ? Submission.never_submitted_status : id
   end
 
+  def latest_id
+    id = jobs&.first&.id
+    id.nil? ? 0 : id
+  end
+
   def cores
     28
   end

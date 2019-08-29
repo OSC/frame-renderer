@@ -10,13 +10,9 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def initialize
+  def initialize(params = {})
     super
-    write_attribute(:directory, Project.maya_top_level_dir)
-  end
-
-  def initialize(params)
-    super
+    write_attribute(:directory, params[:directory] ||= Project.maya_top_level_dir)
   end
 
 end

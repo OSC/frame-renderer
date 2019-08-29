@@ -22,12 +22,17 @@ class Job < ActiveRecord::Base
     script = OodCore::Job::Script.new(options)
 
     job_id = adapter.submit script # throw exception up the stack
-    
+
     info = adapter.info(job_id)
     update(job_id: job_id, status: info.status.to_s)
 
-    #job_script(job_id).write(content)
     job_id # either throw an exception or you succeeded in submitting
+  end
+
+  def stop
+    adapter.delete(job_id)
+    info = adapter.info(job_id)
+    update(status: info.status.to_s)
   end
 
   def update_status

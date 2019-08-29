@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :submissions do
       put 'submit'
       get 'jobs'
+      delete '/jobs/:job_id' => 'submissions#stop', as: 'stop_job'
     end
   end
 

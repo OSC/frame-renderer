@@ -46,7 +46,7 @@ class SubmissionsController < ApplicationController
   def submit
     @project = Project.find(params[:project_id])
     @submission = @project.submissions.find(params[:submission_id])
-    @submission.project_dir = @project.directory
+    @submission.project_dir = @project.directory # have to pass directory down the stack
 
     if @submission.submit
       redirect_to @project, notice: 'Job submission succeeded'
@@ -66,9 +66,7 @@ class SubmissionsController < ApplicationController
   end
 
   def jobs
-    @project = Project.find(params[:project_id])
-    @submission = Submission.find(params[:submission_id])
-    @jobs = @submission.jobs.where(submission_id: params[:submission_id])
+    get_jobs(params)
 
     @jobs.map(&:update_status)
 
@@ -92,7 +90,23 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  private 
+  def stop
+    get_jobs(params)
+    job = Job.find(params[:job_id])
+
+    puts job.inspect.to_s
+    job&.stop
+
+    redirect_to @project
+  end
+
+  private
+
+  def get_jobs(params)
+    @project = Project.find(params[:project_id])
+    @submission = Submission.find(params[:submission_id])
+    @jobs = @submission.jobs.where(submission_id: params[:submission_id])
+  end
 
   def init_submission 
     @submission = @project.submissions.build(
