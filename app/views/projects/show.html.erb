@@ -96,10 +96,11 @@
             <td>
             <%= link_to(
                 File.basename(thumbnail, '.png') + '.exr',
-                "/pun/sys/files/api/v1/fs" + thumbnail_to_exr(@project.directory, thumbnail)
+                "/pun/sys/files/api/v1/fs" + thumbnail_to_exr(@project.directory, thumbnail) + '?download=1'
                 )%>
             <td>
               <img class="d-block w-100" src="/pun/sys/files/api/v1/fs<%= thumbnail %>"
+                onClick="window.open(this.src)"
               >
             </td>
           </tr>

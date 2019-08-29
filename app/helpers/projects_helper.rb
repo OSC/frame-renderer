@@ -17,7 +17,7 @@ module ProjectsHelper
 
   def thumbnail_to_exr(project_dir, thumbnail)
     basename = File.basename(thumbnail, '.png')
-    project_dir + '/scenes/' + basename + '.exr'
+    project_dir + '/images/' + basename + '.exr'
   end
 
   private
