@@ -1,0 +1,159 @@
+# Arnold options
+
+```bash
+Specific options for renderer "arnold": Arnold renderer
+
+General purpose flags:
+  -rd path                    Directory in which to store image files
+  -im filename                Image file output name
+  -rt int                     Render type (0 = render, 1 = export ass, 2 = export and kick)
+  -lic boolean                Turn licensing on or off
+  -of format                  Output image file format. See the Render Settings window to
+        find available formats
+  -fnc int                    File Name Convention: any of name, name.ext, ... See the
+        Render Settings window to find available options. Use namec and
+        namec.ext for Multi Frame Concatenated formats. As a shortcut,
+        numbers 1, 2, ... can also be used
+
+Frame numbering options
+  -s float                    Starting frame for an animation sequence
+  -e float                    End frame for an animation sequence
+  -b float                    By frame (or step) for an animation sequence
+  -skipExistingFrames boolean Skip frames that are already rendered (if true) or force rendering all frames (if false)
+  -pad int                    Number of digits in the output image frame file name
+                    extension
+
+Render Layers and Passes
+  -rl boolean|name(s)         Render each render layer separately
+  -rp boolean|name(s)         Render passes separately. 'all' will render all passes
+  -sel boolean|name(s)        Selects which objects, groups and/or sets to render
+  -l boolean|name(s)          Selects which display and render layers to render
+
+Camera options
+  -cam name                   Specify which camera to be rendered
+  -rgb boolean                Turn RGB output on or off
+  -alpha boolean              Turn Alpha output on or off
+  -depth boolean              Turn Depth output on or off
+  -iip                        Ignore Image Planes. Turn off all image planes before
+                    rendering
+
+Resolution options
+  -x int                      Set X resolution of the final image
+  -y int                      Set Y resolution of the final image
+  -percentRes float           Renders the image using percent of the resolution
+  -ard float                  Device aspect ratio for the rendered image
+  -reg int                    Set render region
+
+Samples options
+  -ai:as int                  Set anti-aliasing samples
+  -ai:hs int                  Set indirect diffuse samples
+  -ai:gs int                  Set indirect specular samples
+  -ai:rs int                  Set transmission samples
+  -ai:bssrdfs int             Number of SSS Samples.
+
+Sample Clamping
+  -ai:cmpsv boolean           Enable sample clamping.
+  -ai:aovsc boolean           Sample campling affects AOVs.
+  -ai:aasc float              Sample max value.
+  -ai:iasc float              Sample max value for indirect rays.
+
+Depth options
+  -ai:td int                  Set total depth.
+  -ai:dif int                 Set indirect diffuse depth.
+  -ai:glo int                 Set indirect specular depth.
+  -ai:rfr int                 Set transmission depth.
+  -ai:vol int                 Set volume GI depth.
+  -ai:atd int                 Set auto-transparency depth.
+
+Motion blur
+  -ai:mben boolean            Enable motion blur.
+  -ai:mbdf boolean            Enable object deformation motion blur.
+  -ai:mbcen boolean           Enable camera motion blur.
+  -ai:mbrt int                Position. (0 - Start On Frame, 1 - Center On Frame, 2 - End On Frame, 3 - Custom)
+  -ai:mbfr float              Shutter Length.
+  -ai:mbstart float           Motion Start.
+  -ai:mbend float             Motion End.
+  -ai:mbms int                Number of motion steps.
+
+Lights
+  -ai:llth float              Low light threshold value.
+  -ai:ll int                  Light linking mode. (0 - None, 1 - Maya Light Links)
+  -ai:sl int                  Shadow linking mode. (0 - None, 1 - Follows Light Linking, 2 - Maya Shadow Links)
+
+Subdivision
+  -ai:mxsb int                Maximum subdivision level.
+
+Render Settings
+  -ai:threads int             Set the number of threads.
+  -ai:bscn int                Bucket Scanning. (0 - Top, 1 - Bottom, 2 - Left, 3 - Right, 4 - Random, 5 - Woven, 6 - Spiral, 7 - Hilbert)
+  -ai:bsz int                 Bucket Size.
+  -ai:bass boolean            Binary Ass Export.
+  -ai:exbb boolean            Export Bounding box.
+  -ai:aerr boolean            Abort on Error.
+  -ai:alf boolean             Abort on License Fail.
+  -ai:slc boolean             Skip License Check.
+  -ai:uopt string             User Options.
+  -ai:port int                Set the Command Port for the Batch Progress Driver
+  -ai:ofn string              Original file name.
+
+Textures
+  -ai:txamm boolean           Enable texture auto mipmap.
+  -ai:txaun boolean           Accept untiled textures.
+  -ai:txett boolean           Use existing tiled textures.
+  -ai:txaum boolean           Accept unmipped textures.
+  -ai:txat int                Auto tile size.
+  -ai:txmm float              Maximum texture cache memory. (MB)
+  -ai:txmof int               Maximum number of opened textures.
+  -ai:txpfs boolean           Per file texture stats.
+  -ai:txdb float              Texture blur in diffuse rays.
+  -ai:txgb float              Texture blur in specular rays.
+
+Feature Overrides
+  -ai:fotx boolean            Ignore textures.
+  -ai:fosh boolean            Ignore shaders.
+  -ai:foat boolean            Ignore atmosphere.
+  -ai:folt boolean            Ignore lights.
+  -ai:fosw boolean            Ignore shadows.
+  -ai:fosd boolean            Ignore subdivision.
+  -ai:fodp boolean            Ignore displacement.
+  -ai:fobp boolean            Ignore bump.
+  -ai:fosm boolean            Ignore smoothing.
+  -ai:fomb boolean            Ignore motion blur.
+  -ai:fosss boolean           Ignore SSS.
+  -ai:fodof boolean           Ignore DOF.
+
+Search Path
+  -ai:sppg string             Plugins search path.
+  -ai:sppr string             Procedurals search path.
+  -ai:spsh string             Plugin search path.
+  -ai:sptx string             Textures search path.
+
+Log
+  -ai:lfn string              Log filename.
+  -ai:ltc boolean             Log to Console.
+  -ai:ltf boolean             Log to File.
+  -ai:lve int                 Verbosity level. (0 - Errors, 1 - Warnings + Info, 2 - Debug)
+  -ai:lmw int                 Maximum number of warnings.
+  -ai:mti boolean             MtoA Translation Info.
+
+Mel callbacks
+  -preRender string           add Mel code executed before rendering
+  -postRender string          add Mel code executed after rendering
+  -preLayer string            add Mel code executed before each render layer
+  -postLayer string           add Mel code executed after each render layer
+  -preFrame string            add Mel code executed before each frame
+  -postFrame string           add Mel code executed after each frame
+  -insertPreRender string     insert Mel code executed before rendering
+  -insertPostRender string    insert Mel code executed after rendering
+  -insertPreLayer string      insert Mel code executed before each render layer
+  -insertPostLayer string     insert Mel code executed after each render layer
+  -insertPreFrame string      insert Mel code executed before each frame
+  -insertPostFrame string     insert Mel code executed after each frame
+
+ *** Remember to place a space between option flags and their arguments. ***
+Any boolean flag will take the following values as TRUE: on, yes, true, or 1.
+Any boolean flag will take the following values as FALSE: off, no, false, or 0.
+
+    e.g. -s 1 -e 10 -x 512 -y 512 -cam persp -as 4 -hs 2 -dif 2 file.
+```
+
