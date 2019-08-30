@@ -31,8 +31,7 @@ class Job < ActiveRecord::Base
 
   def stop
     adapter.delete(job_id)
-    info = adapter.info(job_id)
-    update(status: info.status.to_s)
+    update(status: adapter.status(job_id).to_s)
   end
 
   def update_status

@@ -24,7 +24,6 @@ class Submission < ActiveRecord::Base
     job_script(job_id).write(content)
   rescue => e
     errors.add(:name, :blank, message: e.inspect.to_s)
-    puts 'error while submitting: ' + e.inspect.to_s
     false
   end
 
@@ -60,11 +59,11 @@ class Submission < ActiveRecord::Base
     raise ArgumentError, cluster_error_msg('pitzer') if cluster == 'pitzer'
   end
 
-  private
-
   def cluster_error_msg(cluster)
     "Cannot execute Maya Jobs on #{cluster}, must choose #{default_cluster}"
   end
+
+  private
 
   def submission_template
     'jobs/video_jobs/maya_submit.sh.erb'
