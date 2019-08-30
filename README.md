@@ -157,6 +157,9 @@ create a desktop icon.
 
 # Installer Guide
 
+## Install the RPM
+
+TODO: setup RPM packaging and describe instructions here.
 
 ## Custom Initializers
 
@@ -198,3 +201,19 @@ or even override it.
 ```
 
 # Developer Guide
+
+Note, you'll need [development eneabled](https://osc.github.io/ood-documentation/master/app-development.html)
+in your ondemand installation for you to develop applications.  Or you can check out our 
+[images](https://github.com/OSC/ood-images) to develop against.
+
+<br>
+
+First clone this repo.
+`scl enable rh-git29 -- git clone https://github.com/OSC/frame-renderer.git frame-renderer`
+
+Run `scl enable rh-ruby24 -- bin/setup` to setup everything up.
+
+Then run `scl enable rh-ruby24 -- rake db:migrate` to migrate your database.
+
+Now you should be able to connect to `<your server>/pun/dev/frame-renderer`.
+
