@@ -4,9 +4,9 @@ class Project < ActiveRecord::Base
 
   class << self
     def maya_top_level_dir
-      dir = Pathname.new(ENV['HOME']).join('maya', 'projects')
-      dir.mkpath unless dir.exist?
-      dir.to_s
+      dir = "#{Dir.home}/maya/projects/."
+      Dir.mkdir dir unless Dir.exist? dir
+      dir
     end
   end
 
