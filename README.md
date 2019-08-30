@@ -58,24 +58,24 @@ this directory. Press ![save_project](/docs/imgs/project_create.PNG) and you're 
 get started.
 
 
-## Creating a new submission
+## Creating new job settings
 
-A submission is essentially a preset of arguements you want to execute a job with. Logically, it's 
+Job settings are essentially a set of arguements you want to execute a job with. Logically, it's 
 something like *I want to render the first 10 frames of this scene and get an email when it's done*. 
 
-To create a new submission simply press the ![new_submission](/docs/imgs/new_submission.PNG)
-button. Fill out all the nessecary form items and 
+To create set of job settings simply press the ![new_submission](/docs/imgs/new_submission.PNG)
+button. Fill out all the nessecary form items.  The form items are detailed below. 
 
 |Option|Description|Example|
 |:----------------:|:-----------------:|:-----------------:|
-|name|The name of the submission.|always render first 10|
+|name|The name of the settings.|always render first 10|
 |frames|The frames you want to render.|1-10|
 |frames|The camera view you want to render.|camera1|
 |frames|The ma or mb file you want to render.|/home/me/maya/projects/project_1/scenes/testScene1.ma|
 |cluster|The cluster you want to submit to.|owens|OSC can only submit to owens at this time|
 |renderer|The rendering engine you want to use.|arnold|
 |extra|Extra arguements you want to give to the command. See more [here](#Extra-arguements).|-verb -b 1 -ai:lve 0|
-|scheduled hrs|The amount of time in hours your job will be scheduled.|3|
+|walltime|The amount of time in hours your job will be scheduled.|3|
 |email|A choice to email you when the job is complete.|(checked)|
 |skip existing|A choice for the renderer to skip rendered images if they already exist.|(not checked)|
 
@@ -83,14 +83,14 @@ Press ![save](/docs/imgs/save.PNG) and you're all done.
 
 ### Editing and Deleting
 
-Once you've created a submission you can always go back and edit it through the ![edit](/docs/imgs/edit.PNG) button. 
+Once you've created the settings you can always go back and edit it through the ![edit](/docs/imgs/edit.PNG) button. 
 
 And, for whatever reason, you decide you don't want it anymore simply press the ![edit](/docs/imgs/delete.PNG) button
 to delete it.
 
 ## Submitting jobs and finding the output
 
-Now that you have a job submission all configured you're ready to submit a job. Simply press the 
+Now that you have a job all configured you're ready to submit it. to do so, Simply press the 
  ![submit](/docs/imgs/submit.PNG) button. 
 
 You should see a submision similar to this one below
@@ -167,7 +167,7 @@ Create the file `/etc/ood/config/apps/frame-renderer/initializers/site_cluster_o
 with the ruby class definition below. Notes are given as to why you're overriding these methods.
 
 ```ruby
-class Submission
+class Script
 
   # change the default cluster
   def default_cluster  
