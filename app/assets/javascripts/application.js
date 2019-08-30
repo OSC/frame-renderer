@@ -18,10 +18,3 @@
 //= require filepicker
 //= require js-routes
 //= require_tree .
-
-
-function openHelpTab() {
-  url = 'https://github.com/osc/frame-renderer'
-  var win = window.open(url, '_blank');
-  win.focus();
-}
