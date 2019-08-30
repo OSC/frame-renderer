@@ -46,6 +46,7 @@ are shown.
 Once you're connected, you can simply drag and drop folders back and forth.
 
 ![sftp_navigate](/docs/imgs/sftp_navigate.PNG)
+
 ## Create a new project
 
 Click the ![new_project](/docs/imgs/new_project_button.PNG) button to create a new project. 
@@ -65,7 +66,6 @@ something like *I want to render the first 10 frames of this scene and get an em
 To create a new submission simply press the ![new_submission](/docs/imgs/new_submission.PNG)
 button. Fill out all the nessecary form items and 
 
-
 |Option|Description|Example|
 |:----------------:|:-----------------:|:-----------------:|
 |name|The name of the submission.|always render first 10|
@@ -81,19 +81,56 @@ button. Fill out all the nessecary form items and
 
 Press ![save](/docs/imgs/save.PNG) and you're all done.
 
+### Editing and Deleting
+
+Once you've created a submission you can always go back and edit it through the ![edit](/docs/imgs/edit.PNG) button. 
+
+And, for whatever reason, you decide you don't want it anymore simply press the ![edit](/docs/imgs/delete.PNG) button
+to delete it.
+
+## Submitting jobs and finding the output
+
+Now that you have a job submission all configured you're ready to submit a job. Simply press the 
+ ![submit](/docs/imgs/submit.PNG) button. 
+
+You should see a submision similar to this one below
+
+![not_submitted](/docs/imgs/not_submitted.PNG)
+
+turn it's status ![queued](/docs/imgs/queued.PNG), get a job id, and finally running like this job that's
+running:
+
+![running](/docs/imgs/running.PNG)
+
+Note how the  ![submit](/docs/imgs/submit.PNG) and ![stop](/docs/imgs/stop.PNG) buttons toggle functionality depending
+on if the job is currently running or not.  Now that the job is running, you may not submit a new job and you may stop
+the current job.  Once it is complete, then you may not stop it (becuase you can't) and you may submit a new job.
+
+In this example `7707372.owens-batch.ten.osc.edu` is the job id and we can view it's output under the project's `batch_jobs` directory. 
+
+There will now be a `batch_jobs/7707372.owens-batch.ten.osc.edu/7707372.owens-batch.ten.osc.edu.out` output file which is the log for
+this job. If you're having issues rendering files, look at these log files for errors.
+
+Specifically near the bottom, where you should see messages like this.  If you need to increase the log level, see [below](#Extra-arguements)
+on how to do that.
+```bash
+Scene /users/PZS0714/johrstrom/maya/projects/MasterProject/scenes/kai_turntable_02.mb completed.
+// Maya exited with status 0
+ended at Fri Aug 30 10:00:16 EDT 2019
+ended with status 0
+```
 
 ## Exit status' from Torque
 
 At [OSC](https://www.osc.edu/) we run Torque so commonly seen exit status' are documented here
 for convenience. 
 
-
 |Exit status|Description & Cause|
 |:----------------:|:-----------------:|
-|0|This is the **only** good exit status. This means everything went OK.|
-|-11|The job was killed because it ran out of time. Increase the scheduled hours.|
+|0|This is the **only** good exit status. This means everything went OK, from the jobs' perspective. <br> Maya still could have 'successfully done the wrong thing'.|
+|-11|The job was killed because it ran out of time. Increase the walltime to avoid this. |
+|211|Maya cannot read your scene file properly. It's either corrupt, or it was never real. <br> Regenerate this scene file in the Maya UI.|
 |271|The job was killed by a user.|
-
 
 ## Extra arguements
 
@@ -104,7 +141,7 @@ The default given is `-verb -b 1 -ai:lve 0`.  Here's a breakdown of what those f
 * `-ai:lve 0` Verbosity level. (0 - Errors, 1 - Warnings + Info, 2 - Debug)
 
 So if you wanted to say, render every 3 frames you would use `-b 3` instead of `-b 1`.  Or if you 
-wanted to turn turn up your log level you could use `-ai:lve 2`.  
+wanted to turn turn up your log level you could use `-ai:lve 1` or even 2.  
 
 Note that you can use any combination of arguements.  You can remove some or add some independently
 of each other.  
@@ -112,4 +149,52 @@ of each other.
 To view all of the possible arguements see [this page](/docs/mds/ARNOLD.md) for the Arnold renderer. Flags for 
 other renderers are not documented here, but could be if requested.
 
+## Running Maya UI in a VDI
+
+It's possible for users to run the AutoDesk Maya UI through a virtual deskop application in OpenOndemand (VDI). 
+Users can follow [this gist](https://gist.github.com/johrstrom/110242c274eea508110477dc150d26a5) for directions on how to 
+create a desktop icon. 
+
 # Installer Guide
+
+
+## Custom Initializers
+
+Create the file `/etc/ood/config/apps/frame-renderer/initializers/site_cluster_overrides.rb` and populate it 
+with the ruby class definition below. Notes are given as to why you're overriding these methods.
+
+```ruby
+class Submission
+
+  # change the default cluster
+  def default_cluster  
+    'my sites default cluster'
+  end
+
+  # ensure users can't submit to some cluster. For example OSC cannot submit 
+  # to 'ruby' or 'pitzer' becuase they don't have the required maya libraries.
+  # This method may be empty.
+  def cluster_ok?
+    raise ArgumentError, cluster_error_msg('ruby') if cluster == 'ruby'
+    raise ArgumentError, cluster_error_msg('pitzer') if cluster == 'pitzer'
+  end
+
+  # specify how many cores you want to allocate. Note you may have an if/esle
+  # block here if you are able to submit to multiple clusters and they can use 
+  # a different amount of cores.
+  def cores
+    28
+  end
+
+end
+```
+
+Just to be clear, this is `cluster_error_msg` in case administrators want to use it 
+or even override it.
+```ruby
+  def cluster_error_msg(cluster)
+    "Cannot execute Maya Jobs on #{cluster}, must choose #{default_cluster}"
+  end
+```
+
+# Developer Guide
