@@ -1,14 +1,14 @@
 
 <div class="page-header" >
-  <h2><%= @submission.name %></h2>  <!-- but also title type header  -->
+  <h2><%= @script.name %></h2>  <!-- but also title type header  -->
 </div>
 
-<script>pollForUpdates('<%= @project.id %>', '<%= @submission.id %>')</script>
+<script>pollForUpdates('<%= @project.id %>', '<%= @script.id %>')</script>
 
 <%= link_to 'Back', project_path(@project), class: "btn btn-info" %><br><br>
 
-<h3>All the job results for <%= @submission.name%></h3>
-<% @submission.jobs.each do |job| %>
+<h3>All the job results for <%= @script.name%></h3>
+<% @script.jobs.each do |job| %>
 
   <!-- the button to minimize the job results      -->
   <button

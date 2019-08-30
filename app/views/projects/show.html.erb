@@ -27,9 +27,9 @@
 </div>
 <br><br>
 
-<div id="submission-list-view" class="panel panel-default">
+<div id="script-list-view" class="panel panel-default">
   <div class="panel-body" >
-    <table id="submission-list-table" class="table data-table" >
+    <table id="script-list-table" class="table data-table" >
       <thead>
         <tr> 
           <th>Name</th>
@@ -42,27 +42,27 @@
       </thead>
 
       <tbody>
-        <% @project.submissions.each do |submission| %>
-          <tr class="submission-row" >
+        <% @project.scripts.each do |script| %>
+          <tr class="script-row" >
 
-            <td><%= submission.name %></td>
-            <td><%= submission.frames %></td>
-            <td><%= File.basename(submission.file) %></td>
-            <td><div id="submission-<%= submission.id %>-job-id"><%= submission.latest_job_id %></div></td>
+            <td><%= script.name %></td>
+            <td><%= script.frames %></td>
+            <td><%= File.basename(script.file) %></td>
+            <td><div id="script-<%= script.id %>-job-id"><%= script.latest_job_id %></div></td>
 
-            <td id="status_label_<%= submission.id %>">
-              <%= status_label(submission.latest_status, submission.id) %>
+            <td id="status_label_<%= script.id %>">
+              <%= status_label(script.latest_status, script.id) %>
             </td>
             <td>
-                <%= link_to "Submit", project_submission_submit_path(@project, submission), :method => :put, 
-                    class: 'btn btn-success btn-sm', id: "submit-button-" + submission.id.to_s %>
-                <%= link_to "Stop", project_submission_stop_job_path(@project, submission, submission.latest_id), 
-                    :method => :delete, class: 'btn btn-danger btn-sm disabled', id: "stop-button-" + submission.id.to_s, disabled: "disabled" %>
-                <%= link_to "Edit", edit_project_submission_path(@project, submission), :method => :get, class: 'btn btn-info btn-sm'%>
-                <%= link_to "Delete", project_submission_path(@project, submission), 
+                <%= link_to "Submit", project_script_submit_path(@project, script), :method => :put, 
+                    class: 'btn btn-success btn-sm', id: "submit-button-" + script.id.to_s %>
+                <%= link_to "Stop", project_script_stop_job_path(@project, script, script.latest_id), 
+                    :method => :delete, class: 'btn btn-danger btn-sm disabled', id: "stop-button-" + script.id.to_s, disabled: "disabled" %>
+                <%= link_to "Edit", edit_project_script_path(@project, script), :method => :get, class: 'btn btn-info btn-sm'%>
+                <%= link_to "Delete", project_script_path(@project, script), 
                       :method => :delete, class: 'btn btn-danger btn-sm', data: {confirm: "Are you sure?"} %>
 
-                <%= link_to "View Submissions", project_submission_path(@project, submission), :method => :get, class: 'btn btn-primary btn-sm'%>
+                <%= link_to "View Previous Jobs", project_script_path(@project, script), :method => :get, class: 'btn btn-primary btn-sm'%>
                 
             </td>
           </tr>
@@ -74,11 +74,11 @@
 
 
 <div class="btn-group open">
-  <%= button_to 'New Submission', 
-    new_project_submission_path(@project),
+  <%= button_to 'New Job Settings', 
+    new_project_script_path(@project),
     method: :get,
     class: "btn btn-primary",
-    id: "submission_edit_button"
+    id: "script_edit_button"
   %>
 </div>
 

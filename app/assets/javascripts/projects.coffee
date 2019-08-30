@@ -10,7 +10,7 @@
 update = (project_id) ->
   $.ajax
     type: 'GET'
-    url: Routes.project_submissions_path project_id, format: 'json'
+    url: Routes.project_scripts_path project_id, format: 'json'
     contentType: "application/json; charset=utf-8"
     dataType: "json"
     error: (jqXHR, textStatus, errorThrown) ->
@@ -22,17 +22,16 @@ update = (project_id) ->
 # id: 5
 # job_id: "Never-Submitted-fA_5HIA"
 # status: "not submitted"
-# submission_id: 1
+# script_id: 1
 # updated_at: "2019-08-16T17:13:02.052Z"
 
 updateSubStatus = (data) ->
   data.forEach (job, index) ->
-    statusSpanId = 'job-status-span-' + job.submission_id
-    jobIdCol = 'submission-' + job.submission_id + '-job-id'
+    statusSpanId = 'job-status-span-' + job.script_id
+    jobIdCol = 'script-' + job.script_id + '-job-id'
 
     statusSpan = $('#' + statusSpanId)
     jobIdElement = $('#' + jobIdCol)
-    console.log(jobIdElement)
 
     newCssClass = 'status-label label label-' + statusToLabelLookup(job.status)
     statusSpan.attr('class', newCssClass)
@@ -40,7 +39,7 @@ updateSubStatus = (data) ->
 
     jobIdLink = $('<a>').attr('href', filesAppURL(job.job_id)).text(job.job_id)
     jobIdElement.replaceWith(jobIdLink)
-    toggleRunStop(job.status, job.submission_id)
+    toggleRunStop(job.status, job.script_id)
 
 statusToLabelLookup = (status) ->
   if status == 'not submitted'
@@ -54,9 +53,9 @@ statusToLabelLookup = (status) ->
   else
     return 'default'
 
-toggleRunStop = (status, submission_id) -> 
-  submitButtonId = 'submit-button-' + submission_id
-  stopButtonId = 'stop-button-' + submission_id
+toggleRunStop = (status, script_id) -> 
+  submitButtonId = 'submit-button-' + script_id
+  stopButtonId = 'stop-button-' + script_id
 
   submitButton = $('#' + submitButtonId)
   stopButton = $('#' + stopButtonId)

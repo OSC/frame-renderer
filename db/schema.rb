@@ -11,18 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190830155236) do
+ActiveRecord::Schema.define(version: 20190830194435) do
 
   create_table "jobs", force: :cascade do |t|
     t.string   "status"
     t.string   "job_id"
     t.string   "cluster"
-    t.integer  "submission_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "script_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "jobs", ["submission_id"], name: "index_jobs_on_submission_id"
+  add_index "jobs", ["script_id"], name: "index_jobs_on_script_id"
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20190830155236) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "submissions", force: :cascade do |t|
+  create_table "scripts", force: :cascade do |t|
     t.string   "name"
     t.string   "frames"
     t.string   "camera"
@@ -48,6 +48,6 @@ ActiveRecord::Schema.define(version: 20190830155236) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "submissions", ["project_id"], name: "index_submissions_on_project_id"
+  add_index "scripts", ["project_id"], name: "index_scripts_on_project_id"
 
 end

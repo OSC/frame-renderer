@@ -1,20 +1,15 @@
 require 'pathname'
 
 class Job < ActiveRecord::Base
-  belongs_to :submission
+  belongs_to :script
 
   attr_accessor :job_dir
-
-  def script_name
-    'maya_submit.sh'
-  end
 
   class << self
     def default_scope
       # show latest job submission at the top
       order("#{table_name}.id DESC")
     end
-
   end
 
   def submit(content = nil, opts = {})

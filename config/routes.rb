@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   resources :projects do
-    resources :submissions do
+    resources :scripts do
       put 'submit'
       get 'jobs'
-      delete '/jobs/:job_id' => 'submissions#stop', as: 'stop_job'
+      delete '/jobs/:job_id' => 'scripts#stop', as: 'stop_job'
     end
   end
 

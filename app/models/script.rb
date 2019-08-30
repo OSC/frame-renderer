@@ -1,6 +1,6 @@
 require 'securerandom'
 
-class Submission < ActiveRecord::Base
+class Script < ActiveRecord::Base
   belongs_to :project
   has_many :jobs, dependent: :destroy
   validates :frames, presence: true, format: { with: /\d+\-\d+/ }
@@ -37,12 +37,12 @@ class Submission < ActiveRecord::Base
 
   def latest_status
     status = jobs&.first&.status
-    status.nil? ? Submission.never_submitted_status : status
+    status.nil? ? Script.never_submitted_status : status
   end
 
   def latest_job_id
     id = jobs&.first&.job_id
-    id.nil? ? Submission.never_submitted_status : id
+    id.nil? ? Script.never_submitted_status : id
   end
 
   def latest_id
@@ -65,7 +65,7 @@ class Submission < ActiveRecord::Base
 
   private
 
-  def submission_template
+  def script_template
     'jobs/video_jobs/maya_submit.sh.erb'
   end
 
@@ -80,15 +80,15 @@ class Submission < ActiveRecord::Base
 
   def new_job
     Job.new(
-      submission_id: id,
+      script_id: id,
       cluster: cluster,
       job_dir: project_dir,
     )
   end
 
   def templated_content
-    erb = ERB.new(File.read(submission_template))
-    erb.filename = submission_template.to_s
+    erb = ERB.new(File.read(script_template))
+    erb.filename = script_template.to_s
     erb.result(binding)
   end
 
