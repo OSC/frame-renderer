@@ -5,6 +5,7 @@
 </div>
 
 <script>pollSubmissions('<%= @project.id %>')</script>
+<input type="hidden" id="project-dir-lookup" value=<%= @project.directory %>>
 
 <%= link_to 'Back', projects_path, class: "btn btn-info" %><br><br>
 
@@ -47,7 +48,7 @@
             <td><%= submission.name %></td>
             <td><%= submission.frames %></td>
             <td><%= File.basename(submission.file) %></td>
-            <td id="submission-<%= submission.id %>-job-id" ><%= submission.latest_job_id %></td>
+            <td><div id="submission-<%= submission.id %>-job-id"><%= submission.latest_job_id %></div></td>
 
             <td id="status_label_<%= submission.id %>">
               <%= status_label(submission.latest_status, submission.id) %>

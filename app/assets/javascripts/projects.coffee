@@ -28,15 +28,18 @@ update = (project_id) ->
 updateSubStatus = (data) ->
   data.forEach (job, index) ->
     statusSpanId = 'job-status-span-' + job.submission_id
-    jobIdRow = 'submission-' + job.submission_id + '-job-id'
+    jobIdCol = 'submission-' + job.submission_id + '-job-id'
 
     statusSpan = $('#' + statusSpanId)
-    jobIdElement = $('#' + jobIdRow)
+    jobIdElement = $('#' + jobIdCol)
+    console.log(jobIdElement)
 
     newCssClass = 'status-label label label-' + statusToLabelLookup(job.status)
     statusSpan.attr('class', newCssClass)
     statusSpan.text(job.status)
-    jobIdElement.text(job.job_id)
+
+    jobIdLink = $('<a>').attr('href', filesAppURL(job.job_id)).text(job.job_id)
+    jobIdElement.replaceWith(jobIdLink)
     toggleRunStop(job.status, job.submission_id)
 
 statusToLabelLookup = (status) ->
@@ -68,3 +71,7 @@ toggleRunStop = (status, submission_id) ->
     submitButton.removeClass("disabled")
     stopButton.attr("disabled", true)
     stopButton.addClass("disabled")
+
+filesAppURL = (job_id) ->
+  project_dir = $('#project-dir-lookup').val()
+  return '/pun/sys/files/fs' + project_dir + '/batch_jobs/' + job_id
