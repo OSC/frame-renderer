@@ -125,7 +125,7 @@ class SubmissionsController < ApplicationController
       .require(:submission)
       .permit(
         :name, :frames, :camera, :file, :cluster, 
-        :renderer, :extra, :scheduled_hrs, :email, :skip_existing
+        :renderer, :extra, :walltime, :email, :skip_existing
       )
   end
 
