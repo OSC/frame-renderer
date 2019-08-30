@@ -40,10 +40,6 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
-  def submission_edit
-    @project = Project.find(params[:id])
-  end
-
   private
 
   def project_params
