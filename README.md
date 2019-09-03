@@ -123,7 +123,8 @@ ended with status 0
 ## Exit status' from Torque
 
 At [OSC](https://www.osc.edu/) we run Torque so commonly seen exit status' are documented here
-for convenience. 
+for convenience. For more information see
+[Torque documentation](http://docs.adaptivecomputing.com/torque/6-1-2/adminGuide/torque.htm#topics/torque/2-jobs/jobExitStatus.htm)
 
 |Exit status|Description & Cause|
 |:----------------:|:-----------------:|
