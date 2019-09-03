@@ -8,33 +8,59 @@
 <%= link_to 'Back', project_path(@project), class: "btn btn-info" %><br><br>
 
 <h3>All the job results for <%= @script.name%></h3>
-<% @script.jobs.each do |job| %>
 
-  <!-- the button to minimize the job results      -->
-  <button
-    id="job-<%= job.id %>-button"
-    class="job-result-button job-result-button-<%= normalize_css_str(job.status) %>" 
-    onclick="toggle('job-<%= job.id %>-container')"
-    job_id="<%= job.id %>"
-    job_status="<%= job.status %>"
-  >
-    <%= job.job_id %> [<%= job.status %>]
-  </button>
+<div id="script-list-view" class="panel panel-default">
+  <div class="panel-body" >
+    <table id="past-jobs-table" class="table data-table" >
+      <tbody>
 
-  <!-- containter for the job results div  so it can toggle -->
-  <div id="job-<%= job.id %>-container" style="display: none;">
+        <% @script.jobs.each do |job| %>
+        <tr><td>
 
-   <!-- the job results div -->
-    <div 
-      id="job-<%= job.id %>-info" 
-    >
+          <!-- the button to minimize the job results      -->
+          <button
+            id="job-<%= job.id %>-button"
+            class="job-result-button job-result-button-<%= normalize_css_str(job.status) %>"
+            onclick="toggle('job-<%= job.id %>-container')"
+            job_id="<%= job.id %>"
+            job_status="<%= job.status %>"
+          >
+            <%= job.job_id %> [<%= job.status %>]
+          </button>
 
-      <%= job.status %>
+          <!-- containter for the job results div  so it can toggle -->
+          <div id="job-<%= job.id %>-container" style="display: none;">
 
-    </div> <!-- job results div -->
+          <!-- the job results div -->
+            <div id="job-<%= job.id %>-info" >
+              <table class="table table-condensed table-striped">
+                <tbody>
+                  <tr>
+                    <td>Job Id</td>
+                    <td><%= job.job_id %></td>
+                  </tr>
+                  <tr>
+                    <td>Output file location</td>
+                    <td> <a href="<%= '/pun/sys/files/fs' + @project.directory + '/batch_jobs/' + job.job_id %>">Open in File explorer</a></td>
+                  </tr>
+                  <tr>
+                    <td>Created at</td>
+                    <td><%= job.created_at %></td>
+                  </tr>
+                  <tr>
+                    <td>Last Update at</td>
+                    <td><%= job.updated_at %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> <!-- job info div -->
 
-  </div> <!-- toggle/hide container -->
+          </div> <!-- toggle/hide container -->
 
-  <br><br>
+        </td></tr>
+        <% end %>
 
-<% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
