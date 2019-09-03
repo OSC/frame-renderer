@@ -15,6 +15,10 @@ class Script < ActiveRecord::Base
     def default_cluster
       'owens'
     end
+
+    def batch_jobs_dir
+      'batch_jobs'
+    end
   end
 
   def submit
@@ -24,6 +28,7 @@ class Script < ActiveRecord::Base
     job_script(job_id).write(content)
   rescue => e
     errors.add(:name, :blank, message: e.inspect.to_s)
+    job_script.write(content)
     false
   end
 
@@ -92,11 +97,17 @@ class Script < ActiveRecord::Base
     erb.result(binding)
   end
 
+  def job_array_request
+    return '1-' + nodes.to_s if nodes > 1
+  end
+
   def job_opts
     {
       job_name: 'maya-render',
       cores: 'cores',
-      email_on_terminated: 'email'
+      email_on_terminated: 'email',
+      job_array_request: job_array_request,
+      workdir: base_output_dir.to_s
     }
   end
 end

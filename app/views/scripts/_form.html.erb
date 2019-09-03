@@ -16,13 +16,13 @@
         <%= form.select :cluster, OODClusters.map { |cluster| [ "#{cluster.metadata.title}", cluster.id ] }, 
             { label: "Cluster:", required: true }, { class: "selectpicker", id: "batch_host_select" } %>
 
-        
-          <%= form.select :renderer, 
-            ['arnold','default','file','hw2','hw','interBatch','sw','turtle','turtlebake','vr'], required: true %>
-          <%= form.text_field :extra, required: false %>
-          <%= form.number_field :walltime, required: true, help: 'hours this job will be scheduled for' %>
-          <%= form.check_box :email %>
-          <%= form.check_box :skip_existing %>
+        <%= form.number_field :nodes, required: true %> 
+        <%= form.select :renderer, 
+          ['arnold','default','file','hw2','hw','interBatch','sw','turtle','turtlebake','vr'], required: true %>
+        <%= form.text_field :extra, required: false %>
+        <%= form.number_field :walltime, required: true, help: 'hours this job will be scheduled for' %>
+        <%= form.check_box :email %>
+        <%= form.check_box :skip_existing %>
         
       </div>
 

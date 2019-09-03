@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190830194435) do
+ActiveRecord::Schema.define(version: 20190903150002) do
 
   create_table "jobs", force: :cascade do |t|
     t.string   "status"
@@ -44,8 +44,9 @@ ActiveRecord::Schema.define(version: 20190830194435) do
     t.boolean  "email"
     t.boolean  "skip_existing"
     t.integer  "project_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "nodes",         default: 1
   end
 
   add_index "scripts", ["project_id"], name: "index_scripts_on_project_id"
