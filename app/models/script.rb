@@ -70,6 +70,10 @@ class Script < ActiveRecord::Base
 
   private
 
+  def job_dir
+    base_output_dir.join(Time.now.to_i.to_s).tap { |p| p.mkpath unless p.exist? }
+  end
+
   def script_template
     'jobs/video_jobs/maya_submit.sh.erb'
   end
@@ -79,15 +83,14 @@ class Script < ActiveRecord::Base
   end
 
   def job_script(job_id = 'default')
-    dir = base_output_dir.join(job_id).tap { |p| p.mkpath unless p.exist? }
-    dir.join(job_id + '.script.sh')
+    job_dir.join(job_id + '.script.sh')
   end
 
   def new_job
     Job.new(
       script_id: id,
       cluster: cluster,
-      job_dir: project_dir,
+      directory: job_dir
     )
   end
 
@@ -101,13 +104,13 @@ class Script < ActiveRecord::Base
     return '1-' + nodes.to_s if nodes > 1
   end
 
-  def job_opts
+  def job_opts(job_dir = base_output_dir)
     {
       job_name: 'maya-render',
       cores: 'cores',
       email_on_terminated: 'email',
       job_array_request: job_array_request,
-      workdir: base_output_dir.to_s
+      workdir: job_dir.to_s
     }
   end
 end

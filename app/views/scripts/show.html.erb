@@ -41,7 +41,8 @@
                   </tr>
                   <tr>
                     <td>Output file location</td>
-                    <td> <a href="<%= '/pun/sys/files/fs' + @project.directory + '/batch_jobs/' + job.job_id %>">Open in File explorer</a></td>
+                    <td>
+                      <a href="<%= '/pun/sys/files/fs' + (job&.directory || @project.directory + '/batch_jobs/' + job.job_id) %>">Open in File explorer</a></td>
                   </tr>
                   <tr>
                     <td>Created at</td>

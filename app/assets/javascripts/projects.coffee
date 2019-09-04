@@ -37,7 +37,7 @@ updateSubStatus = (data) ->
     statusSpan.attr('class', newCssClass)
     statusSpan.text(job.status)
 
-    jobIdLink = $('<a>').attr('href', filesAppURL(job.job_id)).text(job.job_id)
+    jobIdLink = $('<a>').attr('href', filesAppURL(job.directory)).text(job.job_id)
     jobIdElement.replaceWith(jobIdLink)
     toggleRunStop(job.status, job.script_id)
 
@@ -71,6 +71,5 @@ toggleRunStop = (status, script_id) ->
     stopButton.attr("disabled", true)
     stopButton.addClass("disabled")
 
-filesAppURL = (job_id) ->
-  project_dir = $('#project-dir-lookup').val()
-  return '/pun/sys/files/fs' + project_dir + '/batch_jobs/' + job_id
+filesAppURL = (job_dir) ->
+  return '/pun/sys/files/fs' + job_dir

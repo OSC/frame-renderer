@@ -3,8 +3,6 @@ require 'pathname'
 class Job < ActiveRecord::Base
   belongs_to :script
 
-  attr_accessor :job_dir
-
   class << self
     def default_scope
       # show latest job submission at the top
