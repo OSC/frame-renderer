@@ -27,8 +27,7 @@ class Script < ActiveRecord::Base
     job_id = new_job.submit(content, job_opts)
     job_script(job_id).write(content)
   rescue => e
-    errors.add(:name, :blank, message: e.inspect.to_s)
-    job_script.write(content)
+    clean_up(e, content)
     false
   end
 
@@ -70,8 +69,19 @@ class Script < ActiveRecord::Base
 
   private
 
+  def clean_up(err, content)
+    errors.add(:name, :blank, message: err.inspect.to_s)
+    job_script.write(content)
+    puts "failed to submit job because of error #{err.inspect}"
+  end
+
   def job_dir
-    base_output_dir.join(Time.now.to_i.to_s).tap { |p| p.mkpath unless p.exist? }
+    base_output_dir.join(job_sub_dir).tap { |p| p.mkpath unless p.exist? }
+  end
+
+  def job_sub_dir
+    # try to make sure this only gets called once during .new
+    @job_sub_dir ||= Time.now.to_i.to_s
   end
 
   def script_template
@@ -104,13 +114,12 @@ class Script < ActiveRecord::Base
     return '1-' + nodes.to_s if nodes > 1
   end
 
-  def job_opts(job_dir = base_output_dir)
+  def job_opts
     {
       job_name: 'maya-render',
-      cores: 'cores',
       email_on_terminated: 'email',
       job_array_request: job_array_request,
-      workdir: job_dir.to_s
+      workdir: job_dir
     }
   end
 end
