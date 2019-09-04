@@ -117,7 +117,7 @@ class Script < ActiveRecord::Base
   def job_opts
     {
       job_name: 'maya-render',
-      email_on_terminated: 'email',
+      email_on_terminated: email,
       job_array_request: job_array_request,
       workdir: job_dir
     }
