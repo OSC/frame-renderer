@@ -88,7 +88,7 @@ Once you've created the settings you can always go back and edit it through the 
 And, for whatever reason, you decide you don't want it anymore simply press the ![edit](/docs/imgs/delete.PNG) button
 to delete it.
 
-## Submitting jobs and finding the output
+## Submitting jobs
 
 Now that you have a job all configured you're ready to submit it. to do so, Simply press the 
  ![submit](/docs/imgs/submit.PNG) button. 
@@ -106,19 +106,45 @@ Note how the  ![submit](/docs/imgs/submit.PNG) and ![stop](/docs/imgs/stop.PNG) 
 on if the job is currently running or not.  Now that the job is running, you may not submit a new job and you may stop
 the current job.  Once it is complete, then you may not stop it (becuase you can't) and you may submit a new job.
 
-In this example `7707372.owens-batch.ten.osc.edu` is the job id and we can view it's output under the project's `batch_jobs` directory. 
+## Finding the output
 
-There will now be a `batch_jobs/7707372.owens-batch.ten.osc.edu/7707372.owens-batch.ten.osc.edu.out` output file which is the log for
-this job. If you're having issues rendering files, look at these log files for errors.
+In this example `7805479.owens-batch.ten.osc.edu` is the job id and we can find it's output directory simply by clicking
+on the the job id.
 
-Specifically near the bottom, where you should see messages like this.  If you need to increase the log level, see [below](#Extra-arguements)
-on how to do that.
+There will now be a directory like `batch_jobs/1567629055` and a file `maya-render.7805479` which is the output log for
+this job. If you're having issues rendering files, look at these log files for errors. If you need to increase the 
+log level, see [below](#Extra-arguements) on how to do that.
+
+Near the bottom, where you should see messages like this.  The phrase 'exit status' is an indication on how the job
+finished and there is help table [below](###Exit-status'-from-Torque) to tell you what they mean.
 ```bash
 Scene /users/PZS0714/johrstrom/maya/projects/MasterProject/scenes/kai_turntable_02.mb completed.
 // Maya exited with status 0
 ended at Fri Aug 30 10:00:16 EDT 2019
 ended with status 0
 ```
+
+### Finding the output for multi-node jobs
+
+If you chose to render on more than one node (machine) then you will have several output files like the image below.
+You'll have one for every node. 
+
+![subseveral_output_filesmit](/docs/imgs/several_output_files.PNG)
+
+This application splits the total number of frames you want to render across all the nodes you want to use (with
+the remainder going to the last node). 
+
+For example if you want to render 20 frames and you want to use 3 nodes, it'll work like this table below:
+
+|Frames|Node|
+|:----:|:-------:|
+|1-6|1|
+|7-12|2|
+|13-20|3|
+
+So if you need to debug frames 9, 10 and 11 you'll need to look at the output file for node to, ending in `-2`. In the 
+image above it's `maya-render.o7805462-2`.  
+
 
 ## Exit status' from Torque
 
