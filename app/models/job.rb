@@ -13,7 +13,7 @@ class Job < ActiveRecord::Base
   end
 
   def submit(content = nil, opts = {})
-    options = job_opts(opts).merge(content: content)
+    options = opts.merge(content: content)
     script = OodCore::Job::Script.new(options)
 
     job_id = adapter.submit script # throw exception up the stack
@@ -36,10 +36,6 @@ class Job < ActiveRecord::Base
     update(status: info.status.to_s)
   end
 
-  def base_output_dir
-    Pathname.new(job_dir).join('batch_jobs').tap { |p| p.mkpath unless p.exist? }
-  end
-
   private
 
   def unable_to_update?
@@ -48,15 +44,6 @@ class Job < ActiveRecord::Base
 
   def adapter
     OodAppkit.clusters[cluster].job_adapter
-  end
-
-  def job_opts(opts = {})
-    opts = opts.to_h.compact.deep_symbolize_keys
-
-    opts.merge(
-      workdir: job_dir,
-      input_path: job_dir,
-    )
   end
 
 end
