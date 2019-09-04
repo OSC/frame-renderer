@@ -25,7 +25,7 @@
 update = (project_id, submission_id) ->
   $.ajax
     type: 'GET'
-    url: Routes.project_submission_jobs_path project_id, submission_id, format: 'json'
+    url: Routes.project_script_jobs_path project_id, submission_id, format: 'json'
     contentType: "application/json; charset=utf-8"
     dataType: "json"
     error: (jqXHR, textStatus, errorThrown) ->
