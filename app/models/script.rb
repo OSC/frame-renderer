@@ -95,8 +95,7 @@ class Script < ActiveRecord::Base
   def job_opts
     {
       job_name: 'maya-render',
-      cores: 'cores',
-      email_on_terminated: 'email'
+      email_on_terminated: email
     }
   end
 end
