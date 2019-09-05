@@ -17,6 +17,11 @@ License:  MIT
 URL:      https://github.com/OSC/%{repo_name}
 Source0:  https://github.com/OSC/%{repo_name}/archive/%{git_tag}.tar.gz
 
+BuildRequires:  sqlite-devel curl make
+BuildRequires:  ondemand-runtime
+BuildRequires:  ondemand-ruby
+BuildRequires:  ondemand-nodejs
+BuildRequires:  ondemand-git
 Requires: ondemand
 
 # Disable automatic dependencies as it causes issues with bundled gems and
