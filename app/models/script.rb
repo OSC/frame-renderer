@@ -5,6 +5,11 @@ class Script < ActiveRecord::Base
   has_many :jobs, dependent: :destroy
   validates :frames, presence: true, format: { with: /\d+\-\d+/ }
 
+  # add accessors: [ :attr1, :attr2 ] etc. when you want to add getters and
+  # setters to add new attributes stored in the JSON store
+  # don't remove attributes from this list going forward! only deprecate
+  store :script_attrs, coder: JSON, accessors: %i[]
+
   attr_accessor :project_dir
 
   class << self

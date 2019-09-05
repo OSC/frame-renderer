@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190903150002) do
+ActiveRecord::Schema.define(version: 20190905151304) do
 
   create_table "jobs", force: :cascade do |t|
     t.string   "status"
     t.string   "job_id"
     t.string   "cluster"
     t.integer  "script_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.text     "job_attrs",  default: ""
   end
 
   add_index "jobs", ["script_id"], name: "index_jobs_on_script_id"
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(version: 20190903150002) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.integer  "nodes",         default: 1
+    t.text     "script_attrs",  default: ""
   end
 
   add_index "scripts", ["project_id"], name: "index_scripts_on_project_id"

@@ -1,9 +1,15 @@
 require 'pathname'
 
-ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 
 require 'bundler/setup' # Set up gems listed in the Gemfile.
 
-ENV['OOD_DATAROOT'] = Pathname.new(ENV['HOME'])
-                              .join('ondemand', 'data', 'frame-renderer')
-                              .expand_path.to_s
+# load dotenv files before "before_configuration" callback
+require File.expand_path('configuration_singleton', __dir__)
+
+# global instance to access and use
+Configuration = ConfigurationSingleton.new
+Configuration.load_dotenv_files
+
+# set defaults to address OodAppkit.dataroot issue
+ENV['OOD_DATAROOT'] = Configuration.dataroot.to_s
