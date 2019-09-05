@@ -86,8 +86,7 @@ class Script < ActiveRecord::Base
   def new_job
     Job.new(
       script_id: id,
-      cluster: cluster,
-      job_dir: project_dir,
+      cluster: cluster
     )
   end
 

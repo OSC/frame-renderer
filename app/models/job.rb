@@ -8,8 +8,6 @@ class Job < ActiveRecord::Base
   # don't remove attributes from this list going forward! only deprecate
   store :job_attrs, coder: JSON, accessors: %i[]
 
-  attr_accessor :job_dir
-
   class << self
     def default_scope
       # show latest job submission at the top
