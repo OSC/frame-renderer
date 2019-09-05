@@ -3,6 +3,11 @@ require 'pathname'
 class Job < ActiveRecord::Base
   belongs_to :script
 
+  # add accessors: [ :attr1, :attr2 ] etc. when you want to add getters and
+  # setters to add new attributes stored in the JSON store
+  # don't remove attributes from this list going forward! only deprecate
+  store :job_attrs, coder: JSON, accessors: %i[]
+
   attr_accessor :job_dir
 
   class << self
