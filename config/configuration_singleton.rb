@@ -62,7 +62,7 @@ class ConfigurationSingleton
     #
     root = ENV['OOD_DATAROOT'] || ENV['RAILS_DATAROOT']
     if rails_env == 'production'
-      root ||= "~/#{ENV['OOD_PORTAL'] || 'ondemand'}/data/#{ENV['APP_TOKEN'] || 'sys/myjobs'}"
+      root ||= "~/#{ENV['OOD_PORTAL'] || 'ondemand'}/data/#{ENV['APP_TOKEN'] || 'sys/frame-renderer'}"
     else
       root ||= app_root.join('data')
     end
