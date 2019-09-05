@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class ProjectsControllerTest < ActionController::TestCase
-  test "should get show" do
-    get :show
+  test 'index always shows' do
+    get :index
     assert_response :success
   end
-
 end

@@ -2,8 +2,8 @@
 
 one:
   status: MyString
-  submission_id: 
+  script_id: 
 
 two:
   status: MyString
-  submission_id: 
+  script_id: 
