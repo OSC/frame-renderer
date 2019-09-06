@@ -4,7 +4,9 @@
 
 #PBS -l nodes=1:ppn=<%= cores %>
 #PBS -j oe
-#PBS -o <%= base_output_dir.to_s %>/$PBS_JOBID/$PBS_JOBID.out
+
+# cannot use a tmpdir like /tmp/pbstmp.7431620[1] bc of the brackets
+export TMPDIR="/tmp"
 
 function create_thumails(){
   RESIZE="-resize 80x80"
@@ -36,14 +38,29 @@ module load maya/2018-ACCAD
 # set all the different variables you'll need 
 CMD="singularity exec $MAYA_IMG Render"
 RENDERER="<%= renderer %>"
+NODES=<%= nodes %>
 START_FRAME="<%= start_frame %>"
 END_FRAME="<%= end_frame %>"
 EXTRA_ARGS="<%= extra %>"
 FILE="<%= file %>"
 PRJ_DIR="<%= project_dir %>"
 SKIP_EXISTING="-skipExistingFrames <%= skip_existing %>"
+------------------------------
+TOTAL_FRAMES=$(( END_FRAME - START_FRAME + 1 ))
+TASK_SIZE=$(( TOTAL_FRAMES / NODES ))
+REMAINDER=$(( TOTAL_FRAMES % NODES ))
 
-ARGS="-r $RENDERER $SKIP_EXISTING ${EXTRA_ARGS} -proj $PRJ_DIR -s $START_FRAME -e $END_FRAME $FILE"
+OFFSET=$(( PBS_ARRAYID * TASK_SIZE ))
+
+TASK_START_FRAME=$(( OFFSET - TASK_SIZE + START_FRAME ))
+TASK_END_FRAME=$(( OFFSET ))
+
+if [ $REMAINDER -ne 0 ] && [ "$PBS_ARRAYID" -eq "$NODES" ]; then
+  # last task picks up the remainder of the frames
+  TASK_END_FRAME=$(( OFFSET + REMAINDER ))
+fi
+
+ARGS="-r $RENDERER $SKIP_EXISTING ${EXTRA_ARGS} -proj $PRJ_DIR -s $TASK_START_FRAME -e $TASK_END_FRAME $FILE"
 
 echo "executing: $CMD $ARGS"
 echo "on host: $(hostname)"

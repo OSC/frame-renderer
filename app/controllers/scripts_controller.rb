@@ -124,7 +124,7 @@ class ScriptsController < ApplicationController
     params
       .require(:script)
       .permit(
-        :name, :frames, :camera, :file, :cluster, 
+        :name, :frames, :camera, :file, :cluster, :nodes,
         :renderer, :extra, :walltime, :email, :skip_existing
       )
   end

@@ -20,6 +20,10 @@ class Script < ActiveRecord::Base
     def default_cluster
       'owens'
     end
+
+    def batch_jobs_dir
+      'batch_jobs'
+    end
   end
 
   def submit
@@ -28,7 +32,7 @@ class Script < ActiveRecord::Base
     job_id = new_job.submit(content, job_opts)
     job_script(job_id).write(content)
   rescue => e
-    errors.add(:name, :blank, message: e.inspect.to_s)
+    clean_up(e, content)
     false
   end
 
@@ -70,6 +74,21 @@ class Script < ActiveRecord::Base
 
   private
 
+  def clean_up(err, content)
+    errors.add(:name, :blank, message: err.inspect.to_s)
+    job_script.write(content)
+    puts "failed to submit job because of error #{err.inspect}"
+  end
+
+  def job_dir
+    base_output_dir.join(job_sub_dir).tap { |p| p.mkpath unless p.exist? }
+  end
+
+  def job_sub_dir
+    # try to make sure this only gets called once during .new
+    @job_sub_dir ||= Time.now.to_i.to_s
+  end
+
   def script_template
     'jobs/video_jobs/maya_submit.sh.erb'
   end
@@ -79,14 +98,14 @@ class Script < ActiveRecord::Base
   end
 
   def job_script(job_id = 'default')
-    dir = base_output_dir.join(job_id).tap { |p| p.mkpath unless p.exist? }
-    dir.join(job_id + '.script.sh')
+    job_dir.join(job_id + '.script.sh')
   end
 
   def new_job
     Job.new(
       script_id: id,
-      cluster: cluster
+      cluster: cluster,
+      directory: job_dir
     )
   end
 
@@ -96,10 +115,16 @@ class Script < ActiveRecord::Base
     erb.result(binding)
   end
 
+  def job_array_request
+    return '1-' + nodes.to_s if nodes > 1
+  end
+
   def job_opts
     {
       job_name: 'maya-render',
-      email_on_terminated: email
+      email_on_terminated: email,
+      job_array_request: job_array_request,
+      workdir: job_dir
     }
   end
 end

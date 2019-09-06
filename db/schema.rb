@@ -45,8 +45,9 @@ ActiveRecord::Schema.define(version: 20190905151304) do
     t.boolean  "email"
     t.boolean  "skip_existing"
     t.integer  "project_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "nodes",         default: 1
     t.text     "script_attrs",  default: ""
   end
 
