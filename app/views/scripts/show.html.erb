@@ -46,11 +46,11 @@
                   </tr>
                   <tr>
                     <td>Created at</td>
-                    <td><%= job.created_at %></td>
+                    <td><%= local_time(job.created_at) %></td>
                   </tr>
                   <tr>
                     <td>Last Update at</td>
-                    <td><%= job.updated_at %></td>
+                    <td><%= local_time(job.updated_at) %></td>
                   </tr>
                 </tbody>
               </table>

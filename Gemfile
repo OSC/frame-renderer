@@ -48,11 +48,10 @@ end
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'bootstrap_form', '~> 2.7.0'
 
+gem 'dotenv-rails', '~> 2.0'
+gem 'js-routes', '~> 1.2.4'
+gem 'local_time', '~> 1.0.3'
 gem 'ood_appkit', '~> 1.0'
 gem 'ood_core', '~> 0.9.3'
-gem 'js-routes', '~> 1.2.4'
-gem 'dotenv-rails', '~> 2.0'
-
 
 gem 'nokogiri', '>= 1.10.4'
-
