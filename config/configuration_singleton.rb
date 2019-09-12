@@ -84,7 +84,9 @@ class ConfigurationSingleton
     Pathname.new(ENV['OOD_LOCALES_ROOT'] || "/etc/ood/config/locales")
   end
 
-  ENV['SPRING_TMP_PATH'] = Dir.tmpdir if ENV['SPRING_TMP_PATH'].nil?
+  if ENV['SPRING_TMP_PATH'].nil?
+    ENV['SPRING_TMP_PATH'] = File.join(Dir.tmpdir, "spring-#{Process.uid}")
+  end
 
   private 
 
