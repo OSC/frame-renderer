@@ -10,7 +10,7 @@ This is an [Open OnDemand](https://openondemand.org) application for rendering a
 We currently support [AutoDesk's Maya](https://www.autodesk.com/products/maya/overview) as its
 rendering engine.
 
-# User Guide
+## User Guide
 
 ## Creating a new project
 
@@ -57,7 +57,6 @@ Use the file picker ![project_file_picker](/docs/imgs/project_dir_select.PNG) to
 this directory. Press ![save_project](/docs/imgs/project_create.PNG) and you're ready to
 get started.
 
-
 ## Creating new job settings
 
 Job settings are essentially a set of arguments you want to execute a job with. Logically, it's
@@ -70,8 +69,8 @@ button. Fill out all the nessecary form items.  The form items are detailed belo
 |:----------------:|:-----------------:|:-----------------:|
 |name|The name of the settings.|always render first 10|
 |frames|The frames you want to render.|1-10|
-|frames|The camera view you want to render.|camera1|
-|frames|The ma or mb file you want to render.|/home/me/maya/projects/project_1/scenes/testScene1.ma|
+|camera|The camera view you want to render.|camera1|
+|file|The ma or mb file you want to render.|/home/me/maya/projects/project_1/scenes/testScene1.ma|
 |cluster|The cluster you want to submit to.|owens|OSC can only submit to owens at this time|
 |renderer|The rendering engine you want to use.|arnold|
 |extra|Extra arguments you want to give to the command. See more [here](#Extra-Arguments).|-verb -b 1 -ai:lve 0|
@@ -118,6 +117,7 @@ log level, see [below](#Extra-Arguments) on how to do that.
 
 Near the bottom, where you should see messages like this.  The phrase 'exit status' is an indication on how the job
 finished and there is help table [below](###Exit-status'-from-Torque) to tell you what they mean.
+
 ```bash
 Scene /users/PZS0714/johrstrom/maya/projects/MasterProject/scenes/kai_turntable_02.mb completed.
 // Maya exited with status 0
@@ -145,7 +145,6 @@ For example if you want to render 20 frames and you want to use 3 nodes, it'll w
 
 So if you need to debug frames 9, 10 and 11 you'll need to look at the output file for node to, ending in `-2`. In the
 image above it's `maya-render.o7805462-2`.
-
 
 ## Exit status' from Torque
 
@@ -183,7 +182,7 @@ It's possible for users to run the AutoDesk Maya UI through a virtual deskop app
 Users can follow [this gist](https://gist.github.com/johrstrom/110242c274eea508110477dc150d26a5) for directions on how to
 create a desktop icon.
 
-# Installer Guide
+## Installer Guide
 
 ## Install the RPM
 
@@ -222,13 +221,14 @@ end
 
 Just to be clear, this is `cluster_error_msg` in case administrators want to use it
 or even override it.
+
 ```ruby
   def cluster_error_msg(cluster)
     "Cannot execute Maya Jobs on #{cluster}, must choose #{default_cluster}"
   end
 ```
 
-# Developer Guide
+## Developer Guide
 
 Note, you'll need [development eneabled](https://osc.github.io/ood-documentation/master/app-development.html)
 in your ondemand installation for you to develop applications.  Or you can check out our
@@ -244,4 +244,3 @@ Run `scl enable rh-ruby24 -- bin/setup` to setup everything up.
 Then run `scl enable rh-ruby24 -- rake db:migrate` to migrate your database.
 
 Now you should be able to connect to `<your server>/pun/dev/frame-renderer`.
-
