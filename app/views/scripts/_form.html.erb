@@ -16,6 +16,10 @@
           help: 'only specify if you\'re in multiple chargeback projects',
           placeholder: "PZS0714" %>
 
+        <!-- hidden cluster field becuase of #17. We're only initially supporting one cluster, which is the
+        default cluster. -->
+        <%= form.hidden_field :cluster, value: Script.default_cluster %>
+
         <%= form.number_field :nodes, required: true %> 
         <%= form.select :renderer, 
           ['arnold','default','file','hw2','hw','interBatch','sw','turtle','turtlebake','vr'], required: true %>

@@ -62,10 +62,6 @@ class Script < ActiveRecord::Base
     28
   end
 
-  def cluster
-    Script.default_cluster
-  end
-
   private
 
   def clean_up(err, content)
