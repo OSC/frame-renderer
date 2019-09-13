@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190905151304) do
+ActiveRecord::Schema.define(version: 20190913190913) do
 
   create_table "jobs", force: :cascade do |t|
     t.string   "status"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20190905151304) do
     t.datetime "updated_at",                 null: false
     t.integer  "nodes",         default: 1
     t.text     "script_attrs",  default: ""
+    t.string   "accounting_id"
   end
 
   add_index "scripts", ["project_id"], name: "index_scripts_on_project_id"

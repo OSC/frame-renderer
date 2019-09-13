@@ -124,7 +124,8 @@ class Script < ActiveRecord::Base
       job_name: 'maya-render',
       email_on_terminated: email,
       job_array_request: job_array_request,
-      workdir: job_dir
+      workdir: job_dir,
+      accounting_id: accounting_id
     }
   end
 end
