@@ -28,8 +28,6 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @project.update(project_params)
 
-    make_project_dir @project.directory
-
     redirect_to @project
   end
 
