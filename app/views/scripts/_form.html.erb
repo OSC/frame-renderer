@@ -12,13 +12,9 @@
         <%= form.text_field :camera, required: true %> 
         <%= form.select :file, list_scenes(@project.directory), required: true %>
         
-        
         <%= form.text_field :accounting_id, required: false, label: 'Chargeback project',
           help: 'only specify if you\'re in multiple chargeback projects',
           placeholder: "PZS0714" %>
-
-        <%= form.select :cluster, OODClusters.map { |cluster| [ "#{cluster.metadata.title}", cluster.id ] }, 
-            { label: "Cluster:", required: true }, { class: "selectpicker", id: "batch_host_select" } %>
 
         <%= form.number_field :nodes, required: true %> 
         <%= form.select :renderer, 
