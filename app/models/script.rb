@@ -72,6 +72,11 @@ class Script < ActiveRecord::Base
     "Cannot execute Maya Jobs on #{cluster}, must choose #{default_cluster}"
   end
 
+  def accounting_id
+    # be sure to return nil and not just empty
+    @accounting_id.to_s.presence
+  end
+
   private
 
   def clean_up(err, content)
