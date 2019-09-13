@@ -60,7 +60,7 @@ get started.
 
 ## Creating new job settings
 
-Job settings are essentially a set of Arguments you want to execute a job with. Logically, it's
+Job settings are essentially a set of arguments you want to execute a job with. Logically, it's
 something like *I want to render the first 10 frames of this scene and get an email when it's done*.
 
 To create set of job settings simply press the ![new_submission](/docs/imgs/new_submission.PNG)
@@ -74,7 +74,7 @@ button. Fill out all the nessecary form items.  The form items are detailed belo
 |frames|The ma or mb file you want to render.|/home/me/maya/projects/project_1/scenes/testScene1.ma|
 |cluster|The cluster you want to submit to.|owens|OSC can only submit to owens at this time|
 |renderer|The rendering engine you want to use.|arnold|
-|extra|Extra Arguments you want to give to the command. See more [here](#Extra-Arguments).|-verb -b 1 -ai:lve 0|
+|extra|Extra arguments you want to give to the command. See more [here](#Extra-Arguments).|-verb -b 1 -ai:lve 0|
 |walltime|The amount of time in hours your job will be scheduled.|3|
 |email|A choice to email you when the job is complete.|(checked)|
 |skip existing|A choice for the renderer to skip rendered images if they already exist.|(not checked)|
@@ -114,7 +114,7 @@ on the the job id.
 
 There will now be a directory like `batch_jobs/1567629055` and a file `maya-render.7805479` which is the output log for
 this job. If you're having issues rendering files, look at these log files for errors. If you need to increase the
-log level, see [below](#Extra-arguments) on how to do that.
+log level, see [below](#Extra-Arguments) on how to do that.
 
 Near the bottom, where you should see messages like this.  The phrase 'exit status' is an indication on how the job
 finished and there is help table [below](###Exit-status'-from-Torque) to tell you what they mean.
@@ -171,10 +171,10 @@ The default given is `-verb -b 1 -ai:lve 0`.  Here's a breakdown of what those f
 So if you wanted to say, render every 3 frames you would use `-b 3` instead of `-b 1`.  Or if you
 wanted to turn turn up your log level you could use `-ai:lve 1` or even 2.
 
-Note that you can use any combination of Arguments.  You can remove some or add some independently
+Note that you can use any combination of arguments.  You can remove some or add some independently
 of each other.
 
-To view all of the possible Arguments see [this page](/docs/mds/ARNOLD.md) for the Arnold renderer. Flags for
+To view all of the possible arguments see [this page](/docs/mds/ARNOLD.md) for the Arnold renderer. Flags for
 other renderers are not documented here, but could be if requested.
 
 ## Running Maya UI in a VDI
