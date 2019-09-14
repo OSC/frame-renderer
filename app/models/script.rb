@@ -27,7 +27,6 @@ class Script < ActiveRecord::Base
   end
 
   def submit
-    cluster_ok?
     content = templated_content
     job_id = new_job.submit(content, job_opts)
     job_script(job_id).write(content)
@@ -63,20 +62,10 @@ class Script < ActiveRecord::Base
     28
   end
 
-  def cluster_ok?
-    raise ArgumentError, cluster_error_msg('ruby') if cluster == 'ruby'
-    raise ArgumentError, cluster_error_msg('pitzer') if cluster == 'pitzer'
-  end
-
-  def cluster_error_msg(cluster)
-    "Cannot execute Maya Jobs on #{cluster}, must choose #{default_cluster}"
-  end
-
   def accounting_id
     # be sure to return nil and not just empty
     @accounting_id.to_s.presence
   end
-
   private
 
   def clean_up(err, content)

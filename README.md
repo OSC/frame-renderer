@@ -191,42 +191,35 @@ TODO: setup RPM packaging and describe instructions here.
 
 ## Custom Initializers
 
-Create the file `/etc/ood/config/apps/frame-renderer/initializers/site_cluster_overrides.rb` and populate it
-with the ruby class definition below. Notes are given as to why you're overriding these methods.
+Create the file `/etc/ood/config/apps/frame-renderer/config/initializers/site_cluster_overrides.rb`
+and populate it with the ruby class definition below. Notes are given as to why you're overriding
+these methods.
 
 ```ruby
 class Script
 
-  # change the default cluster
-  def default_cluster
-    'my sites default cluster'
+  class << self
+    # change the default cluster
+    def default_cluster
+      'my sites default cluster'
+    end
   end
 
-  # ensure users can't submit to some cluster. For example OSC cannot submit
-  # to 'ruby' or 'pitzer' becuase they don't have the required maya libraries.
-  # This method may be empty.
-  def cluster_ok?
-    raise ArgumentError, cluster_error_msg('ruby') if cluster == 'ruby'
-    raise ArgumentError, cluster_error_msg('pitzer') if cluster == 'pitzer'
-  end
-
-  # specify how many cores you want to allocate. Note you may have an if/esle
-  # block here if you are able to submit to multiple clusters and they can use
-  # a different amount of cores.
+  # specify how many cores you want to allocate on nodes in your
+  # default cluster.
   def cores
     28
   end
 
+  # Uncomment and override this function if you provide a different script
+  # template file. I.e., you've created a shell script for your non PBS-Pro
+  # scheduler. Use this function to point to *that* erb shell script instead.
+
+  # def script_template
+  #   'jobs/video_jobs/maya_submit.sh.erb'
+  # end
+
 end
-```
-
-Just to be clear, this is `cluster_error_msg` in case administrators want to use it
-or even override it.
-
-```ruby
-  def cluster_error_msg(cluster)
-    "Cannot execute Maya Jobs on #{cluster}, must choose #{default_cluster}"
-  end
 ```
 
 ## Developer Guide
