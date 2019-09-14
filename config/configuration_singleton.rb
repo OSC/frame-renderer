@@ -1,6 +1,5 @@
 require 'pathname'
 require 'dotenv'
-require 'tmpdir'
 
 # Job Composer app specific configuration singleton definition
 #
@@ -82,10 +81,6 @@ class ConfigurationSingleton
 
   def locales_root
     Pathname.new(ENV['OOD_LOCALES_ROOT'] || "/etc/ood/config/locales")
-  end
-
-  if ENV['SPRING_TMP_PATH'].nil?
-    ENV['SPRING_TMP_PATH'] = File.join(Dir.tmpdir, "spring-#{Process.uid}")
   end
 
   private 
