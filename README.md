@@ -74,9 +74,9 @@ button. Fill out all the nessecary form items.  The form items are detailed belo
 |chargeback project|The project you're charging too. You only have to specify this if you're in multiple projects.|PZS0714|
 |cluster|The cluster you want to submit to.|owens|OSC can only submit to owens at this time|
 |renderer|The rendering engine you want to use.|arnold|
-|extra|Extra arguments you want to give to the command. See more [here](#Extra-Arguments).|-verb -b 1 -ai:lve 0|
+|additional command line options|Extra options you want to give to the command. See more [here](#Additional-Options).|-verb -b 1 -ai:lve 0|
 |walltime|The amount of time in hours your job will be scheduled.|3|
-|email|A choice to email you when the job is complete.|(checked)|
+|email when finished|A choice to email you when the job is complete.|(checked)|
 |skip existing|A choice for the renderer to skip rendered images if they already exist.|(not checked)|
 
 Press ![save](/docs/imgs/save.PNG) and you're all done.
@@ -160,7 +160,7 @@ for convenience. For more information see
 |211|Maya cannot read your scene file properly. It's either corrupt, or it was never real. <br> Regenerate this scene file in the Maya UI.|
 |271|The job was killed by a user.|
 
-## Extra Arguments
+## Additional Options
 
 The default given is `-verb -b 1 -ai:lve 0`.  Here's a breakdown of what those flags mean:
 

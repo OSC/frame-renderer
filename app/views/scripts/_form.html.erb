@@ -8,13 +8,13 @@
 
       <div class="panel-body", role="main">
         <%= form.text_field :name, required: true %> 
-        <%= form.text_field :frames, required: true, help: 'example: 1-10' %>
-        <%= form.text_field :camera, required: true %> 
+        <%= form.text_field :frames, required: true, placeholder: '1-100' %>
+        <%= form.text_field :camera, required: true, placeholder: 'camera1' %>
         <%= form.select :file, list_scenes(@project.directory), required: true %>
         
         <%= form.text_field :accounting_id, required: false, label: 'Chargeback project',
           help: 'only specify if you\'re in multiple chargeback projects',
-          placeholder: "PZS0714" %>
+          placeholder: 'PZS0714' %>
 
         <!-- hidden cluster field becuase of #17. We're only initially supporting one cluster, which is the
         default cluster. -->
@@ -23,10 +23,13 @@
         <%= form.number_field :nodes, required: true %> 
         <%= form.select :renderer, 
           ['arnold','default','file','hw2','hw','interBatch','sw','turtle','turtlebake','vr'], required: true %>
-        <%= form.text_field :extra, required: false %>
+        <%= form.text_field :extra, required: false,
+            label: 'Additional command line options',
+            placeholder: '-verb -b 1 -ai:lve 0',
+            help: ("#{link_to 'Help Docs', 'https://github.com/OSC/frame-renderer#Additional-Options'}").html_safe %>
         <%= form.number_field :walltime, required: true, help: 'hours this job will be scheduled for' %>
-        <%= form.check_box :email %>
-        <%= form.check_box :skip_existing %>
+        <%= form.check_box :email, label: 'Email when finished' %>
+        <%= form.check_box :skip_existing, label: 'Do not render existing .exr files' %>
         
       </div>
 
