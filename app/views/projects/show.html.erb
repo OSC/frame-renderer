@@ -1,29 +1,17 @@
 <div class="page-header" >
   <h2><%= @project.name %></h2>
   <p><%= @project.description %></p>
-  <p>location: <%= @project.directory %></p>
 </div>
 
 <script>pollSubmissions('<%= @project.id %>')</script>
 
-<%= link_to 'Back', projects_path, class: "btn btn-info" %><br><br>
-
-<div>
-  <div class="btn-group open">
-    <%= button_to 'Edit', 
-      edit_project_path(@project),
-      method: :get,
-      class: "btn btn-primary",
-      id: "edit_project_button"
-    %>
-  </div>
-</div>
-<br>
-
-<div>
+<div style="display:inline-block">
+  <%= link_to 'Back', projects_path, class: "btn btn-info" %>
+  <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-warning" %>
   <%= link_to "Open in File Explorer", OodAppkit.files.url(path: @project.directory).to_s, 
     class: 'btn btn-primary btn-sm', :target => '_blank' %>
 </div>
+
 <br><br>
 
 <div id="script-list-view" class="panel panel-default">
@@ -71,18 +59,12 @@
   </div>
 </div>
 
+<%= link_to 'New Job Settings', new_project_script_path(@project), class: "btn btn-primary" %>
 
-<div class="btn-group open">
-  <%= button_to 'New Job Settings', 
-    new_project_script_path(@project),
-    method: :get,
-    class: "btn btn-primary",
-    id: "script_edit_button"
-  %>
-</div>
 
 <br><br>
 
+<% if thumbnails(@project.directory).size > 0 %>
 <div id="thumbnail-list-view" class="panel panel-default">
   <div class="panel-body" >
     <table id="thumbnail-list-table" class="table data-table" >
@@ -113,3 +95,4 @@
     </table>
   <div>
 </div>
+<% end %>
