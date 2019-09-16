@@ -9,8 +9,7 @@ module ProjectsHelper
   end
 
   def thumbnails(project_dir)
-    imgs = Dir.glob(project_dir + '/thumbnails/*.png')
-    imgs&.sort
+    Dir.glob(project_dir + '/thumbnails/*.png').sort
   end
 
   def thumbnail_to_exr(project_dir, thumbnail)
