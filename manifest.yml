@@ -1,7 +1,7 @@
 ---
 name: Frame Renderer
-category: media
+category: Gateway Apps
 icon: fa://tasks
 description: |-
-  An application to generate video files.
-role: media
+  An application to render video frames from Maya.
+role: Graphics
