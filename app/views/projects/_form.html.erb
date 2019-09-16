@@ -1,22 +1,22 @@
-<%= form_for @project do |form| %>
+<%= bootstrap_form_for @project do |form| %>
 
-<p>
-  <%= form.label :name %><br>
-  <%= form.text_field :name %>
-</p>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Project Details
+    </div>
 
-<p>
-  <%= form.label :description %><br>
-  <%= form.text_field :description %>
-</p>
+    <div class="panel-body", role="main">
+      <%= form.text_field :name, label: 'name' %>
+      <%= form.text_area :description, label: 'description' %>
+      <%= form.text_field :name, label: 'name' %>
+      <%= form.text_field :directory, label: 'directory', 'data-filepicker': 'true' %>
+    </div>
+  </div>
 
-<p>
-  <%= form.label :directory %><br>
-  <%= form.text_field :directory, 'data-filepicker': 'true' %>
-</p>
-
-<p>
-  <%= form.submit %>
-<p>
+  <p>
+    <%= form.submit 'Save', class: 'btn btn-primary' %>
+    <%= form.button 'Reset', type: :reset, class: 'btn btn-default' %>
+    <%= link_to 'Back', projects_path, class: 'btn btn-default' %>
+  <p>
 
 <% end %>

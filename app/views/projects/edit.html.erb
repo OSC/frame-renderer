@@ -2,19 +2,18 @@
   <h2>Edit Project <%= @project.name %></h2>
 </div>
 
-
-<%= link_to 'Back', projects_path %>
-
 <div>
   <div class="btn-group open">
     <%= button_to 'Delete', 
       project_path(@project),
       method: :delete,
       data: { confirm: 'Are you sure?' },
-      class: "btn btn-primary",
+      class: "btn btn-danger",
       id: "delete_project_button"
     %>
   </div>
 </div>
+
+<br>
 
 <%= render 'form' %>
