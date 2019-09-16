@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190913190913) do
+ActiveRecord::Schema.define(version: 20190916191322) do
 
   create_table "jobs", force: :cascade do |t|
     t.string   "status"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 20190913190913) do
   end
 
   add_index "jobs", ["script_id"], name: "index_jobs_on_script_id"
+
+  create_table "json_stores", force: :cascade do |t|
+    t.text   "json_attrs"
+    t.string "type"
+  end
+
+  add_index "json_stores", ["type"], name: "index_json_stores_on_type"
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
