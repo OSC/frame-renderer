@@ -40,8 +40,10 @@
         <span aria-hidden="true">&times;</span>
         <span class="sr-only">Close</span>
       </button>
-      <%= alert %>
-      <%= content_tag :pre, flash[:alert_error] if flash[:alert_error] %>
+      <pre>
+        <%= alert %>
+        <%= content_tag :pre, flash[:alert_error] if flash[:alert_error] %>
+      </pre>
     </div>
     <% end %>
 
@@ -51,7 +53,9 @@
         <span aria-hidden="true">&times;</span>
         <span class="sr-only">Close</span>
       </button>
-      <%= notice %>
+      <pre>
+        <%= notice %>
+      </pre>
     </div>
     <% end %>
 
