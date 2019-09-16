@@ -10,7 +10,7 @@
         <%= form.text_field :name, required: true %> 
         <%= form.text_field :frames, required: true, placeholder: '1-100' %>
         <%= form.text_field :camera, required: true, placeholder: 'camera1' %>
-        <%= form.select :file, @project.list_scenes, required: true %>
+        <%= form.select :file, @project.scenes, required: true %>
         
         <%= form.text_field :accounting_id, required: false, label: 'Chargeback project',
           help: 'only specify if you\'re in multiple chargeback projects',

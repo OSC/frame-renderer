@@ -20,7 +20,7 @@ class Project < ActiveRecord::Base
     write_attribute(:directory, params[:directory] ||= Project.maya_top_level_dir)
   end
 
-  def list_scenes
+  def scenes
     Dir.glob(directory + '/scenes/**/**.m[ab]')
   end
 
