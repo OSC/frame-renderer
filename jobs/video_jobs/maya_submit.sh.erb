@@ -5,7 +5,11 @@
 #PBS -l nodes=1:ppn=<%= cores %>
 #PBS -j oe
 
-# cannot use a tmpdir like /tmp/pbstmp.7431620[1] bc of the brackets
+# TMPDIR currently set to something like /tmp/pbstmp.7431620[1] (unescaped)
+# and Maya cannot read filepaths like that correctly.
+JOB_TMPDIR=$TMPDIR
+DIR_BINDS="$JOB_TMPDIR:/tmp"
+# set a new tmpdir bc that's what the container needs to look at
 export TMPDIR="/tmp"
 
 function create_thumails(){
@@ -36,7 +40,7 @@ module use /usr/local/share/lmodfiles/project/ACCAD
 module load maya/2018-ACCAD
 
 # set all the different variables you'll need 
-CMD="singularity exec $MAYA_IMG Render"
+CMD="singularity exec -B $DIR_BINDS $MAYA_IMG Render"
 RENDERER="<%= renderer %>"
 NODES=<%= nodes %>
 START_FRAME="<%= start_frame %>"
