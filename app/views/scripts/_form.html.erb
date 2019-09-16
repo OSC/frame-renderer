@@ -1,5 +1,5 @@
 
-<%= bootstrap_form_for [@project, @script], :html => { :onsubmit => "return validateScript()" }  do |form| %>
+<%= bootstrap_form_for [@project, @script] do |form| %>
 
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -8,10 +8,11 @@
 
       <div class="panel-body", role="main">
         <%= form.text_field :name, required: true %> 
-        <%= form.text_field :frames, required: true, placeholder: '1-100' %>
+        <%= form.text_field :frames,
+          required: true, placeholder: '1-100',
+          pattern: '\d+-\d+', help: "Must be in the form startframe-endframe" %>
         <%= form.text_field :camera, required: true, placeholder: 'camera1' %>
         <%= form.select :file, @project.scenes, required: true %>
-        
         <%= form.text_field :accounting_id, required: false, label: 'Chargeback project',
           help: 'only specify if you\'re in multiple chargeback projects',
           placeholder: 'PZS0714' %>
@@ -20,20 +21,18 @@
         default cluster. -->
         <%= form.hidden_field :cluster, value: Script.default_cluster %>
 
-        <%= form.number_field :nodes, required: true %> 
+        <%= form.number_field :nodes, required: true, min: 1 %>
         <%= form.select :renderer, 
           ['arnold','default','file','hw2','hw','interBatch','sw','turtle','turtlebake','vr'], required: true %>
         <%= form.text_field :extra, required: false,
             label: 'Additional command line options',
             placeholder: '-verb -b 1 -ai:lve 0',
             help: ("#{link_to 'Help Docs', 'https://github.com/OSC/frame-renderer#Additional-Options'}").html_safe %>
-        <%= form.number_field :walltime, required: true, help: 'hours this job will be scheduled for' %>
+        <%= form.number_field :walltime, required: true, help: 'hours this job will be scheduled for', min: 1 %>
         <%= form.check_box :email, label: 'Email when finished' %>
         <%= form.check_box :skip_existing, label: 'Do not render existing .exr files' %>
-        
-      </div>
-
-    </div>
+      </div> <!-- main panel body -->
+    </div> <!-- outer panel -->
 
 
   <p>
