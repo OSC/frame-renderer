@@ -62,11 +62,12 @@ class Script < ActiveRecord::Base
     28
   end
 
-  def accounting_id
-    # be sure to return nil and not just empty
-    @accounting_id.to_s.presence
-  end
   private
+
+  def present_accounting_id
+    # be sure to return nil and not just empty
+    accounting_id.to_s.presence
+  end
 
   def clean_up(err, content)
     errors.add(:name, :blank, message: err.inspect.to_s)
@@ -119,7 +120,7 @@ class Script < ActiveRecord::Base
       email_on_terminated: email,
       job_array_request: job_array_request,
       workdir: job_dir,
-      accounting_id: accounting_id
+      accounting_id: present_accounting_id
     }
   end
 end
