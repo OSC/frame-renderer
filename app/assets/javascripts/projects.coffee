@@ -42,15 +42,20 @@ updateSubStatus = (data) ->
     toggleRunStop(job.status, job.script_id)
 
 statusToLabelLookup = (status) ->
-  if status == 'not submitted'
-    return 'default'
+  if status == 'completed'
+    return 'success'
   else if status == 'queued'
     return 'info'
+  else if status == 'queued_held'
+    return 'warning'
   else if status == 'running'
-    return 'success'
-  else if status == 'completed'
     return 'primary'
+  else if status == 'suspended'
+    return 'warning'
+  if status == 'undetermined'
+    return 'default'
   else
+    # catches 'not submitted' state
     return 'default'
 
 toggleRunStop = (status, script_id) -> 

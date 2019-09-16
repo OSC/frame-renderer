@@ -20,11 +20,12 @@ module ProjectsHelper
   private
 
   def label_class_lookup(status = Job.never_submitted_status)
-    return 'label-default' if status == Script.never_submitted_status
     return 'label-info' if status == 'queued'
-    return 'label-success' if status == 'running'
-    return 'label-primary' if status == 'completed'
+    return 'label-warning' if status == 'queued_held'
+    return 'label-primary' if status == 'running'
+    return 'label-success' if status == 'completed'
+    return 'label-warning' if status == 'suspended'
 
-    'label-default'
+    'label-default' # handles 'not submitted' and 'undetermined'
   end
 end
