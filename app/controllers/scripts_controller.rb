@@ -51,7 +51,7 @@ class ScriptsController < ApplicationController
     if @script.submit
       redirect_to @project, notice: 'Job successfully submitted'
     else
-      redirect_to @project, alert: "Job failed to submit: #{@script.errors.to_a}"
+      redirect_to @project, alert: @script.errors[:name].first
     end
   end
   
