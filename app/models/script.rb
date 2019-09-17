@@ -27,6 +27,7 @@ class Script < ActiveRecord::Base
   end
 
   def submit
+    validate_file # fail fast in case a valid file was never chosen
     content = templated_content
     job_id = new_job.submit(content, job_opts)
     job_script(job_id).write(content)
@@ -64,13 +65,21 @@ class Script < ActiveRecord::Base
 
   private
 
+  def validate_file
+    if file.nil?
+      raise ArgumentError, 'Cannot submit these settings, the file was never chosen'
+    elsif !File.exist?(file)
+      raise ArgumentError, "Cannot submit these settings, #{file} does not exist"
+    end
+  end
+
   def present_accounting_id
     # be sure to return nil and not just empty
     accounting_id.to_s.presence
   end
 
   def clean_up(err, content)
-    errors.add(:name, :blank, message: err.inspect.to_s)
+    errors.add(:name, err.message)
     job_script.write(content)
     puts "failed to submit job because of error #{err.inspect}"
   end
