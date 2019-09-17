@@ -34,7 +34,7 @@
 
             <td><%= script.name %></td>
             <td><%= script.frames %></td>
-            <td><%= File.basename(script.file) %></td>
+            <td><%= script.file.nil? ? "not selected" : File.basename(script.file) %></td>
             <td><div id="script-<%= script.id %>-job-id"><%= script.latest_job_id %></div></td>
 
             <td id="status_label_<%= script.id %>">
