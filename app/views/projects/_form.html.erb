@@ -8,7 +8,9 @@
     <div class="panel-body", role="main">
       <%= form.text_field :name, label: 'name' %>
       <%= form.text_area :description, label: 'description' %>
-      <%= form.text_field :directory, label: 'directory', 'data-filepicker': 'true' %>
+      <%= form.text_field :directory,
+        label: 'directory', 'data-filepicker': 'true',
+        'data-target_file_type': 'dirs' %>
     </div>
   </div>
 
@@ -19,3 +21,4 @@
   <p>
 
 <% end %>
+
