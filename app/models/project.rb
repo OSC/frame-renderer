@@ -10,7 +10,7 @@ class Project < ActiveRecord::Base
   class << self
     def maya_top_level_dir
       dir = "#{Dir.home}/maya/projects/."
-      Dir.mkdir dir unless Dir.exist? dir
+      FileUtils.mkdir_p dir unless Dir.exist? dir
       dir
     end
   end
