@@ -192,7 +192,18 @@ execute the yum install command.
 
 `sudo yum install ondemand-frame-renderer`
 
-## Custom Initializers
+### Customizing the install
+
+### Env file
+
+Create the file `/etc/ood/config/apps/frame-renderer/env` and add these entries.
+
+```bash
+# the sftp host your users can connect to to upload and download their project files.
+SFTP_HOST=my-host.net
+```
+
+### Initializers
 
 Create the file `/etc/ood/config/apps/frame-renderer/config/initializers/site_cluster_overrides.rb`
 and populate it with the ruby class definition below. Notes are given as to why you're overriding
