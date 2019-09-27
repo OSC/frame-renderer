@@ -187,7 +187,10 @@ create a desktop icon.
 
 ## Install the RPM
 
-TODO: setup RPM packaging and describe instructions here.
+You should already have the ondeand plaform installed and the OSC Repo enabled.  If you do, you can simply
+execute the yum install command.
+
+`sudo yum install ondemand-frame-renderer`
 
 ## Custom Initializers
 
