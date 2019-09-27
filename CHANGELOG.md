@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.1.1] - 2019-09-26
 ### Fixed
-- #30 bugfix
+- ensure app doesn't crash if there is no `~/maya/projects` directory [#30](https://github.com/OSC/frame-renderer/issues/30)
 
 [Unreleased]: https://github.com/OSC/frame-renderer/compare/0.1.1...HEAD
 [0.1.1]: https://github.com/OSC/frame-renderer/compare/0.1.0...0.1.1
