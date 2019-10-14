@@ -6,6 +6,13 @@
   Before making a new project here, be sure to upload the project to the servers if the files are not already there. <br>
   You can follow the directions on the <a href="https://github.com/OSC/frame-renderer/#upload-your-project">README</a> on how to do so.
   <br><br>
+
+  <% if Configuration.sftp_host %>
+  If you already have an SFTP client installed, you can click
+  <a href="sftp://<%= ENV["USER"] %>@<%= Configuration.sftp_host %><%= @project.directory %>/">here</a> to open it.
+  <br><br>
+  <% end %>
+
 </div>
 
 <%= render 'form' %>

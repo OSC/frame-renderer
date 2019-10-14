@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Added
+- added SFTP links to support [#3](https://github.com/OSC/frame-renderer/issues/3)
 
 ## [0.1.1] - 2019-09-26
 ### Fixed
