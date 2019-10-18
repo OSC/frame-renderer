@@ -7,6 +7,8 @@
 %{!?git_tag: %define git_tag v%{package_version}}
 %define git_tag_minus_v %(echo %{git_tag} | sed -r 's/^v//')
 
+%define __brp_mangle_shebangs /bin/true
+
 Name:     ondemand-%{app_name}
 Version:  %{package_version}
 Release:  %{package_release}%{?dist}
@@ -20,8 +22,6 @@ Source0:  https://github.com/OSC/%{repo_name}/archive/%{git_tag}.tar.gz
 BuildRequires:  sqlite-devel curl make
 BuildRequires:  ondemand-runtime
 BuildRequires:  ondemand-ruby
-BuildRequires:  ondemand-nodejs
-BuildRequires:  ondemand-git
 Requires: ondemand
 
 # Work around issue with EL6 builds
