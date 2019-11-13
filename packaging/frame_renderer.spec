@@ -2,7 +2,9 @@
 %global debug_package %{nil}
 %global repo_name frame-renderer
 %global app_name frame-renderer
-%{!?package_version: %define package_version %{major}.%{minor}.%{patch}}
+%define ondemand_gems_ver %(rpm --qf "%%{version}" -q ondemand-gems)
+%global gem_home %{scl_ondemand_apps_gem_home}/%{app_name}
+
 %{!?package_release: %define package_release 1}
 %{!?git_tag: %define git_tag v%{package_version}}
 %define git_tag_minus_v %(echo %{git_tag} | sed -r 's/^v//')
@@ -22,7 +24,11 @@ Source0:  https://github.com/OSC/%{repo_name}/archive/%{git_tag}.tar.gz
 BuildRequires:  sqlite-devel curl make
 BuildRequires:  ondemand-runtime
 BuildRequires:  ondemand-ruby
-Requires: ondemand
+BuildRequires:  ondemand-nodejs
+BuildRequires:  ondemand-scldevel
+BuildRequires:  ondemand-gems
+Requires:       ondemand
+Requires:       ondemand-gems-%{ondemand_gems_ver}
 
 # Work around issue with EL6 builds
 # https://stackoverflow.com/a/48801417
@@ -43,12 +49,16 @@ DESCRIPTION
 
 %build
 scl enable ondemand - << \EOS
+export GEM_HOME=$(pwd)/gems-build
+export GEM_PATH=$(pwd)/gems-build:$GEM_PATH
 export PASSENGER_APP_ENV=production
-export PASSENGER_BASE_URI=/pun/sys/%{app_name}
 bin/setup
 EOS
 
 %install
+%__mkdir_p %{buildroot}%{gem_home}
+%__mv ./gems-build/* %{buildroot}%{gem_home}/
+
 %__rm        ./log/production.log
 %__mkdir_p   %{buildroot}%{_localstatedir}/www/ood/apps/sys/%{app_name}
 %__cp -a ./. %{buildroot}%{_localstatedir}/www/ood/apps/sys/%{app_name}/
@@ -86,6 +96,7 @@ touch %{_localstatedir}/www/ood/apps/sys/%{app_name}/tmp/restart.txt
 
 %files
 %defattr(-,root,root)
+%{gem_home}
 %{_localstatedir}/www/ood/apps/sys/%{app_name}
 %{_localstatedir}/www/ood/apps/sys/%{app_name}/manifest.yml
 %ghost %{_localstatedir}/www/ood/apps/sys/%{app_name}/tmp/restart.txt
