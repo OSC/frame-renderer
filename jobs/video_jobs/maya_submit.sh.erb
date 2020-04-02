@@ -49,7 +49,6 @@ EXTRA_ARGS="<%= extra %>"
 FILE="<%= file %>"
 PRJ_DIR="<%= project_dir %>"
 SKIP_EXISTING="-skipExistingFrames <%= skip_existing %>"
-------------------------------
 TOTAL_FRAMES=$(( END_FRAME - START_FRAME + 1 ))
 TASK_SIZE=$(( TOTAL_FRAMES / NODES ))
 REMAINDER=$(( TOTAL_FRAMES % NODES ))
