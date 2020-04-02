@@ -30,7 +30,7 @@
             help: ("#{link_to 'Help Docs', 'https://github.com/OSC/frame-renderer#Additional-Options'}").html_safe %>
         <%= form.number_field :walltime, required: true, help: 'hours this job will be scheduled for', min: 1 %>
         <%= form.check_box :email, label: 'Email when finished' %>
-        <%= form.check_box :skip_existing, label: 'Do not render existing .exr files' %>
+        <%= form.check_box :skip_existing, label: 'Do not render existing frames' %>
       </div> <!-- main panel body -->
     </div> <!-- outer panel -->
 
