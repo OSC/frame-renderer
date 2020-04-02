@@ -6,7 +6,7 @@
     </div>
 
     <div class="panel-body", role="main">
-      <%= form.text_field :name, label: 'name' %>
+      <%= form.text_field :name, label: 'name', required: true %>
       <%= form.text_area :description, label: 'description' %>
       <%= form.text_field :directory,
         label: 'directory', 'data-filepicker': 'true',
