@@ -129,7 +129,8 @@ class Script < ActiveRecord::Base
       email_on_terminated: email,
       job_array_request: job_array_request,
       workdir: job_dir,
-      accounting_id: present_accounting_id
+      accounting_id: present_accounting_id,
+      wall_time: walltime * 3600
     }
   end
 end
