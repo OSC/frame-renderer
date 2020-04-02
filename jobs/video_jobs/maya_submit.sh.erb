@@ -12,7 +12,7 @@ DIR_BINDS="$JOB_TMPDIR:/tmp"
 # set a new tmpdir bc that's what the container needs to look at
 export TMPDIR="/tmp"
 
-function create_thumails(){
+function create_thumbnails(){
   RESIZE="-resize 80x80"
   #IMG_EXTRA_ARGS="-auto-gamma"
   IMG_ARGS="$RESIZE $IMG_EXTRA_ARGS"
@@ -22,12 +22,12 @@ function create_thumails(){
 
   mkdir $THUMB_DIR 2>/dev/null
 
-  for IMG in $(ls <%= project_dir %>/images/*.exr 2>/dev/null)
+  for IMG in $(ls <%= project_dir %>/images 2>/dev/null)
   do
     BASE_IMG_NAME=${IMG##*/}
-    IMG_NAME=${BASE_IMG_NAME%.exr}
+    IMG_NAME=${BASE_IMG_NAME%.*}
 
-    convert $IMG ${IMG_ARGS} $THUMB_DIR/${IMG_NAME}.png
+    convert $IMG_DIR/$IMG $IMG_ARGS $THUMB_DIR/$IMG_NAME.png
   done
 }
 
@@ -79,7 +79,7 @@ echo "ended with status $STATUS"
 
 if [ $STATUS -eq 0 ]; then
   echo "now creating thumbnails"
-  time create_thumails
+  time create_thumbnails
 fi
 
 
