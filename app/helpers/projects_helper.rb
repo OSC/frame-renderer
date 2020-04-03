@@ -12,9 +12,13 @@ module ProjectsHelper
     Dir.glob(project_dir + '/thumbnails/*.png').sort
   end
 
-  def thumbnail_to_exr(project_dir, thumbnail)
-    basename = File.basename(thumbnail, '.png')
-    project_dir + '/images/' + basename + '.exr'
+  def images(project_dir)
+    Dir.glob(project_dir + '/images/*').sort
+  end
+
+  def image_to_thumbnail(project_dir, image)
+    basename = File.basename(image, File.extname(image))
+    project_dir + '/thumbnails/' + basename + '.png'
   end
 
   private

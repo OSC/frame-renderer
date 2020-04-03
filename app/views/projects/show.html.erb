@@ -76,15 +76,17 @@
       </thead>
           <%= %>
       <tbody>
-        <% thumbnails(@project.directory).each do |thumbnail| %>
+        <% images(@project.directory).each do |image| %>
           <tr>
             <td>
             <%= link_to(
-                File.basename(thumbnail, '.png') + '.exr',
-                "/pun/sys/files/api/v1/fs" + thumbnail_to_exr(@project.directory, thumbnail) + '?download=1'
+                File.basename(image),
+                "/pun/sys/files/api/v1/fs" + image + '?download=1'
                 )%>
             <td>
-              <img class="d-block w-100 thumbnail-zoom" src="/pun/sys/files/api/v1/fs<%= thumbnail %>"
+              <img 
+                class="d-block w-100 thumbnail-zoom" 
+                src="/pun/sys/files/api/v1/fs<%= image_to_thumbnail(@project.directory, image) %>"
                 onClick="window.open(this.src)"
               >
             </td>
