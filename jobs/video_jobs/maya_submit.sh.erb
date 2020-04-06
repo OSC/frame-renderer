@@ -56,7 +56,8 @@ REMAINDER=$(( TOTAL_FRAMES % NODES ))
 OFFSET=$(( PBS_ARRAYID * TASK_SIZE ))
 
 if [ $PBS_ARRAYID -gt 1 ]; then
-  # if nodes +1
+  # if nodes >1 have to offset +1 so the start frame of this task
+  # doesn't overlap with the end frame of the previous task
   TASK_START_FRAME=$(( OFFSET - TASK_SIZE + START_FRAME + 1 ))
 else
   TASK_START_FRAME=$(( OFFSET - TASK_SIZE + START_FRAME ))
