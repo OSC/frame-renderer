@@ -60,7 +60,7 @@ class Script < ActiveRecord::Base
   end
 
   def cores
-    28
+    Configuration.cores
   end
 
   private

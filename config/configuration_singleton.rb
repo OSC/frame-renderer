@@ -91,6 +91,10 @@ class ConfigurationSingleton
     ENV['FRAME_RENDERER_CLUSTER'] || "owens"
   end
 
+  def cores
+    (ENV['FRAME_RENDERER_CORES'] || 28).to_i
+  end
+
   private 
 
   # The environment

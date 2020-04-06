@@ -204,7 +204,15 @@ SFTP_HOST=my-host.net
 
 # The cluster your users are going to submit jobs to.  We currently only support one
 # cluster and this must be a valid entry in `/etc/ood/config/clusters.d/`
-FRAME_RENDERER_CLUSTER=my-cluster
+#
+# defaults to owens (an OSC cluster)
+FRAME_RENDERER_CLUSTER=owens
+
+# The number of cores the job is going to request. This is not variable, and every job
+# will request this many cores.
+#
+# defaults to 28 which, on owens, is an entire node.
+FRAME_RENDERER_CORES=28
 ```
 
 ### Initializers
@@ -215,12 +223,6 @@ these methods.
 
 ```ruby
 class Script
-
-  # specify how many cores you want to allocate on nodes in your
-  # default cluster.
-  def cores
-    28
-  end
 
   # Uncomment and override this function if you provide a different script
   # template file. I.e., you've created a shell script for your non PBS-Pro
