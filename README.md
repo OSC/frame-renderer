@@ -213,26 +213,13 @@ FRAME_RENDERER_CLUSTER=owens
 #
 # defaults to 28 which, on owens, is an entire node.
 FRAME_RENDERER_CORES=28
-```
 
-### Initializers
-
-Create the file `/etc/ood/config/apps/frame-renderer/config/initializers/site_cluster_overrides.rb`
-and populate it with the ruby class definition below. Notes are given as to why you're overriding
-these methods.
-
-```ruby
-class Script
-
-  # Uncomment and override this function if you provide a different script
-  # template file. I.e., you've created a shell script for your non PBS-Pro
-  # scheduler. Use this function to point to *that* erb shell script instead.
-
-  # def script_template
-  #   'jobs/video_jobs/maya_submit.sh.erb'
-  # end
-
-end
+# The job script that will be templated and submitted.  The template language is
+# Ruby's ERB.  All the variables in the default script will be available to any
+# new script file.
+#
+# defaults to the script template included with this source (relative directory)
+FRAME_RENDERER_SCRIPT='jobs/video_jobs/maya_submit.sh.erb'
 ```
 
 ## Developer Guide
@@ -251,3 +238,6 @@ Run `scl enable rh-ruby24 -- bin/setup` to setup everything up.
 Then run `scl enable rh-ruby24 -- rake db:migrate` to migrate your database.
 
 Now you should be able to connect to `<your server>/pun/dev/frame-renderer`.
+
+Create  a `.env.local` file if you wish to have environment variables in your development
+workspace.

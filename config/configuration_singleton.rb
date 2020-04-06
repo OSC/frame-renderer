@@ -95,6 +95,10 @@ class ConfigurationSingleton
     (ENV['FRAME_RENDERER_CORES'] || 28).to_i
   end
 
+  def script_template
+    ENV['FRAME_RENDERER_SCRIPT'] || 'jobs/video_jobs/maya_submit.sh.erb'
+  end
+
   private 
 
   # The environment
