@@ -49,18 +49,18 @@ EXTRA_ARGS="<%= extra %>"
 FILE="<%= file %>"
 PRJ_DIR="<%= project_dir %>"
 SKIP_EXISTING="-skipExistingFrames <%= skip_existing %>"
-TOTAL_FRAMES=$(( END_FRAME - START_FRAME + 1 ))
+TOTAL_FRAMES=$(( END_FRAME - START_FRAME ))
 TASK_SIZE=$(( TOTAL_FRAMES / NODES ))
 REMAINDER=$(( TOTAL_FRAMES % NODES ))
 
 OFFSET=$(( PBS_ARRAYID * TASK_SIZE ))
 
 TASK_START_FRAME=$(( OFFSET - TASK_SIZE + START_FRAME ))
-TASK_END_FRAME=$(( OFFSET ))
+TASK_END_FRAME=$(( OFFSET + START_FRAME ))
 
 if [ $REMAINDER -ne 0 ] && [ "$PBS_ARRAYID" -eq "$NODES" ]; then
   # last task picks up the remainder of the frames
-  TASK_END_FRAME=$(( OFFSET + REMAINDER ))
+  TASK_END_FRAME=$(( OFFSET + START_FRAME + REMAINDER ))
 fi
 
 ARGS="-r $RENDERER $SKIP_EXISTING ${EXTRA_ARGS} -proj $PRJ_DIR -s $TASK_START_FRAME -e $TASK_END_FRAME $FILE"
