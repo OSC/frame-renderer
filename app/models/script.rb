@@ -18,7 +18,7 @@ class Script < ActiveRecord::Base
     end
 
     def default_cluster
-      'owens'
+      Configuration.submit_cluster
     end
 
     def batch_jobs_dir

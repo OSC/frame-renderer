@@ -46,7 +46,9 @@ class Job < ActiveRecord::Base
   end
 
   def adapter
-    OodAppkit.clusters[cluster].job_adapter
+    cls = OodAppkit.clusters[cluster]
+    raise "'#{cluster}' is not a correctly configured cluster" if cls.nil?
+    cls.job_adapter
   end
 
 end

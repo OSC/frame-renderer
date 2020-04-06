@@ -201,6 +201,10 @@ Create the file `/etc/ood/config/apps/frame-renderer/env` and add these entries.
 ```bash
 # the sftp host your users can connect to to upload and download their project files.
 SFTP_HOST=my-host.net
+
+# The cluster your users are going to submit jobs to.  We currently only support one
+# cluster and this must be a valid entry in `/etc/ood/config/clusters.d/`
+FRAME_RENDERER_CLUSTER=my-cluster
 ```
 
 ### Initializers
@@ -211,13 +215,6 @@ these methods.
 
 ```ruby
 class Script
-
-  class << self
-    # change the default cluster
-    def default_cluster
-      'my sites default cluster'
-    end
-  end
 
   # specify how many cores you want to allocate on nodes in your
   # default cluster.

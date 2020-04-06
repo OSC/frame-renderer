@@ -87,6 +87,10 @@ class ConfigurationSingleton
     ENV['SFTP_HOST']
   end
 
+  def submit_cluster
+    ENV['FRAME_RENDERER_CLUSTER'] || "owens"
+  end
+
   private 
 
   # The environment
