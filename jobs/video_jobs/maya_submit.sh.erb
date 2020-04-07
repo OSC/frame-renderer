@@ -54,7 +54,6 @@ function end_frame(){
   if [ $REMAINDER -ne 0 ] && [ "$PBS_ARRAYID" -eq "$NODES" ]; then
     # last task picks up the remainder of the frames
     TASK_END_FRAME=$(( OFFSET + START_FRAME + REMAINDER ))
-    echo $REMAINDER
   elif [ "$NODES" != "1" ]; then
     TASK_END_FRAME=$(( OFFSET + START_FRAME ))
   else
