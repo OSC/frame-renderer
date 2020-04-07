@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.2.3] - 2020-04-07
+### Fixed
+- Another framing bug when users specify just one node [#41](https://github.com/OSC/frame-renderer/pull/40)
+  the start and end frames were not corrrect.
+
 ## [0.2.2] - 2020-04-06
 ### Fixed
 - Endframe was not being cacluated correctly when the start frame was non-zero. So end
