@@ -31,6 +31,38 @@ function create_thumbnails(){
   done
 }
 
+function start_frame(){
+  if [ -z "$PBS_ARRAYID" ]; then
+    PBS_ARRAYID=1
+  fi
+  
+  if [ $PBS_ARRAYID -gt 1 ]; then
+    # if nodes >1 have to offset +1 so the start frame of this task
+    # doesn't overlap with the end frame of the previous task
+    TASK_START_FRAME=$(( OFFSET - TASK_SIZE + START_FRAME + 1 ))
+  elif [ "$NODES" != "1" ]; then
+    TASK_START_FRAME=$(( OFFSET - TASK_SIZE + START_FRAME ))
+  else
+    TASK_START_FRAME=$START_FRAME
+  fi
+
+  echo $TASK_START_FRAME
+}
+
+function end_frame(){
+
+  if [ $REMAINDER -ne 0 ] && [ "$PBS_ARRAYID" -eq "$NODES" ]; then
+    # last task picks up the remainder of the frames
+    TASK_END_FRAME=$(( OFFSET + START_FRAME + REMAINDER ))
+  elif [ "$NODES" != "1" ]; then
+    TASK_END_FRAME=$(( OFFSET + START_FRAME ))
+  else
+    TASK_END_FRAME=$END_FRAME
+  fi
+
+  echo $TASK_END_FRAME
+}
+
 echo "starting at $(date)"
 
 #load the singularity and ACCAD modules and record the loaded module list
@@ -42,35 +74,21 @@ module load maya/2018-ACCAD
 # set all the different variables you'll need 
 CMD="singularity exec -B $DIR_BINDS $MAYA_IMG Render"
 RENDERER="<%= renderer %>"
-NODES=<%= nodes %>
-START_FRAME="<%= start_frame %>"
-END_FRAME="<%= end_frame %>"
 EXTRA_ARGS="<%= extra %>"
 FILE="<%= file %>"
 PRJ_DIR="<%= project_dir %>"
 SKIP_EXISTING="-skipExistingFrames <%= skip_existing %>"
-TOTAL_FRAMES=$(( END_FRAME - START_FRAME ))
-TASK_SIZE=$(( TOTAL_FRAMES / NODES ))
-REMAINDER=$(( TOTAL_FRAMES % NODES ))
 
-OFFSET=$(( PBS_ARRAYID * TASK_SIZE ))
 
-if [ $PBS_ARRAYID -gt 1 ]; then
-  # if nodes >1 have to offset +1 so the start frame of this task
-  # doesn't overlap with the end frame of the previous task
-  TASK_START_FRAME=$(( OFFSET - TASK_SIZE + START_FRAME + 1 ))
-else
-  TASK_START_FRAME=$(( OFFSET - TASK_SIZE + START_FRAME ))
-fi
+export NODES=<%= nodes %>
+export START_FRAME="<%= start_frame %>"
+export END_FRAME="<%= end_frame %>"
+export TOTAL_FRAMES=$(( END_FRAME - START_FRAME ))
+export TASK_SIZE=$(( TOTAL_FRAMES / NODES ))
+export REMAINDER=$(( TOTAL_FRAMES % NODES ))
+export OFFSET=$(( PBS_ARRAYID * TASK_SIZE ))
 
-if [ $REMAINDER -ne 0 ] && [ "$PBS_ARRAYID" -eq "$NODES" ]; then
-  # last task picks up the remainder of the frames
-  TASK_END_FRAME=$(( OFFSET + START_FRAME + REMAINDER ))
-else
-  TASK_END_FRAME=$(( OFFSET + START_FRAME ))
-fi
-
-ARGS="-r $RENDERER $SKIP_EXISTING ${EXTRA_ARGS} -proj $PRJ_DIR -s $TASK_START_FRAME -e $TASK_END_FRAME $FILE"
+ARGS="-r $RENDERER $SKIP_EXISTING ${EXTRA_ARGS} -proj $PRJ_DIR -s $(start_frame) -e $(end_frame) $FILE"
 
 echo "executing: $CMD $ARGS"
 echo "on host: $(hostname)"
