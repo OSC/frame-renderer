@@ -88,15 +88,15 @@ class ConfigurationSingleton
   end
 
   def submit_cluster
-    ENV['FRAME_RENDERER_CLUSTER'] || "owens"
+    ENV['OOD_FRAME_RENDERER_CLUSTER'] || "owens"
   end
 
   def cores
-    (ENV['FRAME_RENDERER_CORES'] || 28).to_i
+    (ENV['OOD_FRAME_RENDERER_CORES'] || 28).to_i
   end
 
   def script_template
-    ENV['FRAME_RENDERER_SCRIPT'] || 'jobs/video_jobs/maya_submit.sh.erb'
+    ENV['OOD_FRAME_RENDERER_SCRIPT'] || 'jobs/video_jobs/maya_submit.sh.erb'
   end
 
   private 

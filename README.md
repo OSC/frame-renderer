@@ -206,20 +206,20 @@ SFTP_HOST=my-host.net
 # cluster and this must be a valid entry in `/etc/ood/config/clusters.d/`
 #
 # defaults to owens (an OSC cluster)
-FRAME_RENDERER_CLUSTER=owens
+OOD_FRAME_RENDERER_CLUSTER=owens
 
 # The number of cores the job is going to request. This is not variable, and every job
 # will request this many cores.
 #
 # defaults to 28 which, on owens, is an entire node.
-FRAME_RENDERER_CORES=28
+OOD_FRAME_RENDERER_CORES=28
 
 # The job script that will be templated and submitted.  The template language is
 # Ruby's ERB.  All the variables in the default script will be available to any
 # new script file.
 #
 # defaults to the script template included with this source (relative directory)
-FRAME_RENDERER_SCRIPT='jobs/video_jobs/maya_submit.sh.erb'
+OOD_FRAME_RENDERER_SCRIPT='jobs/video_jobs/maya_submit.sh.erb'
 ```
 
 ## Developer Guide
