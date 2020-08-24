@@ -18,7 +18,7 @@ class Script < ActiveRecord::Base
     end
 
     def default_cluster
-      'owens'
+      Configuration.submit_cluster
     end
 
     def batch_jobs_dir
@@ -60,7 +60,7 @@ class Script < ActiveRecord::Base
   end
 
   def cores
-    28
+    Configuration.cores
   end
 
   private
@@ -94,7 +94,7 @@ class Script < ActiveRecord::Base
   end
 
   def script_template
-    'jobs/video_jobs/maya_submit.sh.erb'
+    Configuration.script_template
   end
 
   def base_output_dir

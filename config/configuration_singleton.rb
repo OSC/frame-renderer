@@ -87,6 +87,18 @@ class ConfigurationSingleton
     ENV['SFTP_HOST']
   end
 
+  def submit_cluster
+    ENV['OOD_FRAME_RENDERER_CLUSTER'] || "owens"
+  end
+
+  def cores
+    (ENV['OOD_FRAME_RENDERER_CORES'] || 28).to_i
+  end
+
+  def script_template
+    ENV['OOD_FRAME_RENDERER_SCRIPT'] || 'jobs/video_jobs/maya_submit.sh.erb'
+  end
+
   private 
 
   # The environment
