@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.3.0] - 2020-08-25
+### Added
+- Added the ability to load the Kent State modules based on group membership
+
+### Changed
+- Changed the way other sites can configure different things like cores, cluster
+  and the script to be submitted.  Sites can now simply use environment varaibles
+  instead of ruby initializers.
+
 ## [0.2.3] - 2020-04-07
 ### Fixed
 - Another framing bug when users specify just one node [#41](https://github.com/OSC/frame-renderer/pull/40)
