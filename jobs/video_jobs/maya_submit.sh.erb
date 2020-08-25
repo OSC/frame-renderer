@@ -68,8 +68,24 @@ echo "starting at $(date)"
 #load the singularity and ACCAD modules and record the loaded module list
 module use /usr/local/share/lmodfiles/project/osc
 module load singularity/current
+
+<%
+  groups = OodSupport::Process.groups.map(&:name)
+%>
+
+<% if groups.include?('mayakentst') %>
+module load project/kent
+module load maya/2020-kent
+mkdir -p $JOB_TMPDIR/Autodesk
+
+BIND_DIRS="$DIR_BINDS,$JOB_TMPDIR/Autodesk:/var/opt/Autodesk"
+
+TMPDIR=$JOB_TMPDIR maya_init.sh
+<% else %>
+<%# this module blocked by group membership on the file system, so OK to be in else block %>
 module use /usr/local/share/lmodfiles/project/ACCAD
 module load maya/2018-ACCAD
+<% end %>
 
 # set all the different variables you'll need 
 CMD="singularity exec -B $DIR_BINDS $MAYA_IMG Render"
