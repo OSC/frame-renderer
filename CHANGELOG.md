@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.3.1] - 2020-10-15
+### Changed
+- OSU to use the new 2020 modules [#48](https://github.com/OSC/frame-renderer/pull/48).
+
+### Fixed
+- Fixed a bug with bind directories in the singularity command [#48](https://github.com/OSC/frame-renderer/pull/48).
+
 ## [0.3.0] - 2020-08-25
 ### Added
 - Added the ability to load the Kent State modules based on group membership
@@ -43,7 +50,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - ensure app doesn't crash if there is no `~/maya/projects` directory [#30](https://github.com/OSC/frame-renderer/issues/30)
 
-[Unreleased]: https://github.com/OSC/frame-renderer/compare/0.2.2...HEAD
+[Unreleased]: https://github.com/OSC/frame-renderer/compare/0.3.1...HEAD
+[0.3.1]: https://github.com/OSC/frame-renderer/compare/0.3.0...0.3.1
+[0.3.0]: https://github.com/OSC/frame-renderer/compare/0.2.2...0.3.0
 [0.2.2]: https://github.com/OSC/frame-renderer/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/OSC/frame-renderer/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/OSC/frame-renderer/compare/0.1.1...0.2.0
