@@ -8,7 +8,7 @@
 # TMPDIR currently set to something like /tmp/pbstmp.7431620[1] (unescaped)
 # and Maya cannot read filepaths like that correctly.
 JOB_TMPDIR=$TMPDIR
-DIR_BINDS="$JOB_TMPDIR:/tmp"
+BIND_DIRS="$JOB_TMPDIR:/tmp"
 # set a new tmpdir bc that's what the container needs to look at
 export TMPDIR="/tmp"
 
@@ -76,19 +76,20 @@ module load singularity/current
 <% if groups.include?('mayakentst') %>
 module load project/kent
 module load maya/2020-kent
-mkdir -p $JOB_TMPDIR/Autodesk
-
-BIND_DIRS="$DIR_BINDS,$JOB_TMPDIR/Autodesk:/var/opt/Autodesk"
-
-TMPDIR=$JOB_TMPDIR maya_init.sh
 <% else %>
 <%# this module blocked by group membership on the file system, so OK to be in else block %>
-module use /usr/local/share/lmodfiles/project/ACCAD
-module load maya/2018-ACCAD
+module load project/accad
+module load maya/2020-accad
 <% end %>
 
+mkdir -p $JOB_TMPDIR/Autodesk
+BIND_DIRS="$BIND_DIRS,$JOB_TMPDIR/Autodesk:/var/opt/Autodesk"
+
+# init the tmpdir
+TMPDIR=$JOB_TMPDIR maya_init.sh
+
 # set all the different variables you'll need 
-CMD="singularity exec -B $DIR_BINDS $MAYA_IMG Render"
+CMD="singularity exec -B $BIND_DIRS $MAYA_IMG Render"
 RENDERER="<%= renderer %>"
 EXTRA_ARGS="<%= extra %>"
 FILE="<%= file %>"
