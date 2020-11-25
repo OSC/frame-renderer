@@ -50,5 +50,6 @@ gem 'js-routes', '~> 1.2.4'
 gem 'local_time', '~> 1.0.3'
 gem 'ood_appkit', '~> 1.0'
 gem 'ood_core', '~> 0.9.3'
+gem 'shellwords', '~> 0.1'
 
 gem 'nokogiri', '>= 1.10.4'
