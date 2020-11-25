@@ -37,11 +37,11 @@ class Script < ActiveRecord::Base
   end
 
   def start_frame
-    frames.split('-').first
+    @start_frame ||= frames.split('-').first.to_i
   end
 
   def end_frame
-    frames.split('-').last
+    @end_frame ||= frames.split('-').last.to_i
   end
 
   def latest_status
@@ -63,6 +63,18 @@ class Script < ActiveRecord::Base
     Configuration.cores
   end
 
+  def task_start_frames
+    Array.new(tasks).map.with_index(1) do |_, array_id|
+      task_start_frame(array_id)
+    end
+  end
+
+  def task_end_frames
+    Array.new(tasks).map.with_index(1) do |_, array_id|
+      task_end_frame(array_id)
+    end
+  end
+
   private
 
   def validate_file
@@ -81,7 +93,8 @@ class Script < ActiveRecord::Base
   def clean_up(err, content)
     errors.add(:name, err.message)
     job_script.write(content)
-    puts "failed to submit job because of error #{err.inspect}"
+    Rails.logger.error("failed to submit job because of error #{err.inspect}")
+    Rails.logger.error(err.backtrace)
   end
 
   def job_dir
@@ -132,5 +145,73 @@ class Script < ActiveRecord::Base
       accounting_id: present_accounting_id,
       wall_time: walltime * 3600
     }
+  end
+
+  def total_frames
+    # need +1 here bc we're always starting at the first frame
+    # 20 - 1 = is 20 frames, not 19. even 3-3 is 1 frame (the third)
+    @total_frames ||= end_frame - start_frame + 1
+  end
+
+  # we originally defined the form as 'nodes' though we actually
+  # use a job array with many tasks. Each task has 1 node, so they
+  # are 1:1. So while the users see 'node' we actually mean 'task'
+  # and it's imperative we keep them 1:1 becuase all these frames/task
+  # calculations rely on it.
+  def tasks
+    nodes
+  end
+
+  def task_size
+    task_size = (total_frames / tasks).to_i
+    task_size.zero? ? 1 : task_size
+  end
+
+  def offset(array_id)
+    array_id == 1 ? task_size : (array_id - 1) * task_size
+  end
+
+  def task_start_frame(array_id)
+    if nodes == 1
+      start_frame
+    elsif task_size == 1
+      # you have as many nodes as there are tasks
+      start_frame.zero? ? array_id - 1 : array_id
+    elsif array_id > 1
+      start_frame + offset(array_id)
+    else
+      # array id == 1
+      start_frame
+    end
+  end
+
+  def task_end_frame(array_id)
+    ef  = if nodes == 1
+            end_frame
+          elsif last_task?(array_id)
+            # last task just picks up all the rest
+            end_frame
+          elsif task_size == 1
+            # you have as many nodes as there are tasks
+            array_id
+          elsif array_id > 1
+            offset(array_id) + task_size
+          else
+            # array id == 1
+            offset(1)
+          end
+
+    shift_end_frame(array_id) ? ef - 1 : ef
+  end
+
+  def shift_end_frame(array_id)
+    # any endframe needs to be left shifted if start_frame is 0
+    # bc offsets and array_id all start at 1. EXCEPT the very last
+    # task which can pick up any remaining frames
+    !last_task?(array_id) && (start_frame.zero? && tasks != 1)
+  end
+
+  def last_task?(array_id)
+    array_id == tasks
   end
 end
