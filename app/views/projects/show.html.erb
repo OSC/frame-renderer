@@ -79,10 +79,11 @@
         <% images(@project.directory).each do |image| %>
           <tr>
             <td>
-            <%= link_to(
-                File.basename(image),
-                "/pun/sys/files/api/v1/fs" + image + '?download=1'
-                )%>
+            <%-
+              basename = File.basename(image)
+              dir = File.dirname(image)
+            -%>
+            <%= link_to(basename, "/pun/sys/files/fs#{dir}/#{url_encode(basename)}?download=1") %>
             <td>
               <img 
                 class="d-block w-100 thumbnail-zoom" 

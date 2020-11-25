@@ -18,7 +18,7 @@ module ProjectsHelper
 
   def image_to_thumbnail(project_dir, image)
     basename = File.basename(image, File.extname(image))
-    project_dir + '/thumbnails/' + basename + '.png'
+    "#{project_dir}/thumbnails/#{url_encode(basename)}.png"
   end
 
   private
