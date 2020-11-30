@@ -7,9 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.4.0] - 2020-11-30
+### Added
+- tests are now ran in Github actions.
+
+### Changed
+- start and end frames for each tasks are now calculated in Ruby in
+  [49](https://github.com/OSC/frame-renderer/issues/49).
+
+### Fixed
+- Files (scenes and thumbnails) can now have spaces in them in
+  [50](https://github.com/OSC/frame-renderer/pull/50).
+
 ## [0.3.1] - 2020-10-15
 ### Changed
 - OSU to use the new 2020 modules [#48](https://github.com/OSC/frame-renderer/pull/48).
+- tags are now prefixed with v.
 
 ### Fixed
 - Fixed a bug with bind directories in the singularity command [#48](https://github.com/OSC/frame-renderer/pull/48).
@@ -50,8 +63,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - ensure app doesn't crash if there is no `~/maya/projects` directory [#30](https://github.com/OSC/frame-renderer/issues/30)
 
-[Unreleased]: https://github.com/OSC/frame-renderer/compare/0.3.1...HEAD
-[0.3.1]: https://github.com/OSC/frame-renderer/compare/0.3.0...0.3.1
+[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/OSC/frame-renderer/compare/v0.3.1...v0.4.0
+[0.3.1]: https://github.com/OSC/frame-renderer/compare/0.3.0...v0.3.1
 [0.3.0]: https://github.com/OSC/frame-renderer/compare/0.2.2...0.3.0
 [0.2.2]: https://github.com/OSC/frame-renderer/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/OSC/frame-renderer/compare/0.2.0...0.2.1
