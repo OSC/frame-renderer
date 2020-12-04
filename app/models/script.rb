@@ -167,21 +167,16 @@ class Script < ActiveRecord::Base
     task_size.zero? ? 1 : task_size
   end
 
-  def offset(array_id)
-    array_id == 1 ? task_size : (array_id - 1) * task_size
-  end
-
   def task_start_frame(array_id)
     if nodes == 1
       start_frame
     elsif task_size == 1
       # you have as many nodes as there are tasks
       start_frame.zero? ? array_id - 1 : array_id
-    elsif array_id > 1
-      start_frame + offset(array_id)
-    else
-      # array id == 1
+    elsif array_id == 1
       start_frame
+    else
+      task_end_frame(array_id - 1) + 1
     end
   end
 
@@ -194,11 +189,8 @@ class Script < ActiveRecord::Base
           elsif task_size == 1
             # you have as many nodes as there are tasks
             array_id
-          elsif array_id > 1
-            offset(array_id) + task_size
           else
-            # array id == 1
-            offset(1)
+            task_start_frame(array_id) + task_size
           end
 
     shift_end_frame(array_id) ? ef - 1 : ef
