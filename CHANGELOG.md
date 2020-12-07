@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.4.1] - 2020-12-07
+### Fixed
+- Fixed two bugs in [52](https://github.com/OSC/frame-renderer/pull/51)
+  - one where end frames were not calculated correctly if start frame was > 1
+  - another where choosing a single node did not choose the correct element
+    in the bash arrays becuase PBSARRAY_ID was unset.
+
 ## [0.4.0] - 2020-11-30
 ### Added
 - tests are now ran in Github actions.
@@ -63,7 +70,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - ensure app doesn't crash if there is no `~/maya/projects` directory [#30](https://github.com/OSC/frame-renderer/issues/30)
 
-[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/OSC/frame-renderer/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/OSC/frame-renderer/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/OSC/frame-renderer/compare/0.3.0...v0.3.1
 [0.3.0]: https://github.com/OSC/frame-renderer/compare/0.2.2...0.3.0
