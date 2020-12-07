@@ -168,7 +168,7 @@ class Script < ActiveRecord::Base
   end
 
   def task_start_frame(array_id)
-    if nodes == 1
+    if tasks == 1
       start_frame
     elsif task_size == 1
       # you have as many nodes as there are tasks
@@ -181,26 +181,20 @@ class Script < ActiveRecord::Base
   end
 
   def task_end_frame(array_id)
-    ef  = if nodes == 1
-            end_frame
-          elsif last_task?(array_id)
-            # last task just picks up all the rest
-            end_frame
-          elsif task_size == 1
-            # you have as many nodes as there are tasks
-            array_id
-          else
-            task_start_frame(array_id) + task_size
-          end
-
-    shift_end_frame(array_id) ? ef - 1 : ef
-  end
-
-  def shift_end_frame(array_id)
-    # any endframe needs to be left shifted if start_frame is 0
-    # bc offsets and array_id all start at 1. EXCEPT the very last
-    # task which can pick up any remaining frames
-    !last_task?(array_id) && (start_frame.zero? && tasks != 1)
+    if tasks == 1
+      end_frame
+    elsif last_task?(array_id)
+      # last task just picks up all the rest
+      end_frame
+    elsif task_size == 1
+      # you have as many nodes as there are tasks
+      start_frame.zero? ? array_id - 1 : array_id
+    else
+      # have to shift everything -1 because task_size
+      # is always > 1 here, but task_size includes start frame
+      ef = task_start_frame(array_id) + task_size
+      last_task?(array_id) ? ef : ef - 1
+    end
   end
 
   def last_task?(array_id)
