@@ -83,6 +83,9 @@ SKIP_EXISTING="-skipExistingFrames <%= skip_existing %>"
 START_FRAMES=(shift <%= task_start_frames.join(' ')%>)
 END_FRAMES=(shift <%= task_end_frames.join(' ')%>)
 
+# if it's a single node, PBS_ARRAYID isn't set so set it to 1
+[ -n "$PBS_ARRAYID" ] || PBS_ARRAYID=1
+
 export TASK_START_FRAME=${START_FRAMES[$PBS_ARRAYID]}
 export TASK_END_FRAME=${END_FRAMES[$PBS_ARRAYID]}
 

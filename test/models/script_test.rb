@@ -16,8 +16,8 @@ class ScriptTest < ActiveSupport::TestCase
 
   test "task frames evenly spit across many nodes starting from 1" do
     script = Script.new(frames: '1-30', nodes: '3')
-    assert_equal [1, 11, 21], script.task_start_frames
-    assert_equal [10, 20, 30], script.task_end_frames
+    assert_equal [1, 12, 23], script.task_start_frames
+    assert_equal [11, 22, 30], script.task_end_frames
   end
 
   test "task frames evenly spit across many nodes starting from 0" do
@@ -28,8 +28,8 @@ class ScriptTest < ActiveSupport::TestCase
 
   test "task frames un-evenly spit across many nodes starting from 1" do
     script = Script.new(frames: '1-50', nodes: '3')
-    assert_equal [1, 17, 33], script.task_start_frames
-    assert_equal [16, 32, 50], script.task_end_frames
+    assert_equal [1, 18, 35], script.task_start_frames
+    assert_equal [17, 34, 50], script.task_end_frames
   end
 
   test "task frames un-evenly spit across many nodes starting from 0" do
@@ -60,5 +60,23 @@ class ScriptTest < ActiveSupport::TestCase
     script = Script.new(frames: '1-10', nodes: '9')
     assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 9], script.task_start_frames
     assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 10], script.task_end_frames
+  end
+
+  test "task frames starting from >> 1 with 1 node" do
+    script = Script.new(frames: '101-200', nodes: '1')
+    assert_equal [101], script.task_start_frames
+    assert_equal [200], script.task_end_frames
+  end
+
+  test "task frames starting from >> 1 with 4 nodes" do
+    script = Script.new(frames: '101-200', nodes: '4')
+    assert_equal [101, 127, 153, 179], script.task_start_frames
+    assert_equal [126, 152, 178, 200], script.task_end_frames
+  end
+
+  test "task frames starting from >> 1 with many nodes" do
+    script = Script.new(frames: '254-10034', nodes: '15')
+    assert_equal [254, 907, 1560, 2213, 2866, 3519, 4172, 4825, 5478, 6131, 6784, 7437, 8090, 8743, 9396], script.task_start_frames
+    assert_equal [906, 1559, 2212, 2865, 3518, 4171, 4824, 5477, 6130, 6783, 7436, 8089, 8742, 9395, 10034], script.task_end_frames
   end
 end
