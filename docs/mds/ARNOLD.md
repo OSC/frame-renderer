@@ -18,6 +18,7 @@ General purpose flags:
 Frame numbering options
   -s float                    Starting frame for an animation sequence
   -e float                    End frame for an animation sequence
+  -seq string                 Frame number sequence e.g "2 4 6..10"
   -b float                    By frame (or step) for an animation sequence
   -skipExistingFrames boolean Skip frames that are already rendered (if true) or force rendering all frames (if false)
   -pad int                    Number of digits in the output image frame file name
@@ -92,6 +93,12 @@ Render Settings
   -ai:aerr boolean            Abort on Error.
   -ai:alf boolean             Abort on License Fail.
   -ai:slc boolean             Skip License Check.
+  -ai:device int              Render Device ( 0 - CPU , 1 - GPU )
+  -ai:manGpuSel boolean        Turn on/off Manual GPU Selection
+  -ai:gpu int                 Index of the GPU used for the render ( Works in conjunction with manGpuSel and can set a single GPU to render)
+  -ai:enas boolean            Enable Adaptive Sampling.
+  -ai:maxaa int               AA Samples Max.
+  -ai:aath float              AA Adaptive Threshold.
   -ai:uopt string             User Options.
   -ai:port int                Set the Command Port for the Batch Progress Driver
   -ai:ofn string              Original file name.
@@ -105,10 +112,11 @@ Textures
   -ai:txmm float              Maximum texture cache memory. (MB)
   -ai:txmof int               Maximum number of opened textures.
   -ai:txpfs boolean           Per file texture stats.
-  -ai:txdb float              Texture blur in diffuse rays.
-  -ai:txgb float              Texture blur in specular rays.
+  -ai:txdb float              Deprecated parameter.
+  -ai:txgb float              Deprecated parameter.
 
 Feature Overrides
+  -ai:foop boolean            Ignore operators.
   -ai:fotx boolean            Ignore textures.
   -ai:fosh boolean            Ignore shaders.
   -ai:foat boolean            Ignore atmosphere.
@@ -132,9 +140,14 @@ Log
   -ai:lfn string              Log filename.
   -ai:ltc boolean             Log to Console.
   -ai:ltf boolean             Log to File.
-  -ai:lve int                 Verbosity level. (0 - Errors, 1 - Warnings + Info, 2 - Debug)
+  -ai:lve int                 Verbosity level. (0 - Errors, 1 - Warnings, 2 - Info, 3 - Debug)
   -ai:lmw int                 Maximum number of warnings.
   -ai:mti boolean             MtoA Translation Info.
+  -ai:ste boolean             Enable Stats.
+  -ai:stf string              Stats Filename .
+  -ai:stm int                 Stats Mode
+  -ai:pfe boolean             Enable profile.
+  -ai:pff string              Profile Filename.
 
 Mel callbacks
   -preRender string           add Mel code executed before rendering
