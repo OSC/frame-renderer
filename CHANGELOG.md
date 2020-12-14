@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.5.0] - 2020-12-14
+### Changed
+- use SLURM_ARRAY_TASK_ID instead of PBS_ARRAYID to migrate fully to Slurm.
+
 ## [0.4.2] - 2020-12-07
 ### Fixed
 - Yet another frame task calculation bug in [53](https://github.com/OSC/frame-renderer/pull/53)
@@ -74,7 +78,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - ensure app doesn't crash if there is no `~/maya/projects` directory [#30](https://github.com/OSC/frame-renderer/issues/30)
 
-[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.4.2...HEAD
+[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/OSC/frame-renderer/compare/v0.4.2...v0.5.0
 [0.4.2]: https://github.com/OSC/frame-renderer/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/OSC/frame-renderer/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/OSC/frame-renderer/compare/v0.3.1...v0.4.0
