@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#set the resources requests. Job name, time, nodes and cores per task, task count 
+# set the resources requests. because it's Slurm, we just use --exclusive
+# instead of caring about cores
 
-#PBS -l nodes=1:ppn=<%= cores %>
-#PBS -j oe
+#SBATCH --nodes=1 --exclusive
 
 # TMPDIR currently set to something like /tmp/pbstmp.7431620[1] (unescaped)
 # and Maya cannot read filepaths like that correctly.
@@ -78,16 +78,16 @@ EXTRA_ARGS="<%= extra %>"
 PRJ_DIR="<%= project_dir %>"
 SKIP_EXISTING="-skipExistingFrames <%= skip_existing %>"
 
-# added 'shift' to this array so we don't have to deal with PBS_ARRAYID-1
+# added 'shift' to this array so we don't have to deal with SLURM_ARRAY_TASK_ID-1
 # calculations, we can just shift right +1
 START_FRAMES=(shift <%= task_start_frames.join(' ')%>)
 END_FRAMES=(shift <%= task_end_frames.join(' ')%>)
 
-# if it's a single node, PBS_ARRAYID isn't set so set it to 1
-[ -n "$PBS_ARRAYID" ] || PBS_ARRAYID=1
+# if it's a single node, SLURM_ARRAY_TASK_ID isn't set so set it to 1
+[ -n "$SLURM_ARRAY_TASK_ID" ] || SLURM_ARRAY_TASK_ID=1
 
-export TASK_START_FRAME=${START_FRAMES[$PBS_ARRAYID]}
-export TASK_END_FRAME=${END_FRAMES[$PBS_ARRAYID]}
+export TASK_START_FRAME=${START_FRAMES[$SLURM_ARRAY_TASK_ID]}
+export TASK_END_FRAME=${END_FRAMES[$SLURM_ARRAY_TASK_ID]}
 
 CMD=(singularity exec -B $BIND_DIRS $MAYA_IMG Render)
 CMD+=(-r $RENDERER $SKIP_EXISTING ${EXTRA_ARGS} -proj $PRJ_DIR -s $TASK_START_FRAME -e $TASK_END_FRAME)
