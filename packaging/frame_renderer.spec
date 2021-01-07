@@ -21,7 +21,7 @@ License:  MIT
 URL:      https://github.com/OSC/%{repo_name}
 Source0:  https://github.com/OSC/%{repo_name}/archive/%{git_tag}.tar.gz
 
-BuildRequires:  sqlite-devel curl make
+BuildRequires:  ondemand-build
 BuildRequires:  ondemand-runtime
 BuildRequires:  ondemand-ruby
 BuildRequires:  ondemand-nodejs
@@ -29,12 +29,6 @@ BuildRequires:  ondemand-scldevel
 BuildRequires:  ondemand-gems
 Requires:       ondemand
 Requires:       ondemand-gems-%{ondemand_gems_ver}
-
-# Work around issue with EL6 builds
-# https://stackoverflow.com/a/48801417
-%if 0%{?rhel} < 7
-%define __strip /opt/rh/devtoolset-6/root/usr/bin/strip
-%endif
 
 # Disable automatic dependencies as it causes issues with bundled gems and
 # node.js packages used in the apps
