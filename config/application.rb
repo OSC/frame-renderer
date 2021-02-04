@@ -25,5 +25,10 @@ module FrameRenderer
     config.action_controller.per_form_csrf_tokens = true
     config.action_controller.forgery_protection_origin_check = true
     ActiveSupport.to_time_preserves_timezone = false
+
+    # new in rails 5.2
+    # also have represent_boolean_as_integer in config/initializers/boolean_db_columns
+    # because it seems to be executed before this block
+    config.active_record.sqlite3.represent_boolean_as_integer = true
   end
 end
