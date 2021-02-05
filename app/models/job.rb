@@ -1,6 +1,6 @@
 require 'pathname'
 
-class Job < ActiveRecord::Base
+class Job < ApplicationRecord
   belongs_to :script
 
   # add accessors: [ :attr1, :attr2 ] etc. when you want to add getters and

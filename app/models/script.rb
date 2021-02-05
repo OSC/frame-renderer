@@ -1,6 +1,6 @@
 require 'securerandom'
 
-class Script < ActiveRecord::Base
+class Script < ApplicationRecord
   belongs_to :project
   has_many :jobs, dependent: :destroy
   validates :frames, presence: true, format: { with: /\d+\-\d+/ }

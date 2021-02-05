@@ -20,7 +20,15 @@ module FrameRenderer
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # new in rails 5.0
+    config.active_record.belongs_to_required_by_default = true
+    config.action_controller.per_form_csrf_tokens = true
+    config.action_controller.forgery_protection_origin_check = true
+    ActiveSupport.to_time_preserves_timezone = false
+
+    # new in rails 5.2
+    # also have represent_boolean_as_integer in config/initializers/boolean_db_columns
+    # because it seems to be executed before this block
+    config.active_record.sqlite3.represent_boolean_as_integer = true
   end
 end
