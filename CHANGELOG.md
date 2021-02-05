@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.6.0] - 2021-02-04
+### Changed
+- OnDemand 2.0 compatability in [59](https://github.com/OSC/frame-renderer/pull/59)
+  - Upgrades rails 5.2 (up from 4.2)
+  - Upgrades bundler to 2.1.4 (up from 1.7.13)
+
 ## [0.5.0] - 2020-12-14
 ### Changed
 - use SLURM_ARRAY_TASK_ID instead of PBS_ARRAYID to migrate fully to Slurm.
@@ -78,7 +84,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - ensure app doesn't crash if there is no `~/maya/projects` directory [#30](https://github.com/OSC/frame-renderer/issues/30)
 
-[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.6.0...HEAD
+[0.5.0]: https://github.com/OSC/frame-renderer/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/OSC/frame-renderer/compare/v0.4.2...v0.5.0
 [0.4.2]: https://github.com/OSC/frame-renderer/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/OSC/frame-renderer/compare/v0.4.0...v0.4.1
