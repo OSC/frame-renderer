@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.6.2] - 2021-02-08
+### Changed
+- Generate SECRET_KEY_BASE through bash commands instead of rake because rake can fail
+  if dependencies are unmet (installed through bin/setup in the next command) in
+  [61](https://github.com/OSC/frame-renderer/pull/61)
+
 ## [0.6.1] - 2021-02-08
 ### Changed
 - Generate SECRET_KEY_BASE during builds in [60](https://github.com/OSC/frame-renderer/pull/60)
@@ -88,7 +94,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - ensure app doesn't crash if there is no `~/maya/projects` directory [#30](https://github.com/OSC/frame-renderer/issues/30)
 
-[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.6.1...HEAD
+[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.6.2...HEAD
+[0.6.2]: https://github.com/OSC/frame-renderer/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/OSC/frame-renderer/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/OSC/frame-renderer/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/OSC/frame-renderer/compare/v0.4.2...v0.5.0
