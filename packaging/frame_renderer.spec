@@ -46,6 +46,7 @@ scl enable ondemand - << \EOS
 export GEM_HOME=$(pwd)/gems-build
 export GEM_PATH=$(pwd)/gems-build:$GEM_PATH
 export PASSENGER_APP_ENV=production
+export SECRET_KEY_BASE=$(bin/rake secret)
 bin/setup
 EOS
 
