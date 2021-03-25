@@ -17,7 +17,7 @@ class Project < ApplicationRecord
 
   def initialize(params = {})
     super
-    write_attribute(:directory, params[:directory] ||= Project.maya_top_level_dir)
+    write_attribute(:directory, params.to_h[:directory] ||= Project.maya_top_level_dir)
   end
 
   def scenes
