@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.6.3] - 2021-03-26
+### Fixed
+- Fixed a bug where users were unable to create new projects due to nil
+  params in [62](https://github.com/OSC/frame-renderer/pull/60)
+
+### Changed
+- bundler update for mememagic in [63](https://github.com/OSC/frame-renderer/pull/60)
+
 ## [0.6.2] - 2021-02-08
 ### Changed
 - Generate SECRET_KEY_BASE through bash commands instead of rake because rake can fail
