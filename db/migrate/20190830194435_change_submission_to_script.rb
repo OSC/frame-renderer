@@ -1,4 +1,4 @@
-class ChangeSubmissionToScript < ActiveRecord::Migration
+class ChangeSubmissionToScript < ActiveRecord::Migration[4.2]
   def change
     rename_table :submissions, :scripts
 
