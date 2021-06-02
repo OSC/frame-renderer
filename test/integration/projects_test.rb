@@ -18,4 +18,7 @@ class ProductsTest < ActionDispatch::IntegrationTest
       get "/admin/dev/products"
     end
   end
+  test "open_the_application" do
+    sd
+  end
 end
