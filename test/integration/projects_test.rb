@@ -39,10 +39,12 @@ class ProjectsTest < ActionDispatch::IntegrationTest
   #  get ""
   #end
   test "testing_controller_action_create" do
-    postVar = post projects_url, 
+    postVar = post projects_path, 
     params: { project: { name: "can create", description: "project successfully.", directory: "/users/PZS0715/bluitel/maya/projects/"} }
     assert_response :redirect
     follow_redirect!
+    assert_response :success
+    get projects_path
     assert_response :success
   end
   #test "deleting_projects_gets_removed" do
