@@ -43,6 +43,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
     params: { project: { name: "can create", description: "project successfully.", directory: "/users/PZS0715/bluitel/maya/projects/"} }
     assert_response :redirect
     follow_redirect!
+    assert_response :success
   end
   #test "deleting_projects_gets_removed" do
   #  delete "/projects/4"
