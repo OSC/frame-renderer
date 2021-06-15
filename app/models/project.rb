@@ -5,7 +5,7 @@ class Project < ApplicationRecord
   # add accessors: [ :attr1, :attr2 ] etc. when you want to add getters and
   # setters to add new attributes stored in the JSON store
   # don't remove attributes from this list going forward! only deprecate
-  store :project_attrs, coder: JSON, accessors: %i[]
+  store :project_attrs, coder: JSON, accessors: %i[:scenes]
 
   class << self
     def maya_top_level_dir

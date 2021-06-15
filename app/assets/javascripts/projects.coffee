@@ -19,7 +19,7 @@ update = (project_id) ->
       updateSubStatus(data)
 
 # created_at: "2019-08-16T17:13:02.052Z"
-# id: 5
+# id: 5 
 # job_id: "Never-Submitted-fA_5HIA"
 # status: "not submitted"
 # script_id: 1
