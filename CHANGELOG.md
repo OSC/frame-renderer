@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.7.0] - 2021-06-29
+
+### Changed
+
+- Updated the file picker to v1.0.0 to be Open OnDemand 2.0.x compatible
+  in [74](https://github.com/OSC/frame-renderer/pull/74).
+
+### Added
+
+- Added some tests cases around project creation, updating and deleting in
+  [71](https://github.com/OSC/frame-renderer/pull/71).
+
 ## [0.6.3] - 2021-03-26
 ### Fixed
 - Fixed a bug where users were unable to create new projects due to nil
