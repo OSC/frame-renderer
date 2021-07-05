@@ -35,7 +35,6 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       post projects_path, params: params
 
       id = @response.location.to_s.split("/").last
-      puts "fdisfsoifso #{@response.location}"
       assert_difference("Project.count", -1) do
         delete project_path(id)
       end
