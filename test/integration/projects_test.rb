@@ -24,7 +24,6 @@ class ProjectsTest < ActionDispatch::IntegrationTest
   end
 
   test "deleting_a_project" do
-    before = Project.all.size
     Dir.mktmpdir do |tmpdir|
       params = {
         project: {
@@ -36,15 +35,16 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       post projects_path, params: params
 
       id = @response.location.to_s.split("/").last
+      puts "fdisfsoifso #{@response.location}"
+      assert_difference("Project.count", -1) do
+        delete project_path(id)
+      end
 
-      delete project_path(id)
       follow_redirect!
       assert_response :success
-
-      after = Project.all.size
-      assert after = before -1
     end
   end
+
   test "update a project" do
     Dir.mktmpdir do |tmpdir2|
       Dir.mktmpdir do |tmpdir|
@@ -74,6 +74,8 @@ class ProjectsTest < ActionDispatch::IntegrationTest
         put project_path(id), params: new_params
         follow_redirect!
         assert_response :success
+        
+        assert_equal("new name", Project.find(id).name)
 
         after = Project.all.size
         assert_equal(before, after)
