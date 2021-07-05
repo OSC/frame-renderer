@@ -24,6 +24,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
   end
 
   test "deleting_a_project" do
+
     Dir.mktmpdir do |tmpdir|
       params = {
         project: {
@@ -73,8 +74,10 @@ class ProjectsTest < ActionDispatch::IntegrationTest
         put project_path(id), params: new_params
         follow_redirect!
         assert_response :success
+
         
         assert_equal("new name", Project.find(id).name)
+
 
         after = Project.all.size
         assert_equal(before, after)
