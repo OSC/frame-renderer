@@ -1,5 +1,8 @@
 class Project < ApplicationRecord
-  validates :name, uniqueness: true, presence: true, length: { minimum: 5 }
+  validates :name, presence: true, length: { minimum: 5 }, uniqueness: true
+  validates :directory, presence: true 
+  validate :directory_must_be_valid
+  validates_uniqueness_of :name
   has_many :scripts
 
   # add accessors: [ :attr1, :attr2 ] etc. when you want to add getters and
@@ -9,9 +12,16 @@ class Project < ApplicationRecord
 
   class << self
     def maya_top_level_dir
-      dir = "#{Dir.home}/maya/projects/."
+      dir = "#{Dir.home}/maya/projects/"
       FileUtils.mkdir_p dir unless Dir.exist? dir
       dir
+    end
+  end
+
+  
+  def directory_must_be_valid
+    unless Dir.exist? directory
+      errors.add(:directory, "the directory must be valid")
     end
   end
 

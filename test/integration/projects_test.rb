@@ -22,6 +22,39 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       assert after == before + 1
     end
   end
+  
+  test "cannot create same name" do
+    Dir.mktmpdir do |tmpdir|
+      params = {
+        project: {
+          name: "test project one",
+          description: "test project one description",
+          directory: tmpdir
+        }
+      }
+      post projects_path, params: params
+      id = @response.location.to_s.split("/").last
+      assert_redirected_to project_path(id)
+
+      post projects_path, params: params
+      id2 = @response.location.to_s.split("/").last
+      assert_nil(Integer(id2, exception: false))
+
+    end
+  end
+
+  test "cannot create invalid directory" do
+    params = {
+      project: {
+        name: "test project one",
+        description: "test project one description",
+        directory: "tmpdir"
+      }
+    }
+    post projects_path, params: params
+    id = @response.location.to_s.split("/").last
+    assert_nil(Integer(id, exception: false))
+  end
 
   test "deleting_a_project" do
 
