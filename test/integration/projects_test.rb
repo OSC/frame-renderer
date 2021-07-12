@@ -39,8 +39,6 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       assert_difference("Project.count", 0) do
         post projects_path, params: params
       end
-
-
     end
   end
 
