@@ -12,7 +12,7 @@ class Project < ApplicationRecord
 
   class << self
     def maya_top_level_dir
-      dir = "#{Dir.home}/maya/projects/"
+      dir = "#{Dir.home}/maya/projects/."
       FileUtils.mkdir_p dir unless Dir.exist? dir
       dir
     end
