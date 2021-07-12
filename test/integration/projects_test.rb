@@ -35,10 +35,11 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       post projects_path, params: params
       id = @response.location.to_s.split("/").last
       assert_redirected_to project_path(id)
+      
+      assert_difference("Project.count", 0) do
+        post projects_path, params: params
+      end
 
-      post projects_path, params: params
-      id2 = @response.location.to_s.split("/").last
-      assert_nil(Integer(id2, exception: false))
 
     end
   end
@@ -51,9 +52,9 @@ class ProjectsTest < ActionDispatch::IntegrationTest
         directory: "tmpdir"
       }
     }
-    post projects_path, params: params
-    id = @response.location.to_s.split("/").last
-    assert_nil(Integer(id, exception: false))
+    assert_difference("Project.count", 0) do
+      post projects_path, params: params
+    end
   end
 
   test "deleting_a_project" do
