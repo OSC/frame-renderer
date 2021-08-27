@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+## [0.8.0] - 2021-08-27
+
+### Changed
+
+- Update ACCAD module in [84](https://github.com/OSC/frame-renderer/pull/84).
+
+### Added
+
+- Test cases in [77](https://github.com/OSC/frame-renderer/pull/77).
+
 ## [0.7.0] - 2021-06-29
 
 ### Changed
@@ -114,7 +124,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - ensure app doesn't crash if there is no `~/maya/projects` directory [#30](https://github.com/OSC/frame-renderer/issues/30)
 
-[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.6.2...HEAD
+[Unreleased]: https://github.com/OSC/frame-renderer/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/OSC/frame-renderer/compare/v0.7.0...v0.8.0
+[0.7.0]: https://github.com/OSC/frame-renderer/compare/v0.6.3...v0.7.0
+[0.6.3]: https://github.com/OSC/frame-renderer/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/OSC/frame-renderer/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/OSC/frame-renderer/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/OSC/frame-renderer/compare/v0.5.0...v0.6.0
