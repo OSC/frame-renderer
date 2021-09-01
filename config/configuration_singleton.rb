@@ -75,6 +75,10 @@ class ConfigurationSingleton
     Pathname.new(ENV['DATABASE_PATH'] || dataroot.join('production.sqlite3')).expand_path
   end
 
+  def database_path
+    dataroot.join("#{rails_env}.sqlite3").expand_path
+  end
+
   def locale
     (ENV['OOD_LOCALE'] || I18n.default_locale).to_sym
   end
