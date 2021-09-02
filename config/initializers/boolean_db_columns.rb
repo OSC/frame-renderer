@@ -5,7 +5,7 @@ ActiveRecord::ConnectionAdapters::SQLite3Adapter.represent_boolean_as_integer = 
 
 rails_env = ENV['RAILS_ENV']
 db_cfg = Rails.configuration.database_configuration[rails_env]
-db = db_cfg["database"]
+db = db_cfg.nil? ? "" : db_cfg["database"]
 
 if File.exist?(db) && !File.zero?(db)
   Script.where("email = 't'").update_all(email: 1)
