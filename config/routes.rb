@@ -7,7 +7,5 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :maya_projects, :controller => 'projects'
-
   root 'projects#index'
 end
