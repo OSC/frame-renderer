@@ -214,12 +214,12 @@ OOD_FRAME_RENDERER_CLUSTER=owens
 # defaults to 28 which, on owens, is an entire node.
 OOD_FRAME_RENDERER_CORES=28
 
-# The job script that will be templated and submitted.  The template language is
+# The maya job script that will be templated and submitted.  The template language is
 # Ruby's ERB.  All the variables in the default script will be available to any
 # new script file.
 #
 # defaults to the script template included with this source (relative directory)
-OOD_FRAME_RENDERER_SCRIPT='jobs/video_jobs/maya_submit.sh.erb'
+OOD_FRAME_RENDERER_MAYA_SCRIPT='jobs/video_jobs/maya_submit.sh.erb'
 ```
 
 ## Developer Guide

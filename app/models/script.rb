@@ -4,6 +4,7 @@ class Script < ApplicationRecord
   belongs_to :project
   has_many :jobs, dependent: :destroy
   validates :frames, presence: true, format: { with: /\d+\-\d+/ }
+  self.inheritance_column = :type
 
   # add accessors: [ :attr1, :attr2 ] etc. when you want to add getters and
   # setters to add new attributes stored in the JSON store
@@ -107,7 +108,7 @@ class Script < ApplicationRecord
   end
 
   def script_template
-    Configuration.script_template
+    raise 'Subclasses need to define `script_template`'
   end
 
   def base_output_dir
