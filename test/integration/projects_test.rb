@@ -116,4 +116,25 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test 'creates a maya project' do
+    Dir.mktmpdir do |tmpdir|
+      params = {
+        project: {
+          name: 'test maya',
+          description: 'test project one description',
+          directory: tmpdir,
+          project_type: 'maya'
+        }
+      }
+
+      post projects_path, params: params
+      id = @response.location.to_s.split("/").last
+
+      follow_redirect!
+      assert_response :success
+
+      assert Project.find(id).is_a?(MayaProject)
+    end
+  end
 end

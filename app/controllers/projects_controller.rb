@@ -15,9 +15,13 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(project_params)
-    @project.save
-    redirect_to @project
+    @project = ProjectFactory.new_project(project_params)
+    if @project.save
+      redirect_to @project
+    else
+      # TODO: show these errors in the webpage.
+      Rails.logger.info("could not save project becuase #{@project.errors.full_messages}")
+    end
   end
 
   def edit
@@ -43,6 +47,6 @@ class ProjectsController < ApplicationController
   def project_params
     params
       .require(:project)
-      .permit(:name, :description, :directory)
+      .permit(:name, :description, :directory, :project_type)
   end
 end
