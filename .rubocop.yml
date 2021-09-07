@@ -8,7 +8,7 @@ Style/ClassAndModuleChildren:
 Style/WordArray:
   EnforcedStyle: 'brackets'
 Style/StringLiterals:
-  EnforcedStyle: 'double_quotes'
+  EnforcedStyle: 'single_quotes'
 
 # layout
 Layout/HashAlignment:
