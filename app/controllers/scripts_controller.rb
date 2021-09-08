@@ -7,7 +7,12 @@ class ScriptsController < ApplicationController
 
   def create
     @project = Project.find(params[:project_id])
-    @script = @project.scripts.build(script_params)
+
+    if ProjectFactory.maya_project?(@project)
+      @script = @project.scripts.build(script_params.merge({ type: 'MayaScript' }))
+    else
+      raise 'Only Maya projects are currently supported'
+    end
 
     if @script.save
       redirect_to project_path(@project), notice: 'Job settings successfully created.'
@@ -54,7 +59,7 @@ class ScriptsController < ApplicationController
       redirect_to @project, alert: @script.errors[:name].first
     end
   end
-  
+
   def show
     @project = Project.find(params[:project_id])
     @script = Script.find(params[:id])
@@ -117,7 +122,6 @@ class ScriptsController < ApplicationController
       cluster: Script.default_cluster,
       skip_existing: true
     )
-
   end
 
   def script_params

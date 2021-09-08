@@ -99,8 +99,8 @@ class ConfigurationSingleton
     (ENV['OOD_FRAME_RENDERER_CORES'] || 28).to_i
   end
 
-  def script_template
-    ENV['OOD_FRAME_RENDERER_SCRIPT'] || 'jobs/video_jobs/maya_submit.sh.erb'
+  def maya_script_template
+    ENV['OOD_FRAME_RENDERER_MAYA_SCRIPT'] || 'jobs/video_jobs/maya_submit.sh.erb'
   end
 
   private 
