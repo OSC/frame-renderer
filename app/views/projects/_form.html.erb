@@ -6,7 +6,7 @@
     </div>
 
     <div class="panel-body", role="main">
-      <%= form.hidden_field :project_type, value: 'maya' %>
+      <%= form.select :project_type, ['Maya', 'VRay'], required: true %>
       <%= form.text_field :name, label: 'name', required: true %>
       <%= form.text_area :description, label: 'description' %>
       <%= form.text_field :directory,
