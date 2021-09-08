@@ -8,10 +8,10 @@ class ScriptsController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
 
-    if ProjectFactory.maya_project?(@project)
-      @script = @project.scripts.build(script_params.merge({ type: 'MayaScript' }))
+    if ProjectFactory.vray_project?(@project)
+      @script = @project.scripts.build(script_params.merge({ type: 'VRayScript' }))
     else
-      raise 'Only Maya projects are currently supported'
+      @script = @project.scripts.build(script_params.merge({ type: 'MayaScript' }))
     end
 
     if @script.save
@@ -113,7 +113,7 @@ class ScriptsController < ApplicationController
     @jobs = @script.jobs.where(script_id: params[:script_id])
   end
 
-  def init_script 
+  def init_script
     @script = @project.scripts.build(
       file: @project.directory,
       extra: '-verb -b 1 -ai:lve 0',
