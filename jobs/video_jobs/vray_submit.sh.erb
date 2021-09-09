@@ -53,6 +53,7 @@ vray.bin -sceneFile="<%= Shellwords.escape(file) %>" \
   -rtEngine=<%= renderer %> \
   -distributed=0 \
   -skipExistingFrames=<%= skip_existing ? '1' : '0' %> \
+  <%= camera.present? ? "-camera='#{camera}'" : '' %> \
   -display=0 \
   <%= extra %> \
   -frames=<%= frames %>
