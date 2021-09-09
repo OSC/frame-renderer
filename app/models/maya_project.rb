@@ -7,4 +7,8 @@ class MayaProject < Project
   def scenes
     Dir.glob("#{directory}/scenes/**/**.m[ab]")
   end
+
+  def script_type
+    'MayaScript'
+  end
 end

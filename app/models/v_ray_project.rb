@@ -9,4 +9,8 @@ class VRayProject < Project
   def scenes
     Dir.glob("#{directory}/scenes/**/**.vrscene")
   end
+
+  def script_type
+    'VRayScript'
+  end
 end
