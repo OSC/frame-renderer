@@ -52,6 +52,8 @@ vray.bin -sceneFile="<%= Shellwords.escape(file) %>" \
   -imgFile='<%= "#{project_dir}/images/#{Shellwords.escape(name)}.exr" %>' \
   -rtEngine=<%= renderer %> \
   -distributed=0 \
+  -skipExistingFrames=<%= skip_existing ? '1' : '0' %> \
+  -display=0 \
   -frames=<%= frames %>
 
 STATUS=$?
