@@ -54,6 +54,7 @@ vray.bin -sceneFile="<%= Shellwords.escape(file) %>" \
   -distributed=0 \
   -skipExistingFrames=<%= skip_existing ? '1' : '0' %> \
   -display=0 \
+  <%= extra %> \
   -frames=<%= frames %>
 
 STATUS=$?

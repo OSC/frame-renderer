@@ -2,7 +2,7 @@ class ScriptsController < ApplicationController
 
   def new
     @project = Project.find(params[:project_id])
-    init_script
+    @script = default_script
   end
 
   def create
@@ -113,14 +113,13 @@ class ScriptsController < ApplicationController
     @jobs = @script.jobs.where(script_id: params[:script_id])
   end
 
-  def init_script
-    @script = @project.scripts.build(
-      file: @project.directory,
-      extra: '-verb -b 1 -ai:lve 0',
+  def default_script
+    @project.scripts.build(
       email: true,
       walltime: 1,
-      type: @project.script_type,
-      skip_existing: true
+      skip_existing: true,
+      extra: @project.default_script_extra,
+      type: @project.script_type
     )
   end
 
