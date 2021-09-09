@@ -16,4 +16,8 @@ class ProjectFactory
   def self.maya_project?(project)
     project.is_a?(MayaProject)
   end
+
+  def self.vray_project?(project)
+    project.is_a?(VRayProject)
+  end
 end

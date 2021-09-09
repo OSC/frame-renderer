@@ -1,0 +1,67 @@
+#!/bin/bash
+#SBATCH --nodes=1 --exclusive
+
+module purge
+module load project/kent
+module load vray
+module load ruby
+
+UTIL_FILE="$TMPDIR/utils.rb"
+export TASK_START_FRAME="<%= start_frame %>"
+export TASK_END_FRAME="<%= end_frame %>"
+
+cat > "$UTIL_FILE" <<UTILS
+#!/usr/bin/env ruby
+
+def create_thumbnails
+  img_dir="<%= project_dir %>/images"
+  thumb_dir="<%= project_dir %>/thumbnails"
+  task_start_frame = (ENV['TASK_START_FRAME'] || 1).to_i
+  task_end_frame = (ENV['TASK_END_FRAME'] || 1).to_i
+
+  images = Dir.glob("#{img_dir}/*").keep_if do |img|
+    file_num = /\d+/.match(File.basename(img))
+    if !file_num.nil?
+      num = file_num.to_s.to_i
+      num >= task_start_frame && num <= task_end_frame
+    else
+      false
+    end
+  end
+
+  convert_args="-resize 80x80"
+  Dir.mkdir(thumb_dir) unless File.exists?(thumb_dir)
+
+  images.each do |img|
+    fname = File.basename(img, ".*")
+    puts "creating thumbnail for '#{fname}'"
+    system("convert '#{img}' #{convert_args} '#{thumb_dir}/#{fname}.png'")
+  end
+
+end
+UTILS
+
+# vray.bin -sceneFile=$OSC_VRAY_DIR/scenes/caustics.vrscene \
+#   -imgFile={output directory/caustics.exr} \
+#   -distributed=0 -imgWidth=1920 -imgHeight=1080 \
+#   -display=0 -rtEngine=5 -frames=1-10
+
+mkdir -p "<%= project_dir %>/images"
+
+vray.bin -sceneFile="<%= Shellwords.escape(file) %>" \
+  -imgFile='<%= "#{project_dir}/images/#{Shellwords.escape(name)}.exr" %>' \
+  -rtEngine=<%= renderer %> \
+  -distributed=0 \
+  -frames=<%= frames %>
+
+STATUS=$?
+
+echo "ended at $(date)"
+echo "ended with status $STATUS"
+
+if [ $STATUS -eq 0 ]; then
+  echo "now creating thumbnails"
+  ruby -r $UTIL_FILE -e create_thumbnails
+fi
+
+exit $STATUS

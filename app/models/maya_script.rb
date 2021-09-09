@@ -9,4 +9,19 @@ class MayaScript < Script
   def script_template
     Configuration.maya_script_template
   end
+
+  def renderers
+    [
+      'arnold', 'default', 'file', 'hw2', 'hw',
+      'interBatch', 'sw', 'turtle', 'turtlebake', 'vr'
+    ].freeze
+  end
+
+  def cores
+    Configuration.cores
+  end
+
+  def cluster
+    Configuration.submit_cluster
+  end
 end

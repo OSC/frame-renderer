@@ -18,10 +18,6 @@ class Script < ApplicationRecord
       'not submitted'
     end
 
-    def default_cluster
-      Configuration.submit_cluster
-    end
-
     def batch_jobs_dir
       'batch_jobs'
     end
@@ -61,7 +57,19 @@ class Script < ApplicationRecord
   end
 
   def cores
-    Configuration.cores
+    raise 'Subclasses need to define `cores`'
+  end
+
+  def cluster
+    raise 'Subclasses need to define `cluster`'
+  end
+
+  def script_template
+    raise 'Subclasses need to define `script_template`'
+  end
+
+  def renderers
+    raise 'Subclasses need to define `renderers`'
   end
 
   def task_start_frames
@@ -105,10 +113,6 @@ class Script < ApplicationRecord
   def job_sub_dir
     # try to make sure this only gets called once during .new
     @job_sub_dir ||= Time.now.to_i.to_s
-  end
-
-  def script_template
-    raise 'Subclasses need to define `script_template`'
   end
 
   def base_output_dir
