@@ -25,6 +25,10 @@ class MayaScript < Script
     Configuration.submit_cluster
   end
 
+  def available_versions
+    ['2020', '2022']
+  end
+
   def job_name
     'maya-render'
   end

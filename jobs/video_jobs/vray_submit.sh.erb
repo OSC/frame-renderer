@@ -3,12 +3,10 @@
 
 module purge
 module load project/kent
-module load vray
+module load vray/<%= module_version %>
 module load ruby
 
 UTIL_FILE="$TMPDIR/utils.rb"
-export TASK_START_FRAME="<%= start_frame %>"
-export TASK_END_FRAME="<%= end_frame %>"
 
 # added 'shift' to this array as the 0th index because SLURM_ARRAY_TASK_ID is always
 # greater than or equal to 1.
