@@ -13,4 +13,8 @@ class VRayProject < Project
   def script_type
     'VRayScript'
   end
+
+  def default_script_extra
+    '-verboseLevel=3'
+  end
 end

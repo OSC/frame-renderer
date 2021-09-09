@@ -13,4 +13,8 @@ class MayaProject < Project
   def script_type
     'MayaScript'
   end
+
+  def default_script_extra
+    '-verb -b 1 -ai:lve 0'
+  end
 end
