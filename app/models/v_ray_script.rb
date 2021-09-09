@@ -26,4 +26,8 @@ class VRayScript < Script
   def job_name
     'vray-render'
   end
+
+  def normalized_name
+    name.parameterize(separator: '_')
+  end
 end

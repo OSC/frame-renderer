@@ -49,7 +49,7 @@ UTILS
 mkdir -p "<%= project_dir %>/images"
 
 vray.bin -sceneFile="<%= Shellwords.escape(file) %>" \
-  -imgFile='<%= "#{project_dir}/images/#{Shellwords.escape(name)}.exr" %>' \
+  -imgFile='<%= "#{project_dir}/images/#{normalized_name}.exr" %>' \
   -rtEngine=<%= renderer %> \
   -distributed=0 \
   -skipExistingFrames=<%= skip_existing ? '1' : '0' %> \
