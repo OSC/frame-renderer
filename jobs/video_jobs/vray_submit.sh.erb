@@ -10,6 +10,17 @@ UTIL_FILE="$TMPDIR/utils.rb"
 export TASK_START_FRAME="<%= start_frame %>"
 export TASK_END_FRAME="<%= end_frame %>"
 
+# added 'shift' to this array as the 0th index because SLURM_ARRAY_TASK_ID is always
+# greater than or equal to 1.
+START_FRAMES=(shift <%= task_start_frames.join(' ')%>)
+END_FRAMES=(shift <%= task_end_frames.join(' ')%>)
+
+# if it's a single node, SLURM_ARRAY_TASK_ID isn't set so set it to 1
+[ -n "$SLURM_ARRAY_TASK_ID" ] || SLURM_ARRAY_TASK_ID=1
+
+export TASK_START_FRAME=${START_FRAMES[$SLURM_ARRAY_TASK_ID]}
+export TASK_END_FRAME=${END_FRAMES[$SLURM_ARRAY_TASK_ID]}
+
 cat > "$UTIL_FILE" <<UTILS
 #!/usr/bin/env ruby
 
@@ -56,7 +67,7 @@ vray.bin -sceneFile="<%= Shellwords.escape(file) %>" \
   <%= camera.present? ? "-camera='#{camera}'" : '' %> \
   -display=0 \
   <%= extra %> \
-  -frames=<%= frames %>
+  -frames=$TASK_START_FRAME-$TASK_END_FRAME
 
 STATUS=$?
 
