@@ -72,6 +72,10 @@ class Script < ApplicationRecord
     raise 'Subclasses need to define `renderers`'
   end
 
+  def job_name
+    raise 'Subclasses need to define `job_name`'
+  end
+
   def task_start_frames
     Array.new(tasks).map.with_index(1) do |_, array_id|
       task_start_frame(array_id)
@@ -143,7 +147,7 @@ class Script < ApplicationRecord
 
   def job_opts
     {
-      job_name: 'maya-render',
+      job_name: job_name,
       email_on_terminated: email,
       job_array_request: job_array_request,
       workdir: job_dir,
