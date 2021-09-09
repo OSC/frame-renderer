@@ -22,4 +22,8 @@ class VRayScript < Script
     # let's just the default right now
     ['0'].freeze
   end
+
+  def job_name
+    'vray-render'
+  end
 end

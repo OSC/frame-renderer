@@ -24,4 +24,8 @@ class MayaScript < Script
   def cluster
     Configuration.submit_cluster
   end
+
+  def job_name
+    'maya-render'
+  end
 end

@@ -119,7 +119,7 @@ class ScriptsController < ApplicationController
       extra: '-verb -b 1 -ai:lve 0',
       email: true,
       walltime: 1,
-      cluster: Script.default_cluster,
+      type: @project.script_type,
       skip_existing: true
     )
   end
