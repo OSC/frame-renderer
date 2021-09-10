@@ -76,6 +76,16 @@ class Script < ApplicationRecord
     raise 'Subclasses need to define `job_name`'
   end
 
+  def available_versions
+    raise 'Subclasses need to define `versions_available`'
+  end
+
+  # shell scripts files need to use this method so that we keep backward compatability
+  # with jobs that never set versions.
+  def module_version
+    version.to_s.present? ? version : available_versions.first
+  end
+
   def task_start_frames
     Array.new(tasks).map.with_index(1) do |_, array_id|
       task_start_frame(array_id)

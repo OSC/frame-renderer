@@ -9,6 +9,8 @@
       <div class="panel-body", role="main">
         <%= form.text_field :name, required: true %> 
 
+        <%= form.select :version, @script.available_versions, required: true, label: "#{version_label(@project)} version" %>
+
         <%= form.text_field :frames,
           required: true, placeholder: '1-100',
           pattern: '\d+-\d+', help: "Must be in the form startframe-endframe" %>

@@ -27,6 +27,10 @@ class VRayScript < Script
     'vray-render'
   end
 
+  def available_versions
+    ['5.10.02']
+  end
+
   def normalized_name
     name.parameterize(separator: '_')
   end

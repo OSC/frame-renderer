@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_07_155035) do
+ActiveRecord::Schema.define(version: 2021_09_09_190250) do
 
   create_table "jobs", force: :cascade do |t|
     t.string "status"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2021_09_07_155035) do
     t.text "script_attrs", default: ""
     t.string "accounting_id"
     t.text "type"
+    t.string "version"
     t.index ["project_id"], name: "index_scripts_on_project_id"
   end
 
