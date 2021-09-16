@@ -19,8 +19,11 @@ class VRayScript < Script
   end
 
   def renderers
-    # let's just the default right now
-    ['0'].freeze
+    [
+      ['V-Ray Renderer (0)', '0'],
+      ['CPU RT engine (1)', '1'],
+      ['GPU RT engine (5)', '5']
+    ]
   end
 
   def job_name
