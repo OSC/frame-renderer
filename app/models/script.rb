@@ -146,7 +146,7 @@ class Script < ApplicationRecord
   end
 
   def templated_content
-    erb = ERB.new(File.read(script_template))
+    erb = ERB.new(File.read(script_template), nil, '-')
     erb.filename = script_template.to_s
     erb.result(binding)
   end
