@@ -2,12 +2,17 @@ class ScriptsController < ApplicationController
 
   def new
     @project = Project.find(params[:project_id])
-    init_script
+    @script = default_script
   end
 
   def create
     @project = Project.find(params[:project_id])
-    @script = @project.scripts.build(script_params)
+
+    if ProjectFactory.vray_project?(@project)
+      @script = @project.scripts.build(script_params.merge({ type: 'VRayScript' }))
+    else
+      @script = @project.scripts.build(script_params.merge({ type: 'MayaScript' }))
+    end
 
     if @script.save
       redirect_to project_path(@project), notice: 'Job settings successfully created.'
@@ -54,7 +59,7 @@ class ScriptsController < ApplicationController
       redirect_to @project, alert: @script.errors[:name].first
     end
   end
-  
+
   def show
     @project = Project.find(params[:project_id])
     @script = Script.find(params[:id])
@@ -108,16 +113,14 @@ class ScriptsController < ApplicationController
     @jobs = @script.jobs.where(script_id: params[:script_id])
   end
 
-  def init_script 
-    @script = @project.scripts.build(
-      file: @project.directory,
-      extra: '-verb -b 1 -ai:lve 0',
+  def default_script
+    @project.scripts.build(
       email: true,
       walltime: 1,
-      cluster: Script.default_cluster,
-      skip_existing: true
+      skip_existing: true,
+      extra: @project.default_script_extra,
+      type: @project.script_type
     )
-
   end
 
   def script_params
@@ -125,7 +128,7 @@ class ScriptsController < ApplicationController
       .require(:script)
       .permit(
         :name, :frames, :camera, :file, :accounting_id, :cluster, :nodes,
-        :renderer, :extra, :walltime, :email, :skip_existing
+        :renderer, :extra, :walltime, :email, :skip_existing, :version
       )
   end
 

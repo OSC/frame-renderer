@@ -162,6 +162,8 @@ for convenience. For more information see
 
 ## Additional Options
 
+### Maya Additional Options
+
 The default given is `-verb -b 1 -ai:lve 0`.  Here's a breakdown of what those flags mean:
 
 * `-verb` Print Mel commands before they are executed
@@ -176,6 +178,12 @@ of each other.
 
 To view all of the possible arguments see [this page](/docs/mds/ARNOLD.md) for the Arnold renderer. Flags for
 other renderers are not documented here, but could be if requested.
+
+### VRay Additional Options
+
+The default for VRay is `-verbose=3` which is the default log output level.
+
+See [the VRAY help page](/docs/mds/VRAY.md) for all the available flags you can use here.
 
 ## Running Maya UI in a VDI
 
@@ -214,12 +222,12 @@ OOD_FRAME_RENDERER_CLUSTER=owens
 # defaults to 28 which, on owens, is an entire node.
 OOD_FRAME_RENDERER_CORES=28
 
-# The job script that will be templated and submitted.  The template language is
+# The maya job script that will be templated and submitted.  The template language is
 # Ruby's ERB.  All the variables in the default script will be available to any
 # new script file.
 #
 # defaults to the script template included with this source (relative directory)
-OOD_FRAME_RENDERER_SCRIPT='jobs/video_jobs/maya_submit.sh.erb'
+OOD_FRAME_RENDERER_MAYA_SCRIPT='jobs/video_jobs/maya_submit.sh.erb'
 ```
 
 ## Developer Guide

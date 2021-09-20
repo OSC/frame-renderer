@@ -4,6 +4,7 @@ class Script < ApplicationRecord
   belongs_to :project
   has_many :jobs, dependent: :destroy
   validates :frames, presence: true, format: { with: /\d+\-\d+/ }
+  self.inheritance_column = :type
 
   # add accessors: [ :attr1, :attr2 ] etc. when you want to add getters and
   # setters to add new attributes stored in the JSON store
@@ -15,10 +16,6 @@ class Script < ApplicationRecord
   class << self
     def never_submitted_status
       'not submitted'
-    end
-
-    def default_cluster
-      Configuration.submit_cluster
     end
 
     def batch_jobs_dir
@@ -60,7 +57,33 @@ class Script < ApplicationRecord
   end
 
   def cores
-    Configuration.cores
+    raise 'Subclasses need to define `cores`'
+  end
+
+  def cluster
+    raise 'Subclasses need to define `cluster`'
+  end
+
+  def script_template
+    raise 'Subclasses need to define `script_template`'
+  end
+
+  def renderers
+    raise 'Subclasses need to define `renderers`'
+  end
+
+  def job_name
+    raise 'Subclasses need to define `job_name`'
+  end
+
+  def available_versions
+    raise 'Subclasses need to define `versions_available`'
+  end
+
+  # shell scripts files need to use this method so that we keep backward compatability
+  # with jobs that never set versions.
+  def module_version
+    version.to_s.present? ? version : available_versions.first
   end
 
   def task_start_frames
@@ -106,10 +129,6 @@ class Script < ApplicationRecord
     @job_sub_dir ||= Time.now.to_i.to_s
   end
 
-  def script_template
-    Configuration.script_template
-  end
-
   def base_output_dir
     Pathname.new(project_dir).join('batch_jobs').tap { |p| p.mkpath unless p.exist? }
   end
@@ -127,7 +146,7 @@ class Script < ApplicationRecord
   end
 
   def templated_content
-    erb = ERB.new(File.read(script_template))
+    erb = ERB.new(File.read(script_template), nil, '-')
     erb.filename = script_template.to_s
     erb.result(binding)
   end
@@ -138,7 +157,7 @@ class Script < ApplicationRecord
 
   def job_opts
     {
-      job_name: 'maya-render',
+      job_name: job_name,
       email_on_terminated: email,
       job_array_request: job_array_request,
       workdir: job_dir,

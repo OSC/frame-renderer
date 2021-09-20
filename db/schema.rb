@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_16_191322) do
+ActiveRecord::Schema.define(version: 2021_09_09_190250) do
 
   create_table "jobs", force: :cascade do |t|
     t.string "status"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2019_09_16_191322) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "project_attrs", default: ""
+    t.text "type"
   end
 
   create_table "scripts", force: :cascade do |t|
@@ -56,6 +57,8 @@ ActiveRecord::Schema.define(version: 2019_09_16_191322) do
     t.integer "nodes", default: 1
     t.text "script_attrs", default: ""
     t.string "accounting_id"
+    t.text "type"
+    t.string "version"
     t.index ["project_id"], name: "index_scripts_on_project_id"
   end
 

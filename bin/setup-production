@@ -27,7 +27,7 @@ chdir APP_ROOT do
 
   # currently SQLite-specific and not safe for Sqlite URIs
   # https://www.sqlite.org/uri.html
-  if Configuration.production_database_path.file?
+  if Configuration.database_path.file?
     # Get a list of all migration for this app
     app_migrations = Dir.glob("#{APP_ROOT}/db/migrate/*")
                         .map { |v| File.basename(v).split('_').first }
@@ -35,7 +35,7 @@ chdir APP_ROOT do
     # Read in current migrations from database
     require 'sqlite3'
     begin
-      db = SQLite3::Database.new Configuration.production_database_path.to_s
+      db = SQLite3::Database.new Configuration.database_path.to_s
       db_migrations = db.execute('SELECT * FROM schema_migrations').map(&:first)
     rescue SQLite3::Exception => e
       abort "Exception occurred: #{e}"
@@ -45,10 +45,10 @@ chdir APP_ROOT do
 
     # Compare the two arrays of migrations
     unless app_migrations.sort == db_migrations.sort
-      abort "Your database differs significantly from the app's schema"
+      `RAILS_ENV=#{ENV['RAILS_ENV']} rake db:migrate`
     end
   else
-    Configuration.production_database_path.parent.mkpath
+    Configuration.database_path.parent.mkpath
     `RAILS_ENV=production bin/rake db:setup`
   end
 end

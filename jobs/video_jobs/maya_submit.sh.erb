@@ -59,11 +59,11 @@ module load ruby
 
 <% if groups.include?('mayakentst') %>
 module load project/kent
-module load maya/2020-kent
+module load maya/<%= module_version %>-kent
 <% else %>
 <%# this module blocked by group membership on the file system, so OK to be in else block %>
 module load project/accad
-module load maya/2022-accad
+module load maya/<%= module_version %>-accad
 <% end %>
 
 mkdir -p $JOB_TMPDIR/Autodesk
@@ -78,8 +78,8 @@ EXTRA_ARGS="<%= extra %>"
 PRJ_DIR="<%= project_dir %>"
 SKIP_EXISTING="-skipExistingFrames <%= skip_existing %>"
 
-# added 'shift' to this array so we don't have to deal with SLURM_ARRAY_TASK_ID-1
-# calculations, we can just shift right +1
+# added 'shift' to this array as the 0th index because SLURM_ARRAY_TASK_ID is always
+# greater than or equal to 1.
 START_FRAMES=(shift <%= task_start_frames.join(' ')%>)
 END_FRAMES=(shift <%= task_end_frames.join(' ')%>)
 
