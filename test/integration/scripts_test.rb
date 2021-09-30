@@ -32,6 +32,22 @@ class ProjectsTest < ActionDispatch::IntegrationTest
     }
   end
 
+  def create_script 
+    Dir.mktmpdir do |tmpdir|
+      id = new_project(tmpdir)
+      get project_path(id)
+      assert_response :success
+
+      get new_project_script_path(id)
+      assert_response :success
+
+      post project_scripts_path(id), params: script_params
+      follow_redirect!
+      assert_response :success
+      id
+    end
+  end
+
   test 'maya project creates maya script' do
     Dir.mktmpdir do |tmpdir|
       id = new_project(tmpdir)
@@ -74,5 +90,12 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       assert_equal 1, Project.find(id).scripts.length
       assert_equal true, Project.find(id).scripts[0].is_a?(VRayScript)
     end
+  end
+  test 'deleting a project deletes a script' do 
+    id = create_script
+    delete project_script_path(id)
+
+    follow_redirect!
+    assert_response :success
   end
 end
