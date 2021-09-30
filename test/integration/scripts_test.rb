@@ -97,5 +97,8 @@ class ProjectsTest < ActionDispatch::IntegrationTest
 
     follow_redirect!
     assert_response :success
+
+    assert_equal 0, Project.find(id).scripts.length
+    assert_equal false, Project.find(id).scripts[0].is_a?(MayaScript)
   end
 end
