@@ -1,43 +1,36 @@
 variables:
- #older versions of git have issues fetching. 
- GIT_STRATEGY: clone
+  # older versions of git have issues fetching.
+  GIT_STRATEGY: clone
+  OOD_PACKAGING_DEBUG: 'true'
+  OOD_PACKAGING_GPG_PRIVATE_KEY: /systems/osc_certs/gpg/ondemand/ondemand.sec
+  OOD_PACKAGING_GPG_PASSPHRASE: /systems/osc_certs/gpg/ondemand/.gpgpass
 
 before_script:
   - docker info
   - '[ -d tmp ] || mkdir tmp'
-  - git clone https://github.com/OSC/ondemand-packaging.git tmp/ondemand-packaging
-  - cp /systems/osc_certs/gpg/ondemand/.gpgpass $CI_PROJECT_DIR/tmp/ondemand-packaging/
-  - cp /systems/osc_certs/gpg/ondemand/ondemand.sec $CI_PROJECT_DIR/tmp/ondemand-packaging/
+  - git clone --branch main https://github.com/OSC/ondemand-packaging.git tmp/ondemand-packaging
 stages:
   - build
   - deploy
 
 rpm-build:
-  variables:
-    BUILD_SH: "./tmp/ondemand-packaging/build.sh"
-    WORK_DIR: "$CI_PROJECT_DIR/tmp/work"
-    OUTPUT_DIR: "$CI_PROJECT_DIR/tmp/output"
-    PKGING_DIR: "$CI_PROJECT_DIR/packaging"
   stage: build
-  only:
-    - tags
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: '$CI_PIPELINE_SOURCE == "external_pull_request_event"'
   script:
-    - $BUILD_SH -w $WORK_DIR -o $OUTPUT_DIR -V $CI_COMMIT_TAG -u -v $PKGING_DIR
+    - ./tmp/ondemand-packaging/bin/ood_packaging -w $CI_PROJECT_DIR/tmp/work -o $CI_PROJECT_DIR/tmp/output -V $CI_COMMIT_TAG -T $CI_PROJECT_DIR
+  parallel:
+    matrix:
+      - OOD_PACKAGING_DIST: [el7, el8]
   artifacts:
     paths:
       - tmp/output
     name: "$CI_PROJECT_NAME-$CI_COMMIT_TAG"
 
-
 rpm-deploy:
-  variables:
-    RLS_SCRIPT: "./tmp/ondemand-packaging/release.py"
-    RLS_KEY: "/systems/osc_certs/ssh/ondemand-packaging/id_rsa"
-    RLS_OUTPUT: "./tmp/output/*"
-    SECTION: "main"
   stage: deploy
-  only:
-    - tags
+  rules:
+    - if: $CI_COMMIT_TAG
   script:
-    - if [[ "$CI_COMMIT_TAG" =~ .*_.* ]]; then export SECTION=ci; fi
-    - $RLS_SCRIPT --debug --pkey $RLS_KEY -c $SECTION $RLS_OUTPUT
+    - ./tmp/ondemand-packaging/release.py --debug --pkey /systems/osc_certs/ssh/ondemand-packaging/id_rsa -c main ./tmp/output/*
