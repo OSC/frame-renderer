@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.1] - 2022-10-06
+
+### Fixed
+
+- [118](https://github.com/OSC/frame-renderer/pull/118) updates `ood_core` to safely bypass
+  files that the user cannot read.
+
 ## [1.0.0] - 2021-09-20
 
 1.0.0 requires a database migration from 0.x versions, so it's increased a major version
@@ -134,7 +141,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - ensure app doesn't crash if there is no `~/maya/projects` directory [#30](https://github.com/OSC/frame-renderer/issues/30)
 
-[Unreleased]: https://github.com/OSC/frame-renderer/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/OSC/frame-renderer/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/OSC/frame-renderer/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/OSC/frame-renderer/compare/v0.8.0...v1.0.0
 [0.8.0]: https://github.com/OSC/frame-renderer/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/OSC/frame-renderer/compare/v0.6.3...v0.7.0
