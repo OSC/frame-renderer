@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source scl_source enable rh-ruby27
+exec /bin/env ruby "$@"
