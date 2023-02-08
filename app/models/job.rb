@@ -17,7 +17,7 @@ class Job < ApplicationRecord
 
   def submit(content = nil, opts = {})
     options = opts.merge(content: content)
-    script = OodCore::Job::Script.new(options)
+    script = OodCore::Job::Script.new(**options)
 
     job_id = adapter.submit script # throw exception up the stack
 
