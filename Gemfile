@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.6'
+gem 'rails', '6.0.6.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.3.6'
+gem 'sqlite3', '~> 1.4.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -43,8 +43,7 @@ gem 'bootstrap_form', '~> 2.7.0'
 gem 'dotenv-rails', '~> 2.1'
 gem 'js-routes', '~> 1.2.4'
 gem 'local_time', '~> 1.0.3'
-gem 'ood_appkit', '~> 1.0'
+gem 'ood_appkit', '~> 2.1'
 gem 'ood_core', '~> 0.21.0'
-gem 'shellwords', '~> 0.1'
 
 gem 'nokogiri', '>= 1.10.4'
