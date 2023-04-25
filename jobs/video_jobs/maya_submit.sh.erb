@@ -50,7 +50,6 @@ echo "starting at $(date)"
 module purge
 #load the singularity and ACCAD modules and record the loaded module list
 module use /usr/local/share/lmodfiles/project/osc
-module load singularity/current
 module load ruby
 
 <%
@@ -89,7 +88,8 @@ END_FRAMES=(shift <%= task_end_frames.join(' ')%>)
 export TASK_START_FRAME=${START_FRAMES[$SLURM_ARRAY_TASK_ID]}
 export TASK_END_FRAME=${END_FRAMES[$SLURM_ARRAY_TASK_ID]}
 
-CMD=(singularity exec -B $BIND_DIRS $MAYA_IMG Render)
+ulimit -c 0
+CMD=(apptainer exec -B $BIND_DIRS $MAYA_IMG Render)
 CMD+=(-r $RENDERER $SKIP_EXISTING ${EXTRA_ARGS} -proj $PRJ_DIR -s $TASK_START_FRAME -e $TASK_END_FRAME)
 
 echo "executing: ${CMD[@]} <%= Shellwords.escape(file) %>"
