@@ -26,7 +26,7 @@ class MayaScript < Script
   end
 
   def available_versions
-    ['2020', '2022']
+    ['2020', '2022', '2023']
   end
 
   def job_name
