@@ -46,3 +46,7 @@ gem 'ood_appkit', '~> 2.1'
 gem 'ood_core', '~> 0.21.0'
 
 gem 'nokogiri', '>= 1.10.4'
+
+# ruby 3.1 ships psych 4 which breaks
+# and rails 6.0 does not have the patch
+gem 'psych', '< 4'
