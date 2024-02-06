@@ -2,7 +2,7 @@
 %global debug_package %{nil}
 %global repo_name frame-renderer
 %global app_name frame-renderer
-%define ondemand_gems_ver %(rpm --qf "%%{version}" -q ondemand-gems)
+%define ondemand_gems_ver %(rpm --qf "%%{version}-%%{release}" -q ondemand-gems | sed -r 's/.el.+//g')
 %global gem_home %{scl_ondemand_apps_gem_home}/%{app_name}
 
 %{!?package_release: %define package_release 1}
