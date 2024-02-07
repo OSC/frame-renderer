@@ -84,7 +84,6 @@ touch %{_localstatedir}/www/ood/apps/sys/%{app_name}/tmp/restart.txt
 
 %files
 %defattr(-,root,root)
-%{gem_home}
 %{_localstatedir}/www/ood/apps/sys/%{app_name}
 %{_localstatedir}/www/ood/apps/sys/%{app_name}/manifest.yml
 %ghost %{_localstatedir}/www/ood/apps/sys/%{app_name}/tmp/restart.txt
