@@ -2,8 +2,6 @@
 %global debug_package %{nil}
 %global repo_name frame-renderer
 %global app_name frame-renderer
-%define ondemand_gems_ver %(rpm --qf "%%{version}-%%{release}" -q ondemand-gems | sed -r 's/.el.+//g')
-%global gem_home %{scl_ondemand_apps_gem_home}/%{app_name}
 
 %{!?package_release: %define package_release 1}
 %{!?git_tag: %define git_tag v%{package_version}}
@@ -26,9 +24,8 @@ BuildRequires:  ondemand-runtime
 BuildRequires:  ondemand-ruby
 BuildRequires:  ondemand-nodejs
 BuildRequires:  ondemand-scldevel
-BuildRequires:  ondemand-gems
 Requires:       ondemand
-Requires:       ondemand-gems-%{ondemand_gems_ver}
+
 
 # Disable automatic dependencies as it causes issues with bundled gems and
 # node.js packages used in the apps
@@ -43,17 +40,13 @@ DESCRIPTION
 
 %build
 scl enable ondemand - << \EOS
-export GEM_HOME=$(pwd)/gems-build
-export GEM_PATH=$(pwd)/gems-build:$GEM_PATH
+bundle config path --local vendor/bundle
 export PASSENGER_APP_ENV=production
 export SECRET_KEY_BASE=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 128 | head -n 1)
 bin/setup
 EOS
 
 %install
-%__mkdir_p %{buildroot}%{gem_home}
-%__mv ./gems-build/* %{buildroot}%{gem_home}/
-
 %__rm        ./log/production.log
 %__mkdir_p   %{buildroot}%{_localstatedir}/www/ood/apps/sys/%{app_name}
 %__cp -a ./. %{buildroot}%{_localstatedir}/www/ood/apps/sys/%{app_name}/
