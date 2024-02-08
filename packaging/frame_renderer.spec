@@ -2,6 +2,7 @@
 %global debug_package %{nil}
 %global repo_name frame-renderer
 %global app_name frame-renderer
+%global _build_id_links none
 
 %{!?package_release: %define package_release 1}
 %{!?git_tag: %define git_tag v%{package_version}}
