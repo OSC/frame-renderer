@@ -16,16 +16,16 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: Setup os dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsqlite3-dev
+
       - name: Setup Ruby using Bundler
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
           bundler-cache: true
-
-      - name: Setup os dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libsqlite3-dev
 
       - name: Install gems
         run: bundle install
