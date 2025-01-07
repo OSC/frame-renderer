@@ -92,11 +92,11 @@ class ConfigurationSingleton
   end
 
   def submit_cluster
-    ENV['OOD_FRAME_RENDERER_CLUSTER'] || "owens"
+    ENV['OOD_FRAME_RENDERER_CLUSTER'] || 'cardinal'
   end
 
   def cores
-    (ENV['OOD_FRAME_RENDERER_CORES'] || 28).to_i
+    (ENV['OOD_FRAME_RENDERER_CORES'] || 48).to_i
   end
 
   def maya_script_template
