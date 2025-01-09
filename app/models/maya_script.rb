@@ -26,10 +26,18 @@ class MayaScript < Script
   end
 
   def available_versions
-    ['2025']
+    if accad?
+      ['2023', '2025']
+    else
+      ['2025']
+    end
   end
 
   def job_name
     'maya-render'
+  end
+
+  def accad?
+    CurrentUser.group_names.include?('mayaosu')
   end
 end
