@@ -45,7 +45,7 @@ gem 'local_time', '~> 1.0.3'
 gem 'ood_appkit', '~> 2.1'
 gem 'ood_core', '~> 0.21.0'
 
-gem 'nokogiri', '>= 1.10.4'
+gem 'nokogiri', force_ruby_platform: true
 
 # ruby 3.1 ships psych 4 which breaks
 # and rails 6.0 does not have the patch
