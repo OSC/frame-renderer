@@ -27,7 +27,7 @@ class MayaScript < Script
 
   def available_versions
     if accad?
-      ['2023', '2025']
+      ['2023', '2025', '2026']
     else
       ['2025']
     end
